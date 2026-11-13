@@ -125,6 +125,8 @@
                 <button class="cat-btn" onclick="filterCategory('سرکە و زەیتەکان', this)">سرکە و زەیتەکان</button>
                 <button class="cat-btn" onclick="filterCategory('جوانکاری', this)">جوانکاری</button>
                 <button class="cat-btn" onclick="filterCategory('گیایی', this)">گیایی</button>
+                <button class="cat-btn" onclick="filterCategory('میسکەکان', this)">میسکەکان</button>
+
                 <button class="cat-btn" onclick="filterCategory('هیتر', this)">هیتر</button>
             </div>
         </div>
@@ -154,6 +156,8 @@
                 <option value="سرکە و زەیتەکان">سرکە و زەیتەکان</option>
                 <option value="جوانکاری">جوانکاری</option>
                 <option value="گیایی">گیایی</option>
+                <option value="میسکەکان ">میسکەکان </option>
+
                 <option value="هیتر">هیتر</option>
             </select>
 
@@ -193,7 +197,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        const ADMIN_PASS = "12345";
+        const ADMIN_PASS = "5991omar";
         const shopPhone = "9647501088904";
 
         const firebaseConfig = {
