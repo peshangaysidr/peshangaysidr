@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="پێشانگای سیدر">
+    <title>پێشانگای سیدر</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&display=swap');
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans Arabic', sans-serif; }
+        body { background-color: #f4f7f6; color: #2d3436; padding-bottom: 60px; }
+
+        header {
+            background: linear-gradient(135deg, #1b4332, #2d6a4f);
+            color: white; padding: 30px 15px 35px; text-align: center;
+            border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        header h1 { font-size: 24px; margin-bottom: 5px; }
+        header p { font-size: 14px; opacity: 0.9; }
+
+        .controls { max-width: 900px; margin: -22px auto 20px; padding: 0 15px; }
+        .search-box {
+            width: 100%; padding: 14px 20px; border: none; border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); font-size: 15px; outline: none; margin-bottom: 15px;
+        }
+
+        .categories { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; }
+        .cat-btn {
+            background: white; border: 1px solid #d8e2dc; padding: 8px 16px;
+            border-radius: 20px; font-size: 14px; cursor: pointer; white-space: nowrap; transition: 0.2s;
+        }
+        .cat-btn.active, .cat-btn:hover { background: #2d6a4f; color: white; border-color: #2d6a4f; }
+
+        .products-grid {
+            max-width: 900px; margin: 0 auto; padding: 0 15px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px;
+        }
+
+        .product-card {
+            background: white; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05); cursor: pointer;
+            display: flex; flex-direction: column;
+        }
+        .product-img { width: 100%; height: 165px; object-fit: cover; background: #e9ecef; }
+        .product-info { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .product-cat { font-size: 11px; color: #52b788; font-weight: 600; margin-bottom: 4px; }
+        .product-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: #1b4332; }
+        .product-price { font-size: 15px; font-weight: 700; color: #d97706; }
+
+        .loading { text-align: center; padding: 40px; color: #2d6a4f; font-weight: bold; grid-column: 1 / -1; }
+
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); justify-content: center; align-items: center; padding: 15px; z-index: 1000;
+        }
+        .modal-content {
+            background: white; max-width: 450px; width: 100%; border-radius: 20px;
+            overflow: hidden; max-height: 90vh; overflow-y: auto;
+        }
+        .modal-img { width: 100%; height: 250px; object-fit: cover; }
+        .modal-body { padding: 20px; }
+        .modal-title { font-size: 20px; color: #1b4332; margin-bottom: 5px; }
+        .modal-price { font-size: 18px; color: #d97706; font-weight: bold; margin-bottom: 15px; }
+        .modal-benefits-title { font-size: 14px; font-weight: bold; color: #2d6a4f; margin-bottom: 5px; }
+        .modal-benefits {
+            font-size: 14px; line-height: 1.7; color: #4a5568; margin-bottom: 20px;
+            background: #f8faf9; padding: 12px; border-radius: 10px; white-space: pre-line;
+        }
+        .modal-actions { display: flex; gap: 10px; }
+        .btn-whatsapp {
+            flex: 1; background: #25D366; color: white; text-align: center;
+            padding: 12px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 15px;
+        }
+        .btn-close {
+            background: #e2e8f0; color: #333; border: none; padding: 12px 18px;
+            border-radius: 12px; cursor: pointer; font-weight: bold;
+        }
+
+        /* بەشی ئەدمین */
+        .admin-trigger {
+            text-align: center; margin-top: 40px;
+        }
+        .admin-trigger button {
+            background: transparent; border: none; color: #94a3b8; font-size: 13px; cursor: pointer; text-decoration: underline;
+        }
+        #adminSection { max-width: 600px; margin: 20px auto; padding: 0 15px; display: none; }
+        .admin-card { background: white; padding: 20px; border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); margin-bottom: 20px; }
+        .admin-card h2 { color: #1b4332; margin-bottom: 15px; font-size: 18px; text-align: center; }
+        .admin-card label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
+        .admin-card input, .admin-card select, .admin-card textarea {
+            width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 10px;
+            margin-bottom: 15px; font-size: 15px; outline: none;
+        }
+        .admin-card textarea { height: 90px; }
+        .btn-save {
+            width: 100%; padding: 14px; background: #2d6a4f; color: white; border: none;
+            border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer;
+        }
+        .item-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 0; border-bottom: 1px solid #eee; gap: 10px;
+        }
+        .item-row img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; }
+        .item-details { flex: 1; }
+        .btn-del { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; }
+        #previewImg { width: 100%; max-height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="storeView">
+        <header>
+            <h1>پێشانگای سیدر</h1>
+            <p>بۆ بەرهەمە سروشتی و گیاییەکان</p>
+        </header>
+
+        <div class="controls">
+            <input type="text" id="searchInput" class="search-box" placeholder="گەڕان بۆ ناوی بەرهەم...">
+            <div class="categories">
+                <button class="cat-btn active" onclick="filterCategory('هەمووی', this)">هەمووی</button>
+                <button class="cat-btn" onclick="filterCategory('سرکە و زەیتەکان', this)">سرکە و زەیتەکان</button>
+                <button class="cat-btn" onclick="filterCategory('جوانکاری', this)">جوانکاری</button>
+                <button class="cat-btn" onclick="filterCategory('گیایی', this)">گیایی</button>
+                <button class="cat-btn" onclick="filterCategory('هیتر', this)">هیتر</button>
+            </div>
+        </div>
+
+        <div class="products-grid" id="productsContainer">
+            <div class="loading">چاوەڕێ بە، بەرهەمەکان باردەبن...</div>
+        </div>
+
+        <div class="admin-trigger">
+            <button onclick="openAdmin()">بەڕێوەبردنی دوکان (ئەدمین)</button>
+        </div>
+    </div>
+
+    <!-- پانێڵی ئەدمین -->
+    <div id="adminSection">
+        <div class="admin-card">
+            <h2>زیادکردنی بەرهەمی نوێ</h2>
+            <label>وێنەی بەرهەم:</label>
+            <input type="file" id="imageFile" accept="image/*" onchange="processImage(event)">
+            <img id="previewImg" src="">
+
+            <label>ناوی بەرهەم:</label>
+            <input type="text" id="pName" placeholder="بۆ نموونە: سرکەی سێوی سەوز">
+
+            <label>جۆر (پۆلێن):</label>
+            <select id="pCat">
+                <option value="سرکە و زەیتەکان">سرکە و زەیتەکان</option>
+                <option value="جوانکاری">جوانکاری</option>
+                <option value="گیایی">گیایی</option>
+                <option value="هیتر">هیتر</option>
+            </select>
+
+            <label>نرخ:</label>
+            <input type="text" id="pPrice" placeholder="بۆ نموونە: ٥,٠٠٠ دینار">
+
+            <label>سوودەکان و چۆنیەتی بەکارهێنان:</label>
+            <textarea id="pBenefits" placeholder="سوودەکانی بەرهەمەکە لێرە بنووسە..."></textarea>
+
+            <button class="btn-save" id="saveBtn" onclick="addProduct()">زیادکردنی بەرهەم</button>
+            <button class="btn-close" style="width:100%; margin-top:10px;" onclick="closeAdmin()">گەڕانەوە بۆ پێشانگا</button>
+        </div>
+
+        <div class="admin-card">
+            <h2>بەرهەمە تۆمارکراوەکان</h2>
+            <div id="adminList">چاوەڕێ بە...</div>
+        </div>
+    </div>
+
+    <div class="modal" id="productModal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <img id="mImg" src="" alt="" class="modal-img">
+            <div class="modal-body">
+                <h2 id="mTitle" class="modal-title"></h2>
+                <div id="mPrice" class="modal-price"></div>
+                <div class="modal-benefits-title">سوودەکان و چۆنیەتی بەکارهێنان:</div>
+                <p id="mBenefits" class="modal-benefits"></p>
+                <div class="modal-actions">
+                    <a id="mWhatsapp" href="#" target="_blank" class="btn-whatsapp">داواکردن بە واتساپ</a>
+                    <button class="btn-close" onclick="closeModal()">داخستن</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const ADMIN_PASS = "12345";
+        const shopPhone = "9647501088904";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCMUMu04j9ixtvBNn8v-WattDSqvYzJEDA",
+            authDomain: "peshangay-sidr.firebaseapp.com",
+            projectId: "peshangay-sidr",
+            storageBucket: "peshangay-sidr.firebasestorage.app",
+            messagingSenderId: "931813021729",
+            appId: "1:931813021729:web:d4e3ea03f49d60055c2b60"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let products = [];
+        let currentCategory = "هەمووی";
+        let compressedImageBase64 = "";
+
+        async function loadProducts() {
+            const container = document.getElementById("productsContainer");
+            try {
+                const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
+                const querySnapshot = await getDocs(q);
+                products = [];
+                querySnapshot.forEach((doc) => {
+                    products.push({ id: doc.id, ...doc.data() });
+                });
+                renderProducts();
+                renderAdminList();
+            } catch (error) {
+                container.innerHTML = `<div class="loading">هێشتا هیچ بەرهەمێک زیاد نەکراوە!</div>`;
+            }
+        }
+
+        window.renderProducts = function() {
+            const container = document.getElementById("productsContainer");
+            const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+            container.innerHTML = "";
+
+            const filtered = products.filter(p => {
+                const matchCat = currentCategory === "هەمووی" || p.category === currentCategory;
+                const matchSearch = p.name.toLowerCase().includes(searchTerm) || (p.benefits && p.benefits.toLowerCase().includes(searchTerm));
+                return matchCat && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="loading">هیچ بەرهەمێک نەدۆزرایەوە.</div>`;
+                return;
+            }
+
+            filtered.forEach(product => {
+                const card = document.createElement("div");
+                card.className = "product-card";
+                card.onclick = () => openModal(product);
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-img">
+                    <div class="product-info">
+                        <div>
+                            <div class="product-cat">${product.category}</div>
+                            <div class="product-title">${product.name}</div>
+                        </div>
+                        <div class="product-price">${product.price}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.filterCategory = function(cat, btn) {
+            currentCategory = cat;
+            document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            renderProducts();
+        }
+
+        window.openModal = function(product) {
+            document.getElementById("mImg").src = product.image;
+            document.getElementById("mTitle").innerText = product.name;
+            document.getElementById("mPrice").innerText = product.price;
+            document.getElementById("mBenefits").innerText = product.benefits;
+            
+            const message = encodeURIComponent(`سڵاو، دەمەوێت داوای ئەم بەرهەمە بکەم:\n*${product.name}*\nنرخ: ${product.price}`);
+            document.getElementById("mWhatsapp").href = `https://wa.me/${shopPhone}?text=${message}`;
+            document.getElementById("productModal").style.display = "flex";
+        }
+
+        window.closeModal = function() {
+            document.getElementById("productModal").style.display = "none";
+        }
+
+        window.openAdmin = function() {
+            const pass = prompt("پاسۆردی بەڕێوەبەر بنووسە:");
+            if (pass === ADMIN_PASS) {
+                document.getElementById("storeView").style.display = "none";
+                document.getElementById("adminSection").style.display = "block";
+                renderAdminList();
+            } else if (pass !== null) {
+                alert("پاسۆردەکە هەڵەیە!");
+            }
+        }
+
+        window.closeAdmin = function() {
+            document.getElementById("adminSection").style.display = "none";
+            document.getElementById("storeView").style.display = "block";
+            loadProducts();
+        }
+
+        window.processImage = function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement("canvas");
+                    const MAX_WIDTH = 600;
+                    const scaleSize = MAX_WIDTH / img.width;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scaleSize;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    compressedImageBase64 = canvas.toDataURL("image/jpeg", 0.7);
+                    const preview = document.getElementById("previewImg");
+                    preview.src = compressedImageBase64;
+                    preview.style.display = "block";
+                }
+                img.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        window.addProduct = async function() {
+            const name = document.getElementById("pName").value.trim();
+            const category = document.getElementById("pCat").value;
+            const price = document.getElementById("pPrice").value.trim();
+            const benefits = document.getElementById("pBenefits").value.trim();
+
+            if (!name || !price || !compressedImageBase64) {
+                alert("تکایە وێنە، ناوی بەرهەم، و نرخ بنووسە!");
+                return;
+            }
+
+            const btn = document.getElementById("saveBtn");
+            btn.disabled = true;
+            btn.innerText = "خەریکی خەزنکردنە...";
+
+            try {
+                await addDoc(collection(db, "products"), {
+                    name, category, price, benefits,
+                    image: compressedImageBase64,
+                    createdAt: Date.now()
+                });
+                alert("بەرهەمەکە بە سەرکەوتوویی زیاد کرا!");
+                document.getElementById("pName").value = "";
+                document.getElementById("pPrice").value = "";
+                document.getElementById("pBenefits").value = "";
+                document.getElementById("imageFile").value = "";
+                document.getElementById("previewImg").style.display = "none";
+                compressedImageBase64 = "";
+                await loadProducts();
+            } catch (e) {
+                alert("هەڵەیەک ڕوویدا: " + e.message);
+            }
+
+            btn.disabled = false;
+            btn.innerText = "زیادکردنی بەرهەم";
+        }
+
+        function renderAdminList() {
+            const list = document.getElementById("adminList");
+            list.innerHTML = "";
+            products.forEach((p) => {
+                const div = document.createElement("div");
+                div.className = "item-row";
+                div.innerHTML = `
+                    <img src="${p.image}">
+                    <div class="item-details">
+                        <h4>${p.name}</h4>
+                        <span style="font-size:13px; color:#d97706;">${p.price}</span>
+                    </div>
+                    <button class="btn-del" onclick="deleteItem('${p.id}')">سڕینەوە</button>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        window.deleteItem = async function(id) {
+            if (confirm("دڵنیایت لە سڕینەوەی ئەم بەرهەمە؟")) {
+                await deleteDoc(doc(db, "products", id));
+                await loadProducts();
+            }
+        }
+
+        document.getElementById("searchInput").addEventListener("input", renderProducts);
+        loadProducts();
+    </script>
+</body>
+</html>
