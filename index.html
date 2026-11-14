@@ -196,7 +196,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const ADMIN_PASS = "5991omar";
         const shopPhone = "9647501088904";
@@ -215,8 +215,7 @@
 
         let products = [];
         let currentCategory = "هەمووی";
-        let compressedImageBase64 = "";
-
+let editingProductId = null;
         async function loadProducts() {
             const container = document.getElementById("productsContainer");
             try {
@@ -332,60 +331,86 @@ const matchCat = currentCategory === "هەمووی" || (p.category && p.category
         }
 
         window.addProduct = async function() {
-            const name = document.getElementById("pName").value.trim();
-            const category = document.getElementById("pCat").value;
-            const price = document.getElementById("pPrice").value.trim();
-            const benefits = document.getElementById("pBenefits").value.trim();
+    const name = document.getElementById("pName").value.trim();
+    const category = document.getElementById("pCat").value;
+    const price = document.getElementById("pPrice").value.trim();
+    const benefits = document.getElementById("pBenefits").value.trim();
 
-            if (!name || !price || !compressedImageBase64) {
-                alert("تکایە وێنە، ناوی بەرهەم، و نرخ بنووسە!");
-                return;
-            }
+    if (!name || !price || !compressedImageBase64) {
+        alert("تکایە وێنە، ناوی بەرهەم، و نرخ بنووسە!");
+        return;
+    }
 
-            const btn = document.getElementById("saveBtn");
-            btn.disabled = true;
-            btn.innerText = "خەریکی خەزنکردنە...";
+    const btn = document.getElementById("saveBtn");
+    btn.disabled = true;
+    btn.innerText = "خەریکی خەزنکردنە...";
 
-            try {
-                await addDoc(collection(db, "products"), {
-                    name, category, price, benefits,
-                    image: compressedImageBase64,
-                    createdAt: Date.now()
-                });
-                alert("بەرهەمەکە بە سەرکەوتوویی زیاد کرا!");
-                document.getElementById("pName").value = "";
-                document.getElementById("pPrice").value = "";
-                document.getElementById("pBenefits").value = "";
-                document.getElementById("imageFile").value = "";
-                document.getElementById("previewImg").style.display = "none";
-                compressedImageBase64 = "";
-                await loadProducts();
-            } catch (e) {
-                alert("هەڵەیەک ڕوویدا: " + e.message);
-            }
-
-            btn.disabled = false;
-            btn.innerText = "زیادکردنی بەرهەم";
-        }
-
-        function renderAdminList() {
-            const list = document.getElementById("adminList");
-            list.innerHTML = "";
-            products.forEach((p) => {
-                const div = document.createElement("div");
-                div.className = "item-row";
-                div.innerHTML = `
-                    <img src="${p.image}">
-                    <div class="item-details">
-                        <h4>${p.name}</h4>
-                        <span style="font-size:13px; color:#d97706;">${p.price}</span>
-                    </div>
-                    <button class="btn-del" onclick="deleteItem('${p.id}')">سڕینەوە</button>
-                `;
-                list.appendChild(div);
+    try {
+        if (editingProductId) {
+            await updateDoc(doc(db, "products", editingProductId), {
+                name, category, price, benefits,
+                image: compressedImageBase64
             });
+            alert("گۆڕانکارییەکان بە سەرکەوتوویی خەزن کران!");
+            editingProductId = null;
+        } else {
+            await addDoc(collection(db, "products"), {
+                name, category, price, benefits,
+                image: compressedImageBase64,
+                createdAt: Date.now()
+            });
+            alert("بەرهەمەکە بە سەرکەوتوویی زیاد کرا!");
         }
+        document.getElementById("pName").value = "";
+        document.getElementById("pPrice").value = "";
+        document.getElementById("pBenefits").value = "";
+        document.getElementById("imageFile").value = "";
+        document.getElementById("previewImg").style.display = "none";
+        compressedImageBase64 = "";
+        await loadProducts();
+    } catch (e) {
+        alert("هەڵەیەک ڕوویدا: " + e.message);
+    }
 
+    btn.disabled = false;
+    btn.innerText = "زیادکردنی بەرهەم";
+}
+        window.editItem = function(id) {
+    const p = products.find(item => item.id === id);
+    if (!p) return;
+    editingProductId = id;
+    document.getElementById("pName").value = p.name;
+    document.getElementById("pCat").value = p.category;
+    document.getElementById("pPrice").value = p.price;
+    document.getElementById("pBenefits").value = p.benefits || "";
+    compressedImageBase64 = p.image;
+    const preview = document.getElementById("previewImg");
+    preview.src = p.image;
+    preview.style.display = "block";
+    document.getElementById("saveBtn").innerText = "خەزنکردنی گۆڕانکارییەکان";
+    document.getElementById("adminSection").scrollIntoView({ behavior: "smooth" });
+}
+
+function renderAdminList() {
+    const list = document.getElementById("adminList");
+    list.innerHTML = "";
+    products.forEach((p) => {
+        const div = document.createElement("div");
+        div.className = "item-row";
+        div.innerHTML = `
+            <img src="${p.image}">
+            <div class="item-details">
+                <h4>${p.name}</h4>
+                <span style="font-size:13px; color:#d97706;">${p.price}</span>
+            </div>
+            <div style="display:flex; gap:6px;">
+                <button style="background:#0284c7; color:white; border:none; padding:6px 10px; border-radius:6px; cursor:pointer;" onclick="editItem('${p.id}')">دەستکاری</button>
+                <button class="btn-del" onclick="deleteItem('${p.id}')">سڕینەوە</button>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+}
         window.deleteItem = async function(id) {
             if (confirm("دڵنیایت لە سڕینەوەی ئەم بەرهەمە؟")) {
                 await deleteDoc(doc(db, "products", id));
