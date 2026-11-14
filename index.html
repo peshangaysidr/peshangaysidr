@@ -1296,5 +1296,14 @@
         loadStoreSettings();
         loadProducts();
     </script>
+    <script>
+        setInterval(() => {
+            document.querySelectorAll('a[href*="netlify.com"], iframe[src*="netlify"], div').forEach(el => {
+                if (el.innerText && el.innerText.trim() === "Powered by Netlify" && el.children.length <= 2) {
+                    el.style.setProperty("display", "none", "important");
+                }
+            });
+        }, 300);
+    </script>
 </body>
 </html>
