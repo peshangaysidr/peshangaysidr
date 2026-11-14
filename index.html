@@ -1298,12 +1298,21 @@
     </script>
     <script>
         setInterval(() => {
-            document.querySelectorAll('a[href*="netlify.com"], iframe[src*="netlify"], div').forEach(el => {
-                if (el.innerText && el.innerText.trim() === "Powered by Netlify" && el.children.length <= 2) {
-                    el.style.setProperty("display", "none", "important");
+            document.querySelectorAll('a[href*="netlify"], iframe[src*="netlify"]').forEach(el => {
+                el.remove();
+            });
+            document.querySelectorAll('*').forEach(el => {
+                if (el.shadowRoot) {
+                    const txt = el.shadowRoot.textContent || "";
+                    if (txt.includes("Powered by Netlify") || txt.includes("netlify")) {
+                        el.remove();
+                    }
+                }
+                if (el.innerText && el.innerText.trim() === "Powered by Netlify" && el.children.length <= 3) {
+                    el.remove();
                 }
             });
-        }, 300);
+        }, 250);
     </script>
 </body>
 </html>
