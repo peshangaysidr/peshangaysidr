@@ -6,9 +6,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="پێشانگای سیدر">
-        <link rel="apple-touch-icon" href="IMG_3196.jpeg">
+    <link rel="apple-touch-icon" href="IMG_3196.jpeg">
     <link rel="icon" type="image/jpeg" href="IMG_3196.jpeg">
-        <meta property="og:title" content="پێشانگای سیدر">
+    <meta property="og:title" content="پێشانگای سیدر">
     <meta property="og:description" content="بۆ بەرهەمە سروشتی، گیایی و جوانکارییەکان">
     <meta property="og:url" content="https://peshangaysidr.netlify.app/">
     <meta property="og:image" content="https://peshangaysidr.netlify.app/IMG_3196.jpeg">
@@ -100,10 +100,10 @@
         .modal-price { font-size: 18px; color: #d97706; font-weight: bold; margin-bottom: 15px; }
         .modal-benefits-title { font-size: 14px; font-weight: bold; color: #2d6a4f; margin-bottom: 5px; }
         .modal-benefits {
-            font-size: 14px; line-height: 1.7; color: #4a5568; margin-bottom: 20px;
+            font-size: 14px; line-height: 1.7; color: #4a5568; margin-bottom: 15px;
             background: #f8faf9; padding: 12px; border-radius: 10px; white-space: pre-line;
         }
-        .modal-actions { display: flex; gap: 10px; }
+        .modal-actions { display: flex; gap: 10px; margin-top: 10px; }
         .btn-whatsapp {
             flex: 1; background: #25D366; color: white; text-align: center;
             padding: 12px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 15px;
@@ -160,7 +160,7 @@
 
     <div id="storeView">
         <header>
-           <img src="IMG_3196.jpeg" alt="پێشانگای سیدر" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #d4af37; margin-bottom: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);"> 
+            <img src="IMG_3196.jpeg" alt="پێشانگای سیدر" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #d4af37; margin-bottom: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
             <h1>پێشانگای سیدر</h1>
             <p>بۆ بەرهەمە سروشتی و گیاییەکان</p>
         </header>
@@ -232,6 +232,9 @@
             <label>سوودەکان و چۆنیەتی بەکارهێنان:</label>
             <textarea id="pBenefits" placeholder="سوودەکانی بەرهەمەکە لێرە بنووسە..."></textarea>
 
+            <label>فیدباک و ڕای کڕیارەکان (ئارەزوومەندانە):</label>
+            <textarea id="pFeedback" placeholder="ڕای کڕیارەکان لەسەر ئەم بەرهەمە لێرە بنووسە..."></textarea>
+
             <button class="btn-save" id="saveBtn" onclick="addProduct()">زیادکردنی بەرهەم</button>
             <button class="btn-close" id="cancelEditBtn" style="width:100%; margin-top:10px; display:none;" onclick="resetForm()">پاشگەزبوونەوە لە دەستکاری</button>
             <button class="btn-close" style="width:100%; margin-top:10px;" onclick="closeAdmin()">گەڕانەوە بۆ پێشانگا</button>
@@ -251,6 +254,12 @@
                 <div id="mPrice" class="modal-price"></div>
                 <div class="modal-benefits-title">سوودەکان و چۆنیەتی بەکارهێنان:</div>
                 <p id="mBenefits" class="modal-benefits"></p>
+
+                <div id="mFeedbackBox" style="display:none; margin-bottom:15px;">
+                    <div class="modal-benefits-title" style="color:#d97706;">فیدباک و ڕای کڕیارەکان:</div>
+                    <p id="mFeedback" class="modal-benefits" style="background:#fffbeb; border-right:3px solid #f59e0b; margin-bottom:0;"></p>
+                </div>
+
                 <div class="modal-actions">
                     <a id="mWhatsapp" href="#" target="_blank" class="btn-whatsapp">داواکردن بە واتساپ</a>
                     <button class="btn-close" onclick="closeModal()">داخستن</button>
@@ -283,7 +292,6 @@
         let compressedImageBase64 = "";
         let editingProductId = null;
 
-        // سیستەمی تۆمارکردنی بەرهەمە بینراوەکان لای کڕیار
         function getSeenProducts() {
             try {
                 return JSON.parse(localStorage.getItem("sidr_seen_products") || "[]");
@@ -415,7 +423,15 @@
                 document.getElementById("mPrice").innerText = product.price;
             }
             
-            document.getElementById("mBenefits").innerText = product.benefits;
+            document.getElementById("mBenefits").innerText = product.benefits || "";
+
+            const fbBox = document.getElementById("mFeedbackBox");
+            if (product.feedback && product.feedback.trim() !== "") {
+                document.getElementById("mFeedback").innerText = product.feedback;
+                fbBox.style.display = "block";
+            } else {
+                fbBox.style.display = "none";
+            }
             
             const message = encodeURIComponent(`سڵاو، دەمەوێت داوای ئەم بەرهەمە بکەم:\n*${product.name}*\nنرخ: ${product.price}`);
             document.getElementById("mWhatsapp").href = `https://wa.me/${shopPhone}?text=${message}`;
@@ -452,6 +468,7 @@
             document.getElementById("pPrice").value = "";
             document.getElementById("pOldPrice").value = "";
             document.getElementById("pBenefits").value = "";
+            document.getElementById("pFeedback").value = "";
             document.getElementById("imageFile").value = "";
             document.getElementById("previewImg").style.display = "none";
             document.getElementById("previewImg").src = "";
@@ -489,6 +506,7 @@
             const price = document.getElementById("pPrice").value.trim();
             const oldPrice = document.getElementById("pOldPrice").value.trim();
             const benefits = document.getElementById("pBenefits").value.trim();
+            const feedback = document.getElementById("pFeedback").value.trim();
 
             if (!name || !price || (!compressedImageBase64 && !editingProductId)) {
                 alert("تکایە وێنە، ناوی بەرهەم، و نرخ بنووسە!");
@@ -501,7 +519,7 @@
 
             try {
                 if (editingProductId) {
-                    const updateData = { name, category, price, oldPrice, benefits };
+                    const updateData = { name, category, price, oldPrice, benefits, feedback };
                     if (compressedImageBase64) {
                         updateData.image = compressedImageBase64;
                     }
@@ -509,7 +527,7 @@
                     alert("گۆڕانکارییەکان بە سەرکەوتوویی خەزن کران!");
                 } else {
                     await addDoc(collection(db, "products"), {
-                        name, category, price, oldPrice, benefits,
+                        name, category, price, oldPrice, benefits, feedback,
                         image: compressedImageBase64,
                         createdAt: Date.now()
                     });
@@ -541,6 +559,7 @@
             document.getElementById("pPrice").value = p.price;
             document.getElementById("pOldPrice").value = p.oldPrice || "";
             document.getElementById("pBenefits").value = p.benefits || "";
+            document.getElementById("pFeedback").value = p.feedback || "";
             document.getElementById("imageFile").value = "";
             
             const preview = document.getElementById("previewImg");
