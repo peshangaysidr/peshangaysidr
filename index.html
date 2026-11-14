@@ -239,7 +239,8 @@
             container.innerHTML = "";
 
             const filtered = products.filter(p => {
-                const matchCat = currentCategory === "هەمووی" || p.category === currentCategory;
+const matchCat = currentCategory === "هەمووی" || (p.category && p.category.trim() === currentCategory.trim());
+
                 const matchSearch = p.name.toLowerCase().includes(searchTerm) || (p.benefits && p.benefits.toLowerCase().includes(searchTerm));
                 return matchCat && matchSearch;
             });
