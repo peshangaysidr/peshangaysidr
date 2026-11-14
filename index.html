@@ -103,6 +103,13 @@
             font-size: 14px; line-height: 1.7; color: #4a5568; margin-bottom: 15px;
             background: #f8faf9; padding: 12px; border-radius: 10px; white-space: pre-line;
         }
+        .fb-images-grid {
+            display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-top: 8px;
+        }
+        .fb-images-grid img {
+            width: 110px; height: 140px; object-fit: cover; border-radius: 10px;
+            border: 1px solid #fcd34d; cursor: pointer; flex-shrink: 0;
+        }
         .modal-actions { display: flex; gap: 10px; margin-top: 10px; }
         .btn-whatsapp {
             flex: 1; background: #25D366; color: white; text-align: center;
@@ -112,6 +119,13 @@
             background: #e2e8f0; color: #333; border: none; padding: 12px 18px;
             border-radius: 12px; cursor: pointer; font-weight: bold;
         }
+
+        /* پەنجەرەی پیشاندانی وێنەی فیدباک بە گەورەیی */
+        #zoomModal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.88); justify-content: center; align-items: center; z-index: 2000; padding: 15px;
+        }
+        #zoomModal img { max-width: 100%; max-height: 90vh; border-radius: 12px; }
 
         /* بەشی سۆشیاڵ میدیا */
         .social-footer {
@@ -154,6 +168,13 @@
         .item-details { flex: 1; }
         .btn-del { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; }
         #previewImg { width: 100%; max-height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; display: none; }
+        .fb-preview-list { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+        .fb-preview-item { position: relative; width: 70px; height: 70px; }
+        .fb-preview-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; }
+        .fb-remove-btn {
+            position: absolute; top: -5px; right: -5px; background: #ef4444; color: white;
+            border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -232,8 +253,12 @@
             <label>سوودەکان و چۆنیەتی بەکارهێنان:</label>
             <textarea id="pBenefits" placeholder="سوودەکانی بەرهەمەکە لێرە بنووسە..."></textarea>
 
-            <label>فیدباک و ڕای کڕیارەکان (ئارەزوومەندانە):</label>
-            <textarea id="pFeedback" placeholder="ڕای کڕیارەکان لەسەر ئەم بەرهەمە لێرە بنووسە..."></textarea>
+            <label>فیدباکی نووسراوی کڕیارەکان (ئارەزوومەندانە - دەتوانیت چەند دانەیەک بنووسیت):</label>
+            <textarea id="pFeedback" placeholder="ڕای کڕیارەکان لێرە بنووسە..."></textarea>
+
+            <label>وێنەی فیدباکەکان (سکرینشۆتی نامەکان - دەتوانیت چەند وێنەیەک هەڵبژێریت):</label>
+            <input type="file" id="fbImagesFile" accept="image/*" multiple onchange="processFeedbackImages(event)">
+            <div id="fbPreviewContainer" class="fb-preview-list"></div>
 
             <button class="btn-save" id="saveBtn" onclick="addProduct()">زیادکردنی بەرهەم</button>
             <button class="btn-close" id="cancelEditBtn" style="width:100%; margin-top:10px; display:none;" onclick="resetForm()">پاشگەزبوونەوە لە دەستکاری</button>
@@ -257,7 +282,8 @@
 
                 <div id="mFeedbackBox" style="display:none; margin-bottom:15px;">
                     <div class="modal-benefits-title" style="color:#d97706;">فیدباک و ڕای کڕیارەکان:</div>
-                    <p id="mFeedback" class="modal-benefits" style="background:#fffbeb; border-right:3px solid #f59e0b; margin-bottom:0;"></p>
+                    <p id="mFeedback" class="modal-benefits" style="background:#fffbeb; border-right:3px solid #f59e0b; margin-bottom:8px; display:none;"></p>
+                    <div id="mFeedbackImages" class="fb-images-grid"></div>
                 </div>
 
                 <div class="modal-actions">
@@ -266,6 +292,11 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- پەنجەرەی بینینی وێنەی فیدباک بە گەورەیی -->
+    <div id="zoomModal" onclick="this.style.display='none'">
+        <img id="zoomedImg" src="">
     </div>
 
     <script type="module">
@@ -290,6 +321,7 @@
         let products = [];
         let currentCategory = "هەمووی";
         let compressedImageBase64 = "";
+        let feedbackImagesList = [];
         let editingProductId = null;
 
         function getSeenProducts() {
@@ -409,6 +441,11 @@
             renderProducts();
         }
 
+        window.zoomImage = function(src) {
+            document.getElementById("zoomedImg").src = src;
+            document.getElementById("zoomModal").style.display = "flex";
+        }
+
         window.openModal = function(product) {
             markProductAsSeen(product.id);
             updateCategoryBadges();
@@ -426,9 +463,30 @@
             document.getElementById("mBenefits").innerText = product.benefits || "";
 
             const fbBox = document.getElementById("mFeedbackBox");
-            if (product.feedback && product.feedback.trim() !== "") {
-                document.getElementById("mFeedback").innerText = product.feedback;
+            const fbTextEl = document.getElementById("mFeedback");
+            const fbImgsEl = document.getElementById("mFeedbackImages");
+            
+            const hasTextFb = product.feedback && product.feedback.trim() !== "";
+            const hasImgFb = Array.isArray(product.feedbackImages) && product.feedbackImages.length > 0;
+
+            if (hasTextFb || hasImgFb) {
                 fbBox.style.display = "block";
+                if (hasTextFb) {
+                    fbTextEl.innerText = product.feedback;
+                    fbTextEl.style.display = "block";
+                } else {
+                    fbTextEl.style.display = "none";
+                }
+
+                fbImgsEl.innerHTML = "";
+                if (hasImgFb) {
+                    product.feedbackImages.forEach(imgSrc => {
+                        const img = document.createElement("img");
+                        img.src = imgSrc;
+                        img.onclick = () => zoomImage(imgSrc);
+                        fbImgsEl.appendChild(img);
+                    });
+                }
             } else {
                 fbBox.style.display = "none";
             }
@@ -460,9 +518,29 @@
             loadProducts();
         }
 
+        window.renderFbPreviews = function() {
+            const container = document.getElementById("fbPreviewContainer");
+            container.innerHTML = "";
+            feedbackImagesList.forEach((src, index) => {
+                const div = document.createElement("div");
+                div.className = "fb-preview-item";
+                div.innerHTML = `
+                    <img src="${src}">
+                    <button type="button" class="fb-remove-btn" onclick="removeFbImage(${index})">×</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        window.removeFbImage = function(index) {
+            feedbackImagesList.splice(index, 1);
+            renderFbPreviews();
+        }
+
         window.resetForm = function() {
             editingProductId = null;
             compressedImageBase64 = "";
+            feedbackImagesList = [];
             document.getElementById("formTitle").innerText = "زیادکردنی بەرهەمی نوێ";
             document.getElementById("pName").value = "";
             document.getElementById("pPrice").value = "";
@@ -470,6 +548,8 @@
             document.getElementById("pBenefits").value = "";
             document.getElementById("pFeedback").value = "";
             document.getElementById("imageFile").value = "";
+            document.getElementById("fbImagesFile").value = "";
+            document.getElementById("fbPreviewContainer").innerHTML = "";
             document.getElementById("previewImg").style.display = "none";
             document.getElementById("previewImg").src = "";
             document.getElementById("saveBtn").innerText = "زیادکردنی بەرهەم";
@@ -500,6 +580,32 @@
             reader.readAsDataURL(file);
         }
 
+        window.processFeedbackImages = function(event) {
+            const files = Array.from(event.target.files);
+            if (!files.length) return;
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement("canvas");
+                        const MAX_WIDTH = 450;
+                        const scaleSize = MAX_WIDTH / img.width;
+                        canvas.width = MAX_WIDTH;
+                        canvas.height = img.height * scaleSize;
+                        const ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        const compressed = canvas.toDataURL("image/jpeg", 0.6);
+                        feedbackImagesList.push(compressed);
+                        renderFbPreviews();
+                    }
+                    img.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            });
+            event.target.value = "";
+        }
+
         window.addProduct = async function() {
             const name = document.getElementById("pName").value.trim();
             const category = document.getElementById("pCat").value.trim();
@@ -519,7 +625,7 @@
 
             try {
                 if (editingProductId) {
-                    const updateData = { name, category, price, oldPrice, benefits, feedback };
+                    const updateData = { name, category, price, oldPrice, benefits, feedback, feedbackImages: feedbackImagesList };
                     if (compressedImageBase64) {
                         updateData.image = compressedImageBase64;
                     }
@@ -528,6 +634,7 @@
                 } else {
                     await addDoc(collection(db, "products"), {
                         name, category, price, oldPrice, benefits, feedback,
+                        feedbackImages: feedbackImagesList,
                         image: compressedImageBase64,
                         createdAt: Date.now()
                     });
@@ -548,6 +655,9 @@
             if (!p) return;
             editingProductId = id;
             compressedImageBase64 = "";
+            feedbackImagesList = Array.isArray(p.feedbackImages) ? [...p.feedbackImages] : [];
+            renderFbPreviews();
+
             document.getElementById("formTitle").innerText = "دەستکاریکردنی بەرهەم";
             document.getElementById("pName").value = p.name;
             
