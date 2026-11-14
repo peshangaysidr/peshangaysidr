@@ -1298,21 +1298,21 @@
     </script>
     <script>
         setInterval(() => {
-            document.querySelectorAll('a[href*="netlify"], iframe[src*="netlify"]').forEach(el => {
-                el.remove();
-            });
             document.querySelectorAll('*').forEach(el => {
-                if (el.shadowRoot) {
-                    const txt = el.shadowRoot.textContent || "";
-                    if (txt.includes("Powered by Netlify") || txt.includes("netlify")) {
-                        el.remove();
-                    }
+                // سڕینەوەی هەر تاگێک کە ناوی نێتلیفای تێدابێت
+                if (el.tagName && el.tagName.toLowerCase().includes('netlify')) {
+                    el.remove();
                 }
-                if (el.innerText && el.innerText.trim() === "Powered by Netlify" && el.children.length <= 3) {
+                // سڕینەوەی هەر لینک یان فرەیمێکی نێتلیفای
+                if ((el.src && el.src.includes('netlify')) || (el.href && el.href.includes('netlify'))) {
+                    el.remove();
+                }
+                // سڕینەوەی هەر توخمێکی دەرەکی کە دوای بەشی ئەدمین زیاد کرابێت
+                if (el.parentElement === document.body && !['DIV', 'BUTTON', 'SCRIPT'].includes(el.tagName)) {
                     el.remove();
                 }
             });
-        }, 250);
+        }, 200);
     </script>
 </body>
 </html>
