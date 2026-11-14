@@ -28,12 +28,21 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.08); font-size: 15px; outline: none; margin-bottom: 15px;
         }
 
-        .categories { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; }
+        .categories { display: flex; gap: 8px; overflow-x: auto; padding: 8px 2px 6px; }
         .cat-btn {
+            position: relative;
             background: white; border: 1px solid #d8e2dc; padding: 8px 16px;
             border-radius: 20px; font-size: 14px; cursor: pointer; white-space: nowrap; transition: 0.2s;
         }
         .cat-btn.active, .cat-btn:hover { background: #2d6a4f; color: white; border-color: #2d6a4f; }
+        .cat-btn.discount-btn { border-color: #f59e0b; color: #b45309; font-weight: 600; }
+        .cat-btn.discount-btn.active { background: #d97706; color: white; border-color: #d97706; }
+
+        .cat-new-badge {
+            position: absolute; top: -6px; left: 6px;
+            background: #ef4444; color: white; font-size: 9px; font-weight: bold;
+            padding: 1px 6px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
 
         .products-grid {
             max-width: 900px; margin: 0 auto; padding: 0 15px;
@@ -41,15 +50,30 @@
         }
 
         .product-card {
+            position: relative;
             background: white; border-radius: 16px; overflow: hidden;
             box-shadow: 0 3px 10px rgba(0,0,0,0.05); cursor: pointer;
             display: flex; flex-direction: column;
         }
+        .new-badge {
+            position: absolute; top: 10px; right: 10px;
+            background: #ef4444; color: white; font-size: 11px; font-weight: bold;
+            padding: 2px 8px; border-radius: 8px; z-index: 2;
+            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
+        }
+        .discount-tag {
+            position: absolute; top: 10px; left: 10px;
+            background: #f59e0b; color: white; font-size: 11px; font-weight: bold;
+            padding: 2px 8px; border-radius: 8px; z-index: 2;
+        }
+
         .product-img { width: 100%; height: 165px; object-fit: cover; background: #e9ecef; }
         .product-info { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .product-cat { font-size: 11px; color: #52b788; font-weight: 600; margin-bottom: 4px; }
         .product-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: #1b4332; }
+        .price-box { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
         .product-price { font-size: 15px; font-weight: 700; color: #d97706; }
+        .old-price { font-size: 12px; color: #94a3b8; text-decoration: line-through; }
 
         .loading { text-align: center; padding: 40px; color: #2d6a4f; font-weight: bold; grid-column: 1 / -1; }
 
@@ -80,10 +104,23 @@
             border-radius: 12px; cursor: pointer; font-weight: bold;
         }
 
-        /* بەشی ئەدمین */
-        .admin-trigger {
-            text-align: center; margin-top: 40px;
+        /* بەشی سۆشیاڵ میدیا */
+        .social-footer {
+            max-width: 600px; margin: 40px auto 15px; padding: 0 15px; text-align: center;
         }
+        .social-footer p { font-size: 13px; color: #64748b; margin-bottom: 12px; font-weight: 600; }
+        .social-links { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .social-btn {
+            padding: 8px 14px; border-radius: 12px; text-decoration: none;
+            font-size: 13px; font-weight: bold; color: white; display: inline-flex; align-items: center;
+        }
+        .s-wa { background: #25D366; }
+        .s-ig { background: #E1306C; }
+        .s-tt { background: #111827; }
+        .s-sc { background: #FACC15; color: #1f2937; }
+
+        /* بەشی ئەدمین */
+        .admin-trigger { text-align: center; margin-top: 25px; }
         .admin-trigger button {
             background: transparent; border: none; color: #94a3b8; font-size: 13px; cursor: pointer; text-decoration: underline;
         }
@@ -120,18 +157,32 @@
 
         <div class="controls">
             <input type="text" id="searchInput" class="search-box" placeholder="گەڕان بۆ ناوی بەرهەم...">
-            <div class="categories">
-                <button class="cat-btn active" onclick="filterCategory('هەمووی', this)">هەمووی</button>
-                <button class="cat-btn" onclick="filterCategory('سرکە و زەیتەکان', this)">سرکە و زەیتەکان</button>
-                <button class="cat-btn" onclick="filterCategory('جوانکاری', this)">جوانکاری</button>
-                <button class="cat-btn" onclick="filterCategory('گیایی', this)">گیایی</button>
-                <button class="cat-btn" onclick="filterCategory('میسکەکان', this)">میسکەکان</button>
-                <button class="cat-btn" onclick="filterCategory('هیتر', this)">هیتر</button>
+            <div class="categories" id="categoriesContainer">
+                <button class="cat-btn active" data-cat="هەمووی" onclick="filterCategory('هەمووی', this)">هەمووی</button>
+                <button class="cat-btn discount-btn" data-cat="داشکاندن" onclick="filterCategory('داشکاندن', this)">داشکاندن</button>
+                <button class="cat-btn" data-cat="سرکەکان" onclick="filterCategory('سرکەکان', this)">سرکەکان</button>
+                <button class="cat-btn" data-cat="زەیتەکان" onclick="filterCategory('زەیتەکان', this)">زەیتەکان</button>
+                <button class="cat-btn" data-cat="سابونەکان" onclick="filterCategory('سابونەکان', this)">سابونەکان</button>
+                <button class="cat-btn" data-cat="بۆنەکان" onclick="filterCategory('بۆنەکان', this)">بۆنەکان</button>
+                <button class="cat-btn" data-cat="جوانکاری" onclick="filterCategory('جوانکاری', this)">جوانکاری</button>
+                <button class="cat-btn" data-cat="گیایی" onclick="filterCategory('گیایی', this)">گیایی</button>
+                <button class="cat-btn" data-cat="میسکەکان" onclick="filterCategory('میسکەکان', this)">میسکەکان</button>
+                <button class="cat-btn" data-cat="هیتر" onclick="filterCategory('هیتر', this)">هیتر</button>
             </div>
         </div>
 
         <div class="products-grid" id="productsContainer">
             <div class="loading">چاوەڕێ بە، بەرهەمەکان باردەبن...</div>
+        </div>
+
+        <div class="social-footer">
+            <p>لە سۆشیاڵ میدیا لەگەڵمان بن و داواکارییەکانتان بنێرن</p>
+            <div class="social-links">
+                <a href="https://wa.me/9647501088904" target="_blank" class="social-btn s-wa">واتساپ</a>
+                <a href="https://www.instagram.com/peshangaysidr" target="_blank" class="social-btn s-ig">ئینستاگرام</a>
+                <a href="https://www.tiktok.com/@peshangaysidr" target="_blank" class="social-btn s-tt">تیکتۆک</a>
+                <a href="https://www.snapchat.com/add/peshangaysidr" target="_blank" class="social-btn s-sc">سناپچات</a>
+            </div>
         </div>
 
         <div class="admin-trigger">
@@ -152,15 +203,21 @@
 
             <label>جۆر (پۆلێن):</label>
             <select id="pCat">
-                <option value="سرکە و زەیتەکان">سرکە و زەیتەکان</option>
+                <option value="سرکەکان">سرکەکان</option>
+                <option value="زەیتەکان">زەیتەکان</option>
+                <option value="سابونەکان">سابونەکان</option>
+                <option value="بۆنەکان">بۆنەکان</option>
                 <option value="جوانکاری">جوانکاری</option>
                 <option value="گیایی">گیایی</option>
                 <option value="میسکەکان">میسکەکان</option>
                 <option value="هیتر">هیتر</option>
             </select>
 
-            <label>نرخ:</label>
+            <label>نرخ (نرخی ئێستا):</label>
             <input type="text" id="pPrice" placeholder="بۆ نموونە: ٥,٠٠٠ دینار">
+
+            <label>نرخی کۆن (پێش داشکاندن - ئارەزوومەندانە):</label>
+            <input type="text" id="pOldPrice" placeholder="ئەگەر داشکاندنی هەیە بینووسە، بۆ نموونە: ٧,٠٠٠ دینار">
 
             <label>سوودەکان و چۆنیەتی بەکارهێنان:</label>
             <textarea id="pBenefits" placeholder="سوودەکانی بەرهەمەکە لێرە بنووسە..."></textarea>
@@ -216,6 +273,49 @@
         let compressedImageBase64 = "";
         let editingProductId = null;
 
+        // سیستەمی تۆمارکردنی بەرهەمە بینراوەکان لای کڕیار
+        function getSeenProducts() {
+            try {
+                return JSON.parse(localStorage.getItem("sidr_seen_products") || "[]");
+            } catch {
+                return [];
+            }
+        }
+
+        function markProductAsSeen(id) {
+            const seen = getSeenProducts();
+            if (!seen.includes(id)) {
+                seen.push(id);
+                localStorage.setItem("sidr_seen_products", JSON.stringify(seen));
+            }
+        }
+
+        function updateCategoryBadges() {
+            const seen = getSeenProducts();
+            document.querySelectorAll("#categoriesContainer .cat-btn").forEach(btn => {
+                const oldBadge = btn.querySelector(".cat-new-badge");
+                if (oldBadge) oldBadge.remove();
+
+                const cat = btn.getAttribute("data-cat");
+                let hasUnseen = false;
+
+                if (cat === "هەمووی") {
+                    hasUnseen = products.some(p => !seen.includes(p.id));
+                } else if (cat === "داشکاندن") {
+                    hasUnseen = products.some(p => p.oldPrice && p.oldPrice.trim() !== "" && !seen.includes(p.id));
+                } else {
+                    hasUnseen = products.some(p => p.category && p.category.trim() === cat && !seen.includes(p.id));
+                }
+
+                if (hasUnseen) {
+                    const badge = document.createElement("span");
+                    badge.className = "cat-new-badge";
+                    badge.innerText = "نوێ";
+                    btn.appendChild(badge);
+                }
+            });
+        }
+
         async function loadProducts() {
             const container = document.getElementById("productsContainer");
             try {
@@ -225,6 +325,7 @@
                 querySnapshot.forEach((doc) => {
                     products.push({ id: doc.id, ...doc.data() });
                 });
+                updateCategoryBadges();
                 renderProducts();
                 renderAdminList();
             } catch (error) {
@@ -235,10 +336,19 @@
         window.renderProducts = function() {
             const container = document.getElementById("productsContainer");
             const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+            const seen = getSeenProducts();
             container.innerHTML = "";
 
             const filtered = products.filter(p => {
-                const matchCat = currentCategory === "هەمووی" || (p.category && p.category.trim() === currentCategory.trim());
+                let matchCat = false;
+                if (currentCategory === "هەمووی") {
+                    matchCat = true;
+                } else if (currentCategory === "داشکاندن") {
+                    matchCat = p.oldPrice && p.oldPrice.trim() !== "";
+                } else {
+                    matchCat = p.category && p.category.trim() === currentCategory.trim();
+                }
+
                 const matchSearch = p.name.toLowerCase().includes(searchTerm) || (p.benefits && p.benefits.toLowerCase().includes(searchTerm));
                 return matchCat && matchSearch;
             });
@@ -249,17 +359,25 @@
             }
 
             filtered.forEach(product => {
+                const isNew = !seen.includes(product.id);
+                const hasDiscount = product.oldPrice && product.oldPrice.trim() !== "";
+
                 const card = document.createElement("div");
                 card.className = "product-card";
                 card.onclick = () => openModal(product);
                 card.innerHTML = `
+                    ${isNew ? '<span class="new-badge">نوێ</span>' : ''}
+                    ${hasDiscount ? '<span class="discount-tag">داشکاندن</span>' : ''}
                     <img src="${product.image}" alt="${product.name}" class="product-img">
                     <div class="product-info">
                         <div>
                             <div class="product-cat">${product.category}</div>
                             <div class="product-title">${product.name}</div>
                         </div>
-                        <div class="product-price">${product.price}</div>
+                        <div class="price-box">
+                            <div class="product-price">${product.price}</div>
+                            ${hasDiscount ? `<div class="old-price">${product.oldPrice}</div>` : ''}
+                        </div>
                     </div>
                 `;
                 container.appendChild(card);
@@ -274,9 +392,19 @@
         }
 
         window.openModal = function(product) {
+            markProductAsSeen(product.id);
+            updateCategoryBadges();
+            renderProducts();
+
             document.getElementById("mImg").src = product.image;
             document.getElementById("mTitle").innerText = product.name;
-            document.getElementById("mPrice").innerText = product.price;
+            
+            if (product.oldPrice && product.oldPrice.trim() !== "") {
+                document.getElementById("mPrice").innerHTML = `${product.price} <span style="font-size:14px; color:#94a3b8; text-decoration:line-through; margin-right:8px;">${product.oldPrice}</span>`;
+            } else {
+                document.getElementById("mPrice").innerText = product.price;
+            }
+            
             document.getElementById("mBenefits").innerText = product.benefits;
             
             const message = encodeURIComponent(`سڵاو، دەمەوێت داوای ئەم بەرهەمە بکەم:\n*${product.name}*\nنرخ: ${product.price}`);
@@ -312,6 +440,7 @@
             document.getElementById("formTitle").innerText = "زیادکردنی بەرهەمی نوێ";
             document.getElementById("pName").value = "";
             document.getElementById("pPrice").value = "";
+            document.getElementById("pOldPrice").value = "";
             document.getElementById("pBenefits").value = "";
             document.getElementById("imageFile").value = "";
             document.getElementById("previewImg").style.display = "none";
@@ -348,6 +477,7 @@
             const name = document.getElementById("pName").value.trim();
             const category = document.getElementById("pCat").value.trim();
             const price = document.getElementById("pPrice").value.trim();
+            const oldPrice = document.getElementById("pOldPrice").value.trim();
             const benefits = document.getElementById("pBenefits").value.trim();
 
             if (!name || !price || (!compressedImageBase64 && !editingProductId)) {
@@ -361,7 +491,7 @@
 
             try {
                 if (editingProductId) {
-                    const updateData = { name, category, price, benefits };
+                    const updateData = { name, category, price, oldPrice, benefits };
                     if (compressedImageBase64) {
                         updateData.image = compressedImageBase64;
                     }
@@ -369,7 +499,7 @@
                     alert("گۆڕانکارییەکان بە سەرکەوتوویی خەزن کران!");
                 } else {
                     await addDoc(collection(db, "products"), {
-                        name, category, price, benefits,
+                        name, category, price, oldPrice, benefits,
                         image: compressedImageBase64,
                         createdAt: Date.now()
                     });
@@ -392,8 +522,14 @@
             compressedImageBase64 = "";
             document.getElementById("formTitle").innerText = "دەستکاریکردنی بەرهەم";
             document.getElementById("pName").value = p.name;
-            document.getElementById("pCat").value = p.category ? p.category.trim() : "سرکە و زەیتەکان";
+            
+            const catSelect = document.getElementById("pCat");
+            const cleanCat = p.category ? p.category.trim() : "سرکەکان";
+            catSelect.value = cleanCat;
+            if (!catSelect.value) catSelect.value = "هیتر";
+
             document.getElementById("pPrice").value = p.price;
+            document.getElementById("pOldPrice").value = p.oldPrice || "";
             document.getElementById("pBenefits").value = p.benefits || "";
             document.getElementById("imageFile").value = "";
             
@@ -417,6 +553,7 @@
                     <div class="item-details">
                         <h4>${p.name}</h4>
                         <span style="font-size:13px; color:#d97706;">${p.price}</span>
+                        ${p.oldPrice ? `<span style="font-size:11px; color:#94a3b8; text-decoration:line-through; margin-right:6px;">${p.oldPrice}</span>` : ''}
                     </div>
                     <div style="display:flex; gap:6px;">
                         <button style="background:#0284c7; color:white; border:none; padding:6px 10px; border-radius:6px; cursor:pointer;" onclick="editItem('${p.id}')">دەستکاری</button>
