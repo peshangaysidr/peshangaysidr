@@ -125,9 +125,7 @@
                 <button class="cat-btn" onclick="filterCategory('سرکە و زەیتەکان', this)">سرکە و زەیتەکان</button>
                 <button class="cat-btn" onclick="filterCategory('جوانکاری', this)">جوانکاری</button>
                 <button class="cat-btn" onclick="filterCategory('گیایی', this)">گیایی</button>
-<button class="cat-btn" onclick="filterCategory('میسکەکان', this)">میسکەکان</button>
-
-
+                <button class="cat-btn" onclick="filterCategory('میسکەکان', this)">میسکەکان</button>
                 <button class="cat-btn" onclick="filterCategory('هیتر', this)">هیتر</button>
             </div>
         </div>
@@ -144,7 +142,7 @@
     <!-- پانێڵی ئەدمین -->
     <div id="adminSection">
         <div class="admin-card">
-            <h2>زیادکردنی بەرهەمی نوێ</h2>
+            <h2 id="formTitle">زیادکردنی بەرهەمی نوێ</h2>
             <label>وێنەی بەرهەم:</label>
             <input type="file" id="imageFile" accept="image/*" onchange="processImage(event)">
             <img id="previewImg" src="">
@@ -157,8 +155,7 @@
                 <option value="سرکە و زەیتەکان">سرکە و زەیتەکان</option>
                 <option value="جوانکاری">جوانکاری</option>
                 <option value="گیایی">گیایی</option>
-<option value="میسکەکان">میسکەکان</option>
-
+                <option value="میسکەکان">میسکەکان</option>
                 <option value="هیتر">هیتر</option>
             </select>
 
@@ -169,6 +166,7 @@
             <textarea id="pBenefits" placeholder="سوودەکانی بەرهەمەکە لێرە بنووسە..."></textarea>
 
             <button class="btn-save" id="saveBtn" onclick="addProduct()">زیادکردنی بەرهەم</button>
+            <button class="btn-close" id="cancelEditBtn" style="width:100%; margin-top:10px; display:none;" onclick="resetForm()">پاشگەزبوونەوە لە دەستکاری</button>
             <button class="btn-close" style="width:100%; margin-top:10px;" onclick="closeAdmin()">گەڕانەوە بۆ پێشانگا</button>
         </div>
 
@@ -196,7 +194,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const ADMIN_PASS = "5991omar";
         const shopPhone = "9647501088904";
@@ -215,7 +213,9 @@ import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc, q
 
         let products = [];
         let currentCategory = "هەمووی";
-let editingProductId = null;
+        let compressedImageBase64 = "";
+        let editingProductId = null;
+
         async function loadProducts() {
             const container = document.getElementById("productsContainer");
             try {
@@ -238,8 +238,7 @@ let editingProductId = null;
             container.innerHTML = "";
 
             const filtered = products.filter(p => {
-const matchCat = currentCategory === "هەمووی" || (p.category && p.category.trim() === currentCategory.trim());
-
+                const matchCat = currentCategory === "هەمووی" || (p.category && p.category.trim() === currentCategory.trim());
                 const matchSearch = p.name.toLowerCase().includes(searchTerm) || (p.benefits && p.benefits.toLowerCase().includes(searchTerm));
                 return matchCat && matchSearch;
             });
@@ -301,9 +300,24 @@ const matchCat = currentCategory === "هەمووی" || (p.category && p.category
         }
 
         window.closeAdmin = function() {
+            resetForm();
             document.getElementById("adminSection").style.display = "none";
             document.getElementById("storeView").style.display = "block";
             loadProducts();
+        }
+
+        window.resetForm = function() {
+            editingProductId = null;
+            compressedImageBase64 = "";
+            document.getElementById("formTitle").innerText = "زیادکردنی بەرهەمی نوێ";
+            document.getElementById("pName").value = "";
+            document.getElementById("pPrice").value = "";
+            document.getElementById("pBenefits").value = "";
+            document.getElementById("imageFile").value = "";
+            document.getElementById("previewImg").style.display = "none";
+            document.getElementById("previewImg").src = "";
+            document.getElementById("saveBtn").innerText = "زیادکردنی بەرهەم";
+            document.getElementById("cancelEditBtn").style.display = "none";
         }
 
         window.processImage = function(event) {
@@ -331,86 +345,88 @@ const matchCat = currentCategory === "هەمووی" || (p.category && p.category
         }
 
         window.addProduct = async function() {
-    const name = document.getElementById("pName").value.trim();
-    const category = document.getElementById("pCat").value;
-    const price = document.getElementById("pPrice").value.trim();
-    const benefits = document.getElementById("pBenefits").value.trim();
+            const name = document.getElementById("pName").value.trim();
+            const category = document.getElementById("pCat").value.trim();
+            const price = document.getElementById("pPrice").value.trim();
+            const benefits = document.getElementById("pBenefits").value.trim();
 
-    if (!name || !price || !compressedImageBase64) {
-        alert("تکایە وێنە، ناوی بەرهەم، و نرخ بنووسە!");
-        return;
-    }
+            if (!name || !price || (!compressedImageBase64 && !editingProductId)) {
+                alert("تکایە وێنە، ناوی بەرهەم، و نرخ بنووسە!");
+                return;
+            }
 
-    const btn = document.getElementById("saveBtn");
-    btn.disabled = true;
-    btn.innerText = "خەریکی خەزنکردنە...";
+            const btn = document.getElementById("saveBtn");
+            btn.disabled = true;
+            btn.innerText = "خەریکی خەزنکردنە...";
 
-    try {
-        if (editingProductId) {
-            await updateDoc(doc(db, "products", editingProductId), {
-                name, category, price, benefits,
-                image: compressedImageBase64
-            });
-            alert("گۆڕانکارییەکان بە سەرکەوتوویی خەزن کران!");
-            editingProductId = null;
-        } else {
-            await addDoc(collection(db, "products"), {
-                name, category, price, benefits,
-                image: compressedImageBase64,
-                createdAt: Date.now()
-            });
-            alert("بەرهەمەکە بە سەرکەوتوویی زیاد کرا!");
+            try {
+                if (editingProductId) {
+                    const updateData = { name, category, price, benefits };
+                    if (compressedImageBase64) {
+                        updateData.image = compressedImageBase64;
+                    }
+                    await updateDoc(doc(db, "products", editingProductId), updateData);
+                    alert("گۆڕانکارییەکان بە سەرکەوتوویی خەزن کران!");
+                } else {
+                    await addDoc(collection(db, "products"), {
+                        name, category, price, benefits,
+                        image: compressedImageBase64,
+                        createdAt: Date.now()
+                    });
+                    alert("بەرهەمەکە بە سەرکەوتوویی زیاد کرا!");
+                }
+                resetForm();
+                await loadProducts();
+            } catch (e) {
+                alert("هەڵەیەک ڕوویدا: " + e.message);
+            }
+
+            btn.disabled = false;
+            btn.innerText = editingProductId ? "خەزنکردنی گۆڕانکارییەکان" : "زیادکردنی بەرهەم";
         }
-        document.getElementById("pName").value = "";
-        document.getElementById("pPrice").value = "";
-        document.getElementById("pBenefits").value = "";
-        document.getElementById("imageFile").value = "";
-        document.getElementById("previewImg").style.display = "none";
-        compressedImageBase64 = "";
-        await loadProducts();
-    } catch (e) {
-        alert("هەڵەیەک ڕوویدا: " + e.message);
-    }
 
-    btn.disabled = false;
-    btn.innerText = "زیادکردنی بەرهەم";
-}
         window.editItem = function(id) {
-    const p = products.find(item => item.id === id);
-    if (!p) return;
-    editingProductId = id;
-    document.getElementById("pName").value = p.name;
-    document.getElementById("pCat").value = p.category;
-    document.getElementById("pPrice").value = p.price;
-    document.getElementById("pBenefits").value = p.benefits || "";
-    compressedImageBase64 = p.image;
-    const preview = document.getElementById("previewImg");
-    preview.src = p.image;
-    preview.style.display = "block";
-    document.getElementById("saveBtn").innerText = "خەزنکردنی گۆڕانکارییەکان";
-    document.getElementById("adminSection").scrollIntoView({ behavior: "smooth" });
-}
+            const p = products.find(item => item.id === id);
+            if (!p) return;
+            editingProductId = id;
+            compressedImageBase64 = "";
+            document.getElementById("formTitle").innerText = "دەستکاریکردنی بەرهەم";
+            document.getElementById("pName").value = p.name;
+            document.getElementById("pCat").value = p.category ? p.category.trim() : "سرکە و زەیتەکان";
+            document.getElementById("pPrice").value = p.price;
+            document.getElementById("pBenefits").value = p.benefits || "";
+            document.getElementById("imageFile").value = "";
+            
+            const preview = document.getElementById("previewImg");
+            preview.src = p.image;
+            preview.style.display = "block";
+            
+            document.getElementById("saveBtn").innerText = "خەزنکردنی گۆڕانکارییەکان";
+            document.getElementById("cancelEditBtn").style.display = "block";
+            document.getElementById("adminSection").scrollIntoView({ behavior: "smooth" });
+        }
 
-function renderAdminList() {
-    const list = document.getElementById("adminList");
-    list.innerHTML = "";
-    products.forEach((p) => {
-        const div = document.createElement("div");
-        div.className = "item-row";
-        div.innerHTML = `
-            <img src="${p.image}">
-            <div class="item-details">
-                <h4>${p.name}</h4>
-                <span style="font-size:13px; color:#d97706;">${p.price}</span>
-            </div>
-            <div style="display:flex; gap:6px;">
-                <button style="background:#0284c7; color:white; border:none; padding:6px 10px; border-radius:6px; cursor:pointer;" onclick="editItem('${p.id}')">دەستکاری</button>
-                <button class="btn-del" onclick="deleteItem('${p.id}')">سڕینەوە</button>
-            </div>
-        `;
-        list.appendChild(div);
-    });
-}
+        function renderAdminList() {
+            const list = document.getElementById("adminList");
+            list.innerHTML = "";
+            products.forEach((p) => {
+                const div = document.createElement("div");
+                div.className = "item-row";
+                div.innerHTML = `
+                    <img src="${p.image}">
+                    <div class="item-details">
+                        <h4>${p.name}</h4>
+                        <span style="font-size:13px; color:#d97706;">${p.price}</span>
+                    </div>
+                    <div style="display:flex; gap:6px;">
+                        <button style="background:#0284c7; color:white; border:none; padding:6px 10px; border-radius:6px; cursor:pointer;" onclick="editItem('${p.id}')">دەستکاری</button>
+                        <button class="btn-del" onclick="deleteItem('${p.id}')">سڕینەوە</button>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
         window.deleteItem = async function(id) {
             if (confirm("دڵنیایت لە سڕینەوەی ئەم بەرهەمە؟")) {
                 await deleteDoc(doc(db, "products", id));
