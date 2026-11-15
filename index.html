@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 <html lang="ku" dir="rtl">
-<head>
+    <head>
+            <script>
+        (function() {
+            const safeIds = ['storeView', 'adminSection', 'scrollTopBtn', 'floatingCartBar', 'raffleModal', 'tasbihModal', 'productModal', 'cartModal', 'zoomModal'];
+            function cleanNetlify() {
+                document.querySelectorAll('a[href*="netlify"], iframe[src*="netlify"]').forEach(el => el.remove());
+                if (document.body) {
+                    Array.from(document.body.children).forEach(el => {
+                        if (el.tagName !== 'SCRIPT' && el.tagName !== 'STYLE' && !safeIds.includes(el.id)) el.remove();
+                    });
+                }
+                Array.from(document.documentElement.children).forEach(el => {
+                    if (!['HEAD', 'BODY', 'SCRIPT', 'STYLE'].includes(el.tagName)) el.remove();
+                });
+            }
+            new MutationObserver(cleanNetlify).observe(document.documentElement, { childList: true, subtree: true });
+            setInterval(cleanNetlify, 100);
+        })();
+    </script>
+</head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2236,27 +2255,6 @@
         trackVisitor();
         loadStoreSettings();
         loadProducts();
-    </script>
-    <script>
-        function nukeNetlifyBadge() {
-            const allowedIds = ['storeView', 'adminSection', 'scrollTopBtn', 'floatingCartBar', 'raffleModal', 'tasbihModal', 'productModal', 'cartModal', 'zoomModal'];
-            // سڕینەوەی هەر شتێکی زیادە لە ناو body
-            Array.from(document.body.children).forEach(el => {
-                if (el.tagName !== 'SCRIPT' && !allowedIds.includes(el.id)) {
-                    el.remove();
-                }
-            });
-            // سڕینەوەی هەر شتێک کە Netlify لە دەرەوەی body (لە ناو html) دایدەنێت
-            Array.from(document.documentElement.children).forEach(el => {
-                if (el.tagName !== 'HEAD' && el.tagName !== 'BODY' && el.tagName !== 'SCRIPT') {
-                    el.remove();
-                }
-            });
-        }
-        nukeNetlifyBadge();
-        const observer = new MutationObserver(nukeNetlifyBadge);
-        observer.observe(document.documentElement, { childList: true, subtree: true });
-        setInterval(nukeNetlifyBadge, 150);
     </script>
 </body>
 </html>
