@@ -16,8 +16,29 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://peshangaysidr.netlify.app/IMG_3196.jpeg">
     <title>پێشانگای سیدر — بۆ گیا دەرمانی و جوانکاری</title>
+    <script>
+        (function() {
+            const manifest = {
+                name: "پێشانگای سیدر",
+                short_name: "پێشانگای سیدر",
+                start_url: location.origin + location.pathname,
+                display: "standalone",
+                background_color: "#092216",
+                theme_color: "#092216",
+                icons: [
+                    { src: location.origin + "/IMG_3196.jpeg", sizes: "192x192", type: "image/jpeg" },
+                    { src: location.origin + "/IMG_3196.jpeg", sizes: "512x512", type: "image/jpeg" }
+                ]
+            };
+            const blob = new Blob([JSON.stringify(manifest)], {type: 'application/manifest+json'});
+            const link = document.createElement('link');
+            link.rel = 'manifest';
+            link.href = URL.createObjectURL(blob);
+            document.head.appendChild(link);
+        })();
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700;800;900&display=swap');
         
         :root {
             --bg-body: #f4f7f6;
@@ -29,7 +50,7 @@
             --border-color: #d8e2dc;
             --input-bg: #ffffff;
             --shadow-card: 0 3px 10px rgba(0,0,0,0.06);
-            --header-grad: linear-gradient(135deg, #0b2619, #163d2b, #0e2e1f);
+            --header-grad: radial-gradient(circle at center, #0e3322 0%, #071e13 100%);
             --gold: #d4af37;
             --gold-light: #f3e5ab;
             --amber: #d97706;
@@ -37,149 +58,227 @@
         }
 
         body.dark-theme {
-            --bg-body: #0f1714;
-            --bg-card: #182420;
-            --bg-soft: #1f2e29;
+            --bg-body: #0d1512;
+            --bg-card: #16221e;
+            --bg-soft: #1d2b26;
             --text-main: #e2e8f0;
             --text-title: #a7f3d0;
             --text-muted: #94a3b8;
             --border-color: #2c4039;
-            --input-bg: #1f2e29;
-            --shadow-card: 0 4px 14px rgba(0,0,0,0.35);
-            --header-grad: linear-gradient(135deg, #06140d, #0e291d, #071710);
+            --input-bg: #1d2b26;
+            --shadow-card: 0 4px 14px rgba(0,0,0,0.38);
+            --header-grad: radial-gradient(circle at center, #0c2b1d 0%, #05160e 100%);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans Arabic', sans-serif; }
         body { background-color: var(--bg-body); color: var(--text-main); padding-bottom: 95px; transition: background-color 0.25s, color 0.25s; }
 
-        /* سەرپەڕەی شاهانە (Classic Royal Header) */
+        /* سەرپەڕەی شاهانە ڕێک وەک دیزاینە پەسەندکراوەکە */
         header {
             position: relative;
             background: var(--header-grad);
             color: white;
-            padding: 50px 18px 54px;
+            padding: 58px 18px 54px;
             text-align: center;
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
-            box-shadow: 0 6px 22px rgba(0,0,0,0.22);
+            border-bottom-left-radius: 28px;
+            border-bottom-right-radius: 28px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
             overflow: hidden;
             border-bottom: 3px solid var(--gold);
         }
 
-        /* چوارچێوە دووانە ئاڵتوونییەکە */
         .royal-frame-outer {
             position: absolute;
-            top: 10px; bottom: 10px; left: 10px; right: 10px;
-            border: 1.5px solid rgba(212, 175, 55, 0.55);
-            border-radius: 22px;
+            top: 14px; bottom: 14px; left: 12px; right: 12px;
+            border: 1.5px solid rgba(212, 175, 55, 0.75);
+            border-radius: 16px;
             pointer-events: none;
-            z-index: 1;
+            z-index: 2;
         }
         .royal-frame-inner {
             position: absolute;
-            top: 15px; bottom: 15px; left: 15px; right: 15px;
-            border: 1px solid rgba(212, 175, 55, 0.28);
-            border-radius: 18px;
+            top: 20px; bottom: 20px; left: 18px; right: 18px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 12px;
             pointer-events: none;
-            z-index: 1;
+            z-index: 2;
         }
 
-        /* گەڵای سیدر لە گۆشەکان */
-        .corner-leaf {
+        /* نەخشی گۆشە کلاسیکییەکان */
+        .corner-ornament {
             position: absolute;
-            width: 115px;
-            height: 115px;
+            width: 34px;
+            height: 34px;
+            z-index: 3;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M2,2 L26,2 L26,8 L14,8 L14,14 L8,14 L8,26 L2,26 Z' fill='none' stroke='%23d4af37' stroke-width='1.5'/%3E%3Cpath d='M14,14 L22,22' stroke='%23d4af37' stroke-width='1.3'/%3E%3C/svg%3E");
             background-size: contain;
             background-repeat: no-repeat;
-            opacity: 0.42;
-            pointer-events: none;
-            z-index: 1;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cpath d='M5,5 Q55,25 95,85' fill='none' stroke='%23d4af37' stroke-width='1.4'/%3E%3Cpath d='M25,15 C35,5 50,10 48,22 C38,24 28,20 25,15 Z' fill='none' stroke='%23d4af37' stroke-width='1.1'/%3E%3Cpath d='M18,28 C8,38 12,52 24,50 C26,40 22,30 18,28 Z' fill='none' stroke='%23d4af37' stroke-width='1.1'/%3E%3Cpath d='M48,32 C60,22 75,28 72,40 C60,42 50,36 48,32 Z' fill='none' stroke='%23d4af37' stroke-width='1.1'/%3E%3Cpath d='M38,46 C26,56 30,72 42,70 C45,58 42,48 38,46 Z' fill='none' stroke='%23d4af37' stroke-width='1.1'/%3E%3Cpath d='M70,54 C82,45 96,52 92,64 C80,65 72,58 70,54 Z' fill='none' stroke='%23d4af37' stroke-width='1.1'/%3E%3Cpath d='M60,68 C48,78 52,92 64,90 C67,78 64,70 60,68 Z' fill='none' stroke='%23d4af37' stroke-width='1.1'/%3E%3C/svg%3E");
         }
-        .leaf-tr { top: 8px; right: 8px; }
-        .leaf-tl { top: 8px; left: 8px; transform: scaleX(-1); }
-        .leaf-br { bottom: 8px; right: 8px; transform: scaleY(-1); }
-        .leaf-bl { bottom: 8px; left: 8px; transform: scale(-1, -1); }
+        .co-tr { top: 14px; right: 12px; transform: scaleX(-1); }
+        .co-tl { top: 14px; left: 12px; }
+        .co-br { bottom: 14px; right: 12px; transform: scale(-1, -1); }
+        .co-bl { bottom: 14px; left: 12px; transform: scaleY(-1); }
+
+        /* گەڵا ناسک و چڕەکانی سیدر لە تەنیشتەکانەوە */
+        .side-foliage {
+            position: absolute;
+            top: 16px;
+            bottom: 16px;
+            width: 115px;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.72;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 260'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='1.15'%3E%3Cpath d='M10,10 Q45,75 25,155 Q15,205 35,245'/%3E%3Cpath d='M25,22 C45,10 62,18 55,34 C42,38 28,30 25,22 Z'/%3E%3Cpath d='M25,22 L50,30' stroke-width='0.7'/%3E%3Cpath d='M33,48 C58,36 76,46 68,64 C52,68 38,58 33,48 Z'/%3E%3Cpath d='M33,48 L62,58' stroke-width='0.7'/%3E%3Cpath d='M22,58 C6,70 4,88 18,90 C26,80 26,66 22,58 Z'/%3E%3Cpath d='M36,85 C62,74 82,86 72,104 C56,108 42,96 36,85 Z'/%3E%3Cpath d='M36,85 L66,98' stroke-width='0.7'/%3E%3Cpath d='M28,118 C52,110 70,122 60,138 C46,140 34,128 28,118 Z'/%3E%3Cpath d='M28,118 L55,132' stroke-width='0.7'/%3E%3Cpath d='M18,132 C4,144 4,162 18,162 C25,152 24,140 18,132 Z'/%3E%3Cpath d='M24,168 C46,162 62,174 52,188 C40,190 30,178 24,168 Z'/%3E%3Cpath d='M26,204 C44,200 56,212 48,224 C36,225 30,214 26,204 Z'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+        .foliage-left { left: 10px; }
+        .foliage-right { right: 10px; transform: scaleX(-1); }
 
         .top-bar-actions {
-            position: absolute; top: 20px; left: 20px; right: 20px;
+            position: absolute; top: 24px; left: 24px; right: 24px;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 5;
+            z-index: 6;
         }
         .icon-pill-btn {
-            background: rgba(11, 38, 25, 0.65); border: 1px solid rgba(212, 175, 55, 0.45);
-            color: #f3e5ab; padding: 6px 12px; border-radius: 20px; font-size: 11px;
-            cursor: pointer; backdrop-filter: blur(5px); display: inline-flex; align-items: center; gap: 4px;
+            background: rgba(7, 30, 19, 0.82); border: 1px solid rgba(212, 175, 55, 0.6);
+            color: #f3e5ab; padding: 5px 11px; border-radius: 20px; font-size: 11px;
+            cursor: pointer; backdrop-filter: blur(4px); display: inline-flex; align-items: center; gap: 4px;
             transition: all 0.2s;
         }
         .icon-pill-btn:active { transform: scale(0.95); background: rgba(212, 175, 55, 0.25); }
 
         .header-content {
             position: relative;
-            z-index: 3;
+            z-index: 4;
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-top: 6px;
         }
-        .logo-emblem-wrap {
-            width: 86px;
-            height: 86px;
+        /* لۆگۆی شاهانەی «پس» لەسەر هێڵی سەرەوە */
+        .royal-logo-medallion {
+            width: 82px;
+            height: 82px;
             border-radius: 50%;
-            padding: 3px;
-            background: linear-gradient(135deg, #f3e5ab, #d4af37, #996515);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.45), 0 0 15px rgba(212, 175, 55, 0.35);
+            background: radial-gradient(circle at 35% 30%, #14452f, #061b11);
+            border: 3px solid #d4af37;
+            box-shadow: 0 0 0 2px #071e13, 0 0 0 3.5px rgba(212, 175, 55, 0.65), 0 8px 20px rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 12px;
+            position: relative;
         }
-        .logo-emblem-wrap img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            display: block;
-            background: #fff;
+        .royal-logo-medallion::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            width: 4px;
+            height: 10px;
+            background: linear-gradient(to bottom, #f3e5ab, #b8860b);
+            border-radius: 2px;
         }
         header h1 {
-            font-size: 29px;
-            font-weight: 800;
+            font-size: 32px;
+            font-weight: 900;
             margin-bottom: 6px;
-            letter-spacing: 0.4px;
-            background: linear-gradient(to bottom, #fff8dc, #e6c252, #c59b27);
+            letter-spacing: 0.3px;
+            background: linear-gradient(to bottom, #fff6d1 0%, #e5be49 52%, #b5891c 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.55));
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.75));
         }
         header p {
-            font-size: 14.5px;
+            font-size: 15px;
             color: #f5efe6;
-            font-weight: 600;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.75);
             letter-spacing: 0.2px;
         }
-
-        /* چاککردنی سێرچ و فلتەر تا نەچێتە ژێر سەرپەڕە */
         .controls {
             position: relative;
             z-index: 15;
             max-width: 900px;
-            margin: -24px auto 15px;
+            margin: -22px auto 15px;
             padding: 0 15px;
         }
-        .search-sort-row { display: flex; gap: 8px; margin-bottom: 12px; }
+        .search-sort-row { display: flex; gap: 8px; margin-bottom: 11px; }
         .search-box {
             flex: 1; padding: 13px 16px; border: 1.5px solid var(--border-color); border-radius: 15px;
             background: var(--bg-card); color: var(--text-main);
-            box-shadow: 0 5px 18px rgba(0,0,0,0.1); font-size: 14px; outline: none;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.12); font-size: 14px; outline: none;
             transition: border-color 0.25s, box-shadow 0.25s;
         }
-        .search-box:focus {
-            border-color: var(--gold);
-            box-shadow: 0 5px 18px rgba(212, 175, 55, 0.2);
-        }
+        .search-box:focus { border-color: var(--gold); box-shadow: 0 5px 18px rgba(212, 175, 55, 0.22); }
         .sort-select {
             padding: 0 10px; border: 1.5px solid var(--border-color); border-radius: 15px;
             background: var(--bg-card); color: var(--text-main);
-            box-shadow: 0 5px 18px rgba(0,0,0,0.1); font-size: 13px; outline: none; cursor: pointer;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.12); font-size: 13px; outline: none; cursor: pointer;
         }
+
+        /* دوگمە خێراکانی خەڵاتی مانگانە و تەسبیحات */
+        .quick-features-row {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            gap: 9px;
+            margin-bottom: 11px;
+        }
+        .raffle-banner-btn {
+            position: relative;
+            background: linear-gradient(135deg, #0b2b1c, #16442e, #0b2b1c);
+            border: 1.5px solid #d4af37;
+            border-radius: 15px;
+            padding: 11px 12px;
+            color: #fff;
+            text-align: right;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(212, 175, 55, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+            transition: transform 0.15s;
+        }
+        .raffle-banner-btn:active { transform: scale(0.98); }
+        .raffle-icon-glow {
+            width: 38px; height: 38px; border-radius: 12px;
+            background: linear-gradient(135deg, #f3e5ab, #d4af37);
+            color: #0b2b1c; font-size: 20px; display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+        }
+        .raffle-btn-text strong {
+            display: block; font-size: 12.5px; color: #f3e5ab; font-weight: 800; line-height: 1.3;
+        }
+        .raffle-btn-text span {
+            display: block; font-size: 10.5px; color: #cbd5e1; margin-top: 2px;
+        }
+
+        .tasbih-banner-btn {
+            background: var(--bg-card);
+            border: 1.5px solid var(--green-primary);
+            border-radius: 15px;
+            padding: 11px 12px;
+            color: var(--text-title);
+            text-align: right;
+            cursor: pointer;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            transition: transform 0.15s;
+        }
+        .tasbih-banner-btn:active { transform: scale(0.98); }
+        .tasbih-icon-box {
+            width: 36px; height: 36px; border-radius: 12px;
+            background: rgba(45, 106, 79, 0.14);
+            color: var(--green-primary); font-size: 19px; display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        body.dark-theme .tasbih-icon-box { color: #a7f3d0; background: rgba(167, 243, 208, 0.12); }
+        .tasbih-banner-btn strong { display: block; font-size: 12.5px; font-weight: 800; }
+        .tasbih-banner-btn span { display: block; font-size: 10.5px; color: var(--text-muted); margin-top: 2px; }
 
         .promo-banner {
             background: linear-gradient(90deg, #b45309, #d97706, #b45309);
@@ -194,7 +293,6 @@
             color: #fff; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold;
             cursor: pointer;
         }
-        .copy-promo-pill:active { transform: scale(0.95); }
 
         .categories { display: flex; gap: 8px; overflow-x: auto; padding: 8px 2px 6px; }
         .cat-btn {
@@ -275,13 +373,9 @@
             background: var(--green-primary); color: white; font-size: 12px; font-weight: bold;
             cursor: pointer; transition: 0.2s;
         }
-        .btn-add-cart-card.notify-card-btn {
-            background: #0284c7; color: white;
-        }
+        .btn-add-cart-card.notify-card-btn { background: #0284c7; color: white; }
         .btn-add-cart-card:active { transform: scale(0.97); }
-
         .loading { text-align: center; padding: 40px; color: var(--green-primary); font-weight: bold; grid-column: 1 / -1; }
-
         .floating-cart-bar {
             position: fixed; bottom: 16px; left: 15px; right: 15px; max-width: 550px; margin: 0 auto;
             background: linear-gradient(135deg, #0f3020, #1b4332); color: white;
@@ -302,7 +396,7 @@
 
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.65); justify-content: center; align-items: center; padding: 15px; z-index: 1000;
+            background: rgba(0,0,0,0.68); justify-content: center; align-items: center; padding: 15px; z-index: 1000;
         }
         .modal-content {
             background: var(--bg-card); color: var(--text-main); max-width: 460px; width: 100%; border-radius: 20px;
@@ -358,7 +452,65 @@
             padding: 11px 16px; border-radius: 12px; cursor: pointer; font-weight: bold;
         }
 
-        /* شریتی گەیاندنی بێبەرامبەر لە سەبەتە */
+        /* دیزاینی شاهانەی پەنجەرەی خەڵاتی مانگانە */
+        .raffle-royal-header {
+            background: radial-gradient(circle at center, #0e3322 0%, #061a10 100%);
+            padding: 22px 18px;
+            text-align: center;
+            border-bottom: 2.5px solid #d4af37;
+            color: #fff;
+        }
+        .raffle-royal-header h2 {
+            font-size: 21px; font-weight: 900; color: #f3e5ab; margin-bottom: 5px;
+        }
+        .raffle-prize-pill {
+            display: inline-block;
+            background: linear-gradient(135deg, #f3e5ab, #d4af37);
+            color: #0b2619; font-weight: 800; font-size: 13px;
+            padding: 4px 14px; border-radius: 20px; margin-top: 4px;
+        }
+        .winner-showcase {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.16), rgba(16, 185, 129, 0.1));
+            border: 1.5px solid #d4af37;
+            border-radius: 14px; padding: 11px; text-align: center; margin-bottom: 14px;
+        }
+        .chance-badge-info {
+            display: flex; gap: 8px; margin-bottom: 12px; font-size: 11.5px;
+        }
+        .chance-pill {
+            flex: 1; background: var(--bg-soft); border: 1px solid var(--border-color);
+            padding: 8px; border-radius: 10px; text-align: center;
+        }
+
+        /* دیزاینی پەنجەرەی تەسبیحات */
+        .tasbih-tabs {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;
+        }
+        .tasbih-tab-btn {
+            padding: 10px 8px; border-radius: 12px; border: 1.5px solid var(--border-color);
+            background: var(--bg-soft); color: var(--text-main); font-size: 13.5px; font-weight: 700;
+            cursor: pointer; transition: 0.2s;
+        }
+        .tasbih-tab-btn.active {
+            background: linear-gradient(135deg, #0b2b1c, #1b4332);
+            color: #f3e5ab; border-color: #d4af37;
+        }
+        .tasbih-circle-btn {
+            width: 195px; height: 195px; border-radius: 50%; margin: 10px auto 14px;
+            background: radial-gradient(circle at 35% 30%, #16442e, #082014);
+            border: 4px solid #d4af37;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.22), 0 10px 25px rgba(0,0,0,0.3);
+            color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; user-select: none; transition: transform 0.08s;
+        }
+        .tasbih-circle-btn:active { transform: scale(0.95); }
+        .tasbih-zikr-label { font-size: 18px; font-weight: 800; color: #f3e5ab; margin-bottom: 4px; }
+        .tasbih-count-num { font-size: 42px; font-weight: 900; color: #ffffff; line-height: 1.1; }
+        .tasbih-tap-hint { font-size: 11px; color: #a7f3d0; margin-top: 6px; }
+        .tasbih-hasanat-note {
+            text-align: center; font-size: 12px; color: var(--text-muted); margin-bottom: 12px;
+        }
+
         .free-ship-box {
             background: var(--bg-soft); border: 1px dashed var(--gold);
             padding: 10px 12px; border-radius: 12px; margin-bottom: 12px; font-size: 12.5px;
@@ -400,13 +552,8 @@
         }
         #zoomModal img { max-width: 100%; max-height: 90vh; border-radius: 12px; }
 
-        /* بەشی پرسیارە باوەکان (FAQ) */
-        .faq-section {
-            max-width: 650px; margin: 35px auto 10px; padding: 0 15px;
-        }
-        .faq-section h3 {
-            text-align: center; color: var(--text-title); font-size: 16px; margin-bottom: 12px;
-        }
+        .faq-section { max-width: 650px; margin: 35px auto 10px; padding: 0 15px; }
+        .faq-section h3 { text-align: center; color: var(--text-title); font-size: 16px; margin-bottom: 12px; }
         .faq-item {
             background: var(--bg-card); border: 1px solid var(--border-color);
             border-radius: 12px; margin-bottom: 8px; overflow: hidden;
@@ -418,9 +565,7 @@
         .faq-item summary::-webkit-details-marker { display: none; }
         .faq-item summary::after { content: "+"; font-size: 18px; color: var(--gold); }
         .faq-item[open] summary::after { content: "−"; }
-        .faq-item p {
-            padding: 0 14px 12px; font-size: 13px; line-height: 1.65; color: var(--text-muted);
-        }
+        .faq-item p { padding: 0 14px 12px; font-size: 13px; line-height: 1.65; color: var(--text-muted); }
 
         .social-footer { max-width: 650px; margin: 25px auto 15px; padding: 0 15px; text-align: center; }
         .social-footer p { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; font-weight: 600; }
@@ -439,12 +584,33 @@
         .admin-trigger button {
             background: transparent; border: none; color: var(--text-muted); font-size: 13px; cursor: pointer; text-decoration: underline;
         }
+
+        /* دیزاینی زەق و شاهانەی بەشی ئەدمین */
         #adminSection { max-width: 600px; margin: 20px auto; padding: 0 15px; display: none; }
+        .admin-top-return {
+            width: 100%; margin-bottom: 15px; padding: 12px;
+            background: linear-gradient(135deg, #0b2b1c, #16442e); color: #f3e5ab;
+            border: 1.5px solid #d4af37; border-radius: 14px; font-size: 14px; font-weight: 800;
+            cursor: pointer; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
         .admin-card {
             background: var(--bg-card); border: 1px solid var(--border-color);
-            padding: 18px; border-radius: 16px; box-shadow: var(--shadow-card); margin-bottom: 18px;
+            border-right: 4px solid var(--gold);
+            padding: 16px; border-radius: 16px; box-shadow: var(--shadow-card); margin-bottom: 20px;
         }
-        .admin-card h2 { color: var(--text-title); margin-bottom: 14px; font-size: 17px; text-align: center; }
+        .admin-card-header {
+            background: linear-gradient(135deg, #0b2b1c, #17442f);
+            color: #f3e5ab;
+            padding: 12px 15px;
+            border-radius: 12px;
+            border-bottom: 2.5px solid #d4af37;
+            margin-bottom: 16px;
+            font-size: 16px;
+            font-weight: 800;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+            letter-spacing: 0.2px;
+        }
         .admin-card label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; }
         .admin-card input[type="text"], .admin-card input[type="number"], .admin-card input[type="file"], .admin-card select, .admin-card textarea {
             width: 100%; padding: 11px; border: 1px solid var(--border-color); border-radius: 10px;
@@ -481,6 +647,12 @@
             position: absolute; top: -5px; right: -5px; background: #ef4444; color: white;
             border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer;
         }
+        .jomla-check-item {
+            display: flex; align-items: center; justify-content: space-between; gap: 10px;
+            padding: 10px; background: var(--bg-soft); border: 1px solid var(--border-color);
+            border-radius: 10px; margin-bottom: 8px;
+        }
+        .jomla-check-item.bought span { text-decoration: line-through; opacity: 0.55; }
     </style>
 </head>
 <body>
@@ -494,14 +666,37 @@
 
             <div class="royal-frame-outer"></div>
             <div class="royal-frame-inner"></div>
-            <div class="corner-leaf leaf-tr"></div>
-            <div class="corner-leaf leaf-tl"></div>
-            <div class="corner-leaf leaf-br"></div>
-            <div class="corner-leaf leaf-bl"></div>
+            <div class="corner-ornament co-tr"></div>
+            <div class="corner-ornament co-tl"></div>
+            <div class="corner-ornament co-br"></div>
+            <div class="corner-ornament co-bl"></div>
+            <div class="side-foliage foliage-left"></div>
+            <div class="side-foliage foliage-right"></div>
 
             <div class="header-content">
-                <div class="logo-emblem-wrap">
-                    <img src="IMG_3196.jpeg" alt="لۆگۆی پێشانگای سیدر">
+                <div class="royal-logo-medallion">
+                    <svg viewBox="0 0 100 100" width="58" height="58">
+                        <defs>
+                            <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#fff3b0"/>
+                                <stop offset="50%" stop-color="#d4af37"/>
+                                <stop offset="100%" stop-color="#996515"/>
+                            </linearGradient>
+                            <linearGradient id="leafGrad" x1="0" y1="1" x2="1" y2="0">
+                                <stop offset="0%" stop-color="#15803d"/>
+                                <stop offset="100%" stop-color="#86efac"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- گەڵا سەوزەکە -->
+                        <path d="M52,38 C46,24 55,10 68,8 C66,22 58,34 52,38 Z" fill="url(#leafGrad)"/>
+                        <path d="M48,40 C38,32 32,20 38,12 C46,18 50,30 48,40 Z" fill="url(#leafGrad)" opacity="0.88"/>
+                        <!-- پیتی پ و س بە ستایلی خۆشنووسی -->
+                        <path d="M72,34 L72,58 C72,66 64,68 60,62 C58,58 58,52 58,52 C58,62 49,66 44,60 C41,56 41,50 41,50 C41,66 32,76 20,74 C11,72 9,60 15,50 C19,43 27,40 32,42" fill="none" stroke="url(#goldGrad)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <!-- سێ خاڵەکەی پ -->
+                        <circle cx="72" cy="73" r="2.6" fill="url(#goldGrad)"/>
+                        <circle cx="66" cy="77" r="2.6" fill="url(#goldGrad)"/>
+                        <circle cx="77" cy="77" r="2.6" fill="url(#goldGrad)"/>
+                    </svg>
                 </div>
                 <h1>پێشانگای سیدر</h1>
                 <p>بۆ گیا دەرمانی و جوانکاری</p>
@@ -518,11 +713,28 @@
                 </select>
             </div>
 
+            <div class="quick-features-row">
+                <button class="raffle-banner-btn" onclick="openRaffleModal()">
+                    <div class="raffle-icon-glow">🎁</div>
+                    <div class="raffle-btn-text">
+                        <strong>خەڵاتی مانگانەی کڕیاران</strong>
+                        <span>تیروپشکی ٥,٠٠٠ دیناری • ناوت تۆمار بکە</span>
+                    </div>
+                </button>
+                <button class="tasbih-banner-btn" onclick="openTasbihModal()">
+                    <div class="tasbih-icon-box">📿</div>
+                    <div>
+                        <strong>تەسبیحات</strong>
+                        <span>زیکر و هەژماری خێر</span>
+                    </div>
+                </button>
+            </div>
+
             <div class="promo-banner" id="promoBanner">گەیاندنمان هەیە بۆ هەموو شارەکانی کوردستان 🚚</div>
 
             <div class="categories" id="categoriesContainer">
                 <button class="cat-btn active" data-cat="هەمووی" onclick="filterCategory('هەمووی', this)">هەمووی</button>
-                <button class="cat-btn pkg-btn" data-cat="پێکەجەکان" onclick="filterCategory('پێکەجەکان', this)">🎁 پێکەجەکان</button>
+                <button class="cat-btn pkg-btn" data-cat="پاکێجەکان" onclick="filterCategory('پاکێجەکان', this)">🎁 پاکێجەکان</button>
                 <button class="cat-btn fav-btn" data-cat="دڵخوازەکان" onclick="filterCategory('دڵخوازەکان', this)">❤️ دڵخوازەکان</button>
                 <button class="cat-btn discount-btn" data-cat="داشکاندن" onclick="filterCategory('داشکاندن', this)">داشکاندن</button>
                 <button class="cat-btn" data-cat="سرکەکان" onclick="filterCategory('سرکەکان', this)">سرکەکان</button>
@@ -539,20 +751,10 @@
         <div class="products-grid" id="productsContainer">
             <div class="loading">چاوەڕێ بە، بەرهەمەکان باردەبن...</div>
         </div>
-        <div class="faq-section">
+
+        <div class="faq-section" id="faqSectionContainer">
             <h3>پرسیارە باوەکان</h3>
-            <details class="faq-item">
-                <summary>ئایا بەرهەمەکان ١٠٠٪ سروشتی و گیایین؟</summary>
-                <p>بەڵێ، سەرجەم بەرهەمەکانی پێشانگای سیدر لە پێکهاتە سروشتی و گیاییە پەسەندکراوەکان ئامادە کراون و دوورن لە ماددە کیمیاییە زیانبەخشەکان.</p>
-            </details>
-            <details class="faq-item">
-                <summary>گەیاندن بۆ شارەکان چەند ڕۆژی پێدەچێت؟</summary>
-                <p>گەیاندنمان هەیە بۆ سەرجەم شار و شارۆچکەکانی کوردستان؛ لە ماوەی ٢٤ بۆ ٤٨ کاتژمێردا داواکارییەکەت دەگاتە دەستت.</p>
-            </details>
-            <details class="faq-item">
-                <summary>چۆن بزانم کام بەرهەم بۆ پێست یان قژی من گونجاوە؟</summary>
-                <p>لە ناو هەر بەرهەمێکدا دوگمەی «پرسیار دەربارەی ئەم بەرهەمە» هەیە؛ دەتوانیت بە یەک کلیک نامەمان بۆ بنێریت تا ڕێنمایی تەواوت پێبدەین.</p>
-            </details>
+            <div id="faqPublicList"></div>
         </div>
 
         <div class="social-footer">
@@ -579,10 +781,11 @@
         </div>
         <div id="cartBarTotal" style="font-weight:bold; color:#fde68a;">0 دینار</div>
     </div>
-
     <div id="adminSection">
+        <button type="button" class="admin-top-return" onclick="closeAdmin()">← گەڕانەوە بۆ پێشانگا</button>
+
         <div class="admin-card">
-            <h2>ئاماری سەردانیکەرانی پێشانگا</h2>
+            <div class="admin-card-header">📊 ئاماری سەردانیکەرانی پێشانگا</div>
             <div class="stats-grid">
                 <div class="stat-box">
                     <div class="stat-num" id="statToday">0</div>
@@ -600,7 +803,42 @@
         </div>
 
         <div class="admin-card">
-            <h2>ڕێکخستنی بانەر، داشکاندن و گەیاندن</h2>
+            <div class="admin-card-header">🎁 تیروپشکی خەڵاتی مانگانە (٥,٠٠٠ دینار)</div>
+            <div id="adminLastWinnerBox" style="background:var(--bg-soft); padding:10px; border-radius:10px; margin-bottom:12px; font-size:13px; border:1px solid var(--gold);">
+                براوەی ئێستا: <strong id="adminWinnerLabel">هێشتا دیاری نەکراوە</strong>
+            </div>
+            <div style="font-size:13px; margin-bottom:10px;">
+                کۆی بەشداربووان: <strong id="raffleCountLabel">0</strong> کەس
+            </div>
+            <button type="button" class="btn-save" style="background:linear-gradient(135deg, #b8860b, #d4af37); color:#0b2619; margin-bottom:10px;" onclick="pickRandomRaffleWinner()">🎲 ئەنجامدانی تیروپشک و هەڵبژاردنی براوە</button>
+            <div id="adminRaffleList" style="max-height:190px; overflow-y:auto; margin-bottom:10px;"></div>
+            <button type="button" class="btn-del" style="width:100%; padding:9px;" onclick="clearRaffleEntries()">پاککردنەوەی لیستی بەشداربووان بۆ مانگی نوێ</button>
+        </div>
+
+        <div class="admin-card">
+            <div class="admin-card-header">📋 لیستی کڕینەوەی جوملە (تەواوبوو و کەمبووەکان)</div>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">ئەو بەرهەمانەی «زوو دەگاتەوە»ـیان لەسەرە خۆکارانە لێرەن، دەتوانیت شتی تریش بە دەست زیاد بکەیت:</p>
+            <div style="display:flex; gap:8px; margin-bottom:12px;">
+                <input type="text" id="jomlaNewItemInput" placeholder="ناوی کاڵا یان پێداویستیی کەمبوو بنووسە..." style="margin-bottom:0;">
+                <button type="button" class="btn-save" style="width:auto; padding:0 16px;" onclick="addManualJomlaItem()">+ زیادکردن</button>
+            </div>
+            <div id="jomlaListContainer" style="margin-bottom:12px;"></div>
+            <button type="button" class="btn-save" style="background:#0284c7;" onclick="copyJomlaList()">📋 کۆپیکردنی هەموو لیستەکە بۆ جوملەچی</button>
+        </div>
+
+        <div class="admin-card">
+            <div class="admin-card-header">❓ بەڕێوەبردنی پرسیارە باوەکان (FAQ)</div>
+            <label>پرسیار:</label>
+            <input type="text" id="faqQInput" placeholder="بۆ نموونە: ئایا بەرهەمەکان سروشتین؟">
+            <label>وەڵام:</label>
+            <textarea id="faqAInput" placeholder="وەڵامی پرسیارەکە لێرە بنووسە..."></textarea>
+            <button type="button" class="btn-save" id="saveFaqBtn" onclick="saveFaqItem()">+ زیادکردنی پرسیار و وەڵام</button>
+            <button type="button" class="btn-close" id="cancelFaqEditBtn" style="width:100%; margin-top:8px; display:none;" onclick="resetFaqForm()">پاشگەزبوونەوە</button>
+            <div id="adminFaqList" style="margin-top:14px;"></div>
+        </div>
+
+        <div class="admin-card">
+            <div class="admin-card-header">⚙️ ڕێکخستنی بانەر، داشکاندن و گەیاندن</div>
             <label>نووسینەکانی بانەری سەرەوە (هەر ڕستەیەک لە دێڕێکی جیا بنووسە):</label>
             <textarea id="settingBanners" placeholder="گەیاندنمان هەیە بۆ هەموو شارەکانی کوردستان&#10;بۆ داواکاری سەروو ٣٥,٠٠٠ دینار گەیاندن بێبەرامبەرە"></textarea>
 
@@ -609,6 +847,9 @@
 
             <label>ڕێژەی داشکاندن بە سەدی (٪):</label>
             <input type="number" id="settingPromoPercent" placeholder="بۆ نموونە: 10">
+
+            <label>کۆدی دیاریی براوەی مانگانە (٥,٠٠٠ دینار داشکاندن):</label>
+            <input type="text" id="settingGiftCode" placeholder="بۆ نموونە: SIDR5000">
 
             <label>سنووری گەیاندنی بێبەرامبەر (بە دینار):</label>
             <input type="number" id="settingFreeShipLimit" placeholder="35000">
@@ -622,11 +863,11 @@
             <label>نرخی گەیاندن — شارەکانی تر (دینار):</label>
             <input type="number" id="settingShipOther" placeholder="5000">
 
-            <button class="btn-save" id="saveSettingsBtn" onclick="saveStoreSettings()">پاشەکەوتکردنی ڕێکخستنەکان</button>
+            <button type="button" class="btn-save" id="saveSettingsBtn" onclick="saveStoreSettings()">پاشەکەوتکردنی ڕێکخستنەکان</button>
         </div>
 
         <div class="admin-card">
-            <h2 id="formTitle">زیادکردنی بەرهەمی نوێ</h2>
+            <div class="admin-card-header" id="formTitle">➕ زیادکردنی بەرهەمی نوێ</div>
             <label>وێنەی بەرهەم:</label>
             <input type="file" id="imageFile" accept="image/*" onchange="processImage(event)">
             <img id="previewImg" src="">
@@ -636,7 +877,7 @@
 
             <label>جۆر (پۆلێن):</label>
             <select id="pCat">
-                <option value="پێکەجەکان">پێکەجەکان</option>
+                <option value="پاکێجەکان">پاکێجەکان</option>
                 <option value="سرکەکان">سرکەکان</option>
                 <option value="زەیتەکان">زەیتەکان</option>
                 <option value="سابونەکان">سابونەکان</option>
@@ -660,7 +901,7 @@
 
             <label class="checkbox-row">
                 <input type="checkbox" id="pOutOfStock">
-                <span>لە دوکان نەماوە — بیکە بە «زوو دەگاتەوە» (ئاگادارکردنەوە لە واتساپ)</span>
+                <span>لە دوکان نەماوە — بیکە بە «زوو دەگاتەوە» (دەچێتە لیستی جوملەش)</span>
             </label>
 
             <label>سوودەکان و چۆنیەتی بەکارهێنان:</label>
@@ -669,21 +910,83 @@
             <label>فیدباکی نووسراوی کڕیارەکان (ئارەزوومەندانە):</label>
             <textarea id="pFeedback" placeholder="ڕای کڕیارەکان لێرە بنووسە..."></textarea>
 
-            <label>وێنەی فیدباکەکان (سکرینشۆتی نامەکان - دەتوانیت چەند وێنەیەک هەڵبژێریت):</label>
+            <label>وێنەی فیدباکەکان (سکرینشۆتی نامەکان):</label>
             <input type="file" id="fbImagesFile" accept="image/*" multiple onchange="processFeedbackImages(event)">
             <div id="fbPreviewContainer" class="fb-preview-list"></div>
 
-            <button class="btn-save" id="saveBtn" onclick="addProduct()">زیادکردنی بەرهەم</button>
-            <button class="btn-close" id="cancelEditBtn" style="width:100%; margin-top:10px; display:none;" onclick="resetForm()">پاشگەزبوونەوە لە دەستکاری</button>
-            <button class="btn-close" style="width:100%; margin-top:10px;" onclick="closeAdmin()">گەڕانەوە بۆ پێشانگا</button>
+            <button type="button" class="btn-save" id="saveBtn" onclick="addProduct()">زیادکردنی بەرهەم</button>
+            <button type="button" class="btn-close" id="cancelEditBtn" style="width:100%; margin-top:10px; display:none;" onclick="resetForm()">پاشگەزبوونەوە لە دەستکاری</button>
+            <button type="button" class="btn-close" style="width:100%; margin-top:10px;" onclick="closeAdmin()">گەڕانەوە بۆ پێشانگا</button>
         </div>
 
         <div class="admin-card">
-            <h2>بەرهەمە تۆمارکراوەکان</h2>
+            <div class="admin-card-header">📦 بەرهەمە تۆمارکراوەکان</div>
             <div id="adminList">چاوەڕێ بە...</div>
         </div>
     </div>
 
+    <!-- پەنجەرەی خەڵاتی مانگانە -->
+    <div class="modal" id="raffleModal" onclick="closeRaffleModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="raffle-royal-header">
+                <h2>🎁 خەڵاتی مانگانەی پێشانگای سیدر</h2>
+                <p style="font-size:13px; color:#e2e8f0;">بەشداری بکە و ببە براوەی دیاریی مانگانە</p>
+                <div class="raffle-prize-pill">بە بڕی ٥,٠٠٠ دینار کڕینی بێبەرامبەر</div>
+            </div>
+            <div class="modal-body">
+                <div class="winner-showcase" id="publicWinnerShowcase" style="display:none;">
+                    <div style="font-size:12px; color:var(--amber); font-weight:bold;">🏆 براوەی تیروپشکی پێشوو</div>
+                    <div id="publicWinnerName" style="font-size:15px; font-weight:800; color:var(--text-title); margin-top:2px;"></div>
+                </div>
+
+                <div class="chance-badge-info">
+                    <div class="chance-pill">👤 سەردانیکەر<br><strong>١ چانس</strong></div>
+                    <div class="chance-pill" style="border-color:var(--gold);">🛍️ کڕیاری ماڵپەڕ<br><strong>٣ چانس</strong></div>
+                </div>
+
+                <a href="https://www.instagram.com/peshangaysidr" target="_blank" style="display:block; text-align:center; background:linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color:#fff; padding:9px; border-radius:11px; text-decoration:none; font-size:12.5px; font-weight:bold; margin-bottom:12px;">
+                    مەرجی بەشداربوون: فۆڵۆوی ئینستاگراممان بکە (@peshangaysidr)
+                </a>
+
+                <input type="text" id="raffleFullName" class="cart-input" placeholder="ناوی سیانی یان ناوی تەواو *">
+                <input type="text" id="raffleIgUser" class="cart-input" placeholder="یوزەرنەیمی ئینستاگرامەکەت (بۆ نموونە: @ahmed.ali) *">
+
+                <button type="button" class="btn-save" id="submitRaffleBtn" style="background:linear-gradient(135deg, #0b2b1c, #1b4332); color:#f3e5ab; border:1px solid #d4af37;" onclick="submitRaffleEntry()">✨ تۆمارکردنی ناوم لە تیروپشک</button>
+                <div id="raffleStatusMsg" style="font-size:12.5px; text-align:center; margin-top:8px;"></div>
+                <button type="button" class="btn-close" style="width:100%; margin-top:10px;" onclick="closeRaffleModal()">داخستن</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- پەنجەرەی تەسبیحات -->
+    <div class="modal" id="tasbihModal" onclick="closeTasbihModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-body">
+                <h2 class="modal-title" style="text-align:center; margin-bottom:12px;">📿 تەسبیحی ئەلیکترۆنی</h2>
+                <div class="tasbih-tabs">
+                    <button type="button" class="tasbih-tab-btn active" onclick="selectZikr('subhan', 'سبحان الله', this)">سبحان الله</button>
+                    <button type="button" class="tasbih-tab-btn" onclick="selectZikr('alhamd', 'الحمد لله', this)">الحمد لله</button>
+                    <button type="button" class="tasbih-tab-btn" onclick="selectZikr('akbar', 'الله أكبر', this)">الله أكبر</button>
+                    <button type="button" class="tasbih-tab-btn" onclick="selectZikr('tahlil', 'لا إله إلا الله', this)">لا إله إلا الله</button>
+                </div>
+
+                <div class="tasbih-circle-btn" onclick="incrementTasbih()">
+                    <div class="tasbih-zikr-label" id="tasbihCurrentLabel">سبحان الله</div>
+                    <div class="tasbih-count-num" id="tasbihCurrentCount">0</div>
+                    <div class="tasbih-tap-hint">دەست لێرە بدە (لە ١٠٠ زەنگ لێدەدات)</div>
+                </div>
+
+                <div class="tasbih-hasanat-note" id="tasbihHasanatText">کۆی خێرەکانت: 0 چاکە (هەر زیکرێک ١٠ چاکە)</div>
+
+                <div style="display:flex; gap:8px;">
+                    <button type="button" class="btn-del" style="flex:1; padding:11px; border-radius:12px; font-weight:bold;" onclick="resetCurrentTasbih()">سفرکردنەوە ↺</button>
+                    <button type="button" class="btn-close" style="flex:1;" onclick="closeTasbihModal()">داخستن</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- پەنجەرەی بەرهەم و سەبەتە -->
     <div class="modal" id="productModal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <img id="mImg" src="" alt="" class="modal-img">
@@ -735,7 +1038,7 @@
                 <div id="cartItemsContainer"></div>
 
                 <div class="promo-box">
-                    <input type="text" id="cartPromoInput" placeholder="کۆدی داشکاندنت هەیە؟ لێرە بینووسە">
+                    <input type="text" id="cartPromoInput" placeholder="کۆدی داشکاندن یان کۆدی دیاری">
                     <button class="btn-save" style="width:auto; padding:0 16px;" onclick="applyPromoCode()">جێبەجێکردن</button>
                 </div>
                 <div id="promoMsg" style="font-size:12px; margin-bottom:8px;"></div>
@@ -751,7 +1054,7 @@
 
                 <div class="cart-summary">
                     <div class="summary-line"><span>کۆی نرخی بەرهەمەکان:</span><span id="cartSubtotal">0 دینار</span></div>
-                    <div class="summary-line" id="cartDiscountRow" style="display:none; color:#10b981;"><span>داشکاندن:</span><span id="cartDiscountVal">0 دینار</span></div>
+                    <div class="summary-line" id="cartDiscountRow" style="display:none; color:#10b981;"><span>داشکاندن / دیاری:</span><span id="cartDiscountVal">0 دینار</span></div>
                     <div class="summary-line"><span>تێچووی گەیاندن:</span><span id="cartShippingVal">شار هەڵبژێرە</span></div>
                     <div class="summary-line summary-total"><span>کۆی گشتی:</span><span id="cartFinalTotal">0 دینار</span></div>
                 </div>
@@ -767,7 +1070,6 @@
     <div id="zoomModal" onclick="this.style.display='none'">
         <img id="zoomedImg" src="">
     </div>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, getDoc, setDoc, deleteDoc, updateDoc, doc, query, orderBy, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -797,24 +1099,35 @@
             banners: ["گەیاندنمان هەیە بۆ هەموو شارەکانی کوردستان 🚚", "بۆ داواکاری سەروو ٣٥,٠٠٠ دینار گەیاندن بێبەرامبەرە 🎁"],
             promoCode: "",
             promoPercent: 0,
+            giftCode: "SIDR5000",
             freeShipLimit: 35000,
             shipRanya: 2000,
             shipMain: 4000,
-            shipOther: 5000
+            shipOther: 5000,
+            lastWinner: ""
         };
         let appliedDiscountPercent = 0;
+        let appliedFixedGift = 0;
         let bannerInterval = null;
+
+        let faqList = [
+            { q: "ئایا بەرهەمەکان ١٠٠٪ سروشتی و گیایین؟", a: "بەڵێ، سەرجەم بەرهەمەکانی پێشانگای سیدر لە پێکهاتە سروشتی و گیاییە پەسەندکراوەکان ئامادە کراون و دوورن لە ماددە کیمیاییە زیانبەخشەکان." },
+            { q: "گەیاندن بۆ شارەکان چەند ڕۆژی پێدەچێت؟", a: "گەیاندنمان هەیە بۆ سەرجەم شار و شارۆچکەکانی کوردستان؛ لە ماوەی ٢٤ بۆ ٤٨ کاتژمێردا داواکارییەکەت دەگاتە دەستت." },
+            { q: "چۆن بزانم کام بەرهەم بۆ پێست یان قژی من گونجاوە؟", a: "لە ناو هەر بەرهەمێکدا دوگمەی «پرسیار دەربارەی ئەم بەرهەمە» هەیە؛ دەتوانیت بە یەک کلیک نامەمان بۆ بنێریت تا ڕێنمایی تەواوت پێبدەین." }
+        ];
+        let editingFaqIndex = null;
+
+        let manualJomlaItems = JSON.parse(localStorage.getItem("sidr_jomla_manual") || "[]");
+        let boughtJomlaKeys = JSON.parse(localStorage.getItem("sidr_jomla_bought") || "[]");
+
+        // ڕێکخستنی ڕووناکی
         let themeMode = localStorage.getItem("sidr_theme") || "system";
         function applyTheme() {
             const btn = document.getElementById("themeToggleBtn");
             let isDark = false;
-            if (themeMode === "dark") {
-                isDark = true;
-                btn.innerText = "🌙 تاریک";
-            } else if (themeMode === "light") {
-                isDark = false;
-                btn.innerText = "☀️ ڕووناک";
-            } else {
+            if (themeMode === "dark") { isDark = true; btn.innerText = "🌙 تاریک"; }
+            else if (themeMode === "light") { isDark = false; btn.innerText = "☀️ ڕووناک"; }
+            else {
                 isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
                 btn.innerText = "🌓 خۆکار";
             }
@@ -848,6 +1161,15 @@
             return num.toLocaleString('en-US') + " دینار";
         }
 
+        // نیشانەی سووری سەر ئایکۆنی هۆم سکرین (App Badge)
+        function updateHomeScreenBadge(unseenCount) {
+            if ('setAppBadge' in navigator) {
+                if (unseenCount > 0) navigator.setAppBadge(unseenCount).catch(() => {});
+                else if ('clearAppBadge' in navigator) navigator.clearAppBadge().catch(() => {});
+            }
+        }
+
+        // ئاماری سەردانیکەران
         function getDateStr(offsetDays = 0) {
             const d = new Date();
             d.setDate(d.getDate() + offsetDays);
@@ -858,11 +1180,7 @@
             sessionStorage.setItem("sidr_visited", "1");
             const today = getDateStr(0);
             try {
-                const statsRef = doc(db, "metadata", "visitors");
-                await setDoc(statsRef, {
-                    total: increment(1),
-                    [today]: increment(1)
-                }, { merge: true });
+                await setDoc(doc(db, "metadata", "visitors"), { total: increment(1), [today]: increment(1) }, { merge: true });
             } catch (e) {}
         }
         async function loadVisitorStats() {
@@ -879,23 +1197,41 @@
             } catch (e) {}
         }
 
+        // ڕێکخستنەکانی دوکان و FAQ
         async function loadStoreSettings() {
             try {
                 const snap = await getDoc(doc(db, "metadata", "settings"));
                 if (snap.exists()) {
                     const data = snap.data();
-                    if (Array.isArray(data.banners) && data.banners.length > 0) {
-                        storeSettings.banners = data.banners;
-                    }
+                    if (Array.isArray(data.banners) && data.banners.length > 0) storeSettings.banners = data.banners;
                     storeSettings.promoCode = data.promoCode || "";
                     storeSettings.promoPercent = Number(data.promoPercent) || 0;
+                    storeSettings.giftCode = data.giftCode || "SIDR5000";
                     storeSettings.freeShipLimit = data.freeShipLimit !== undefined ? Number(data.freeShipLimit) : 35000;
                     storeSettings.shipRanya = data.shipRanya !== undefined ? Number(data.shipRanya) : 2000;
                     storeSettings.shipMain = data.shipMain !== undefined ? Number(data.shipMain) : 4000;
                     storeSettings.shipOther = data.shipOther !== undefined ? Number(data.shipOther) : 5000;
+                    storeSettings.lastWinner = data.lastWinner || "";
+                    if (Array.isArray(data.faqs)) faqList = data.faqs;
                 }
             } catch (e) {}
             startBannerSlider();
+            renderPublicFaqs();
+            updateWinnerDisplays();
+        }
+
+        function updateWinnerDisplays() {
+            const pubBox = document.getElementById("publicWinnerShowcase");
+            const pubName = document.getElementById("publicWinnerName");
+            const admLabel = document.getElementById("adminWinnerLabel");
+            if (storeSettings.lastWinner) {
+                pubBox.style.display = "block";
+                pubName.innerText = storeSettings.lastWinner;
+                admLabel.innerText = storeSettings.lastWinner;
+            } else {
+                pubBox.style.display = "none";
+                admLabel.innerText = "هێشتا دیاری نەکراوە";
+            }
         }
 
         window.copyBannerPromo = function(code) {
@@ -909,10 +1245,7 @@
             if (storeSettings.promoCode && storeSettings.promoPercent > 0) {
                 slides.unshift(`🎁 کۆدی داشکاندنی ${storeSettings.promoPercent}٪: (${storeSettings.promoCode}) <button class="copy-promo-pill" onclick="copyBannerPromo('${storeSettings.promoCode}')">کۆپی</button>`);
             }
-            if (!slides.length) {
-                bannerEl.style.display = "none";
-                return;
-            }
+            if (!slides.length) { bannerEl.style.display = "none"; return; }
             bannerEl.style.display = "flex";
             let idx = 0;
             bannerEl.innerHTML = slides[0];
@@ -933,6 +1266,7 @@
             const rawBanners = document.getElementById("settingBanners").value.split("\n").map(s => s.trim()).filter(Boolean);
             const promoCode = document.getElementById("settingPromoCode").value.trim().toUpperCase();
             const promoPercent = Number(document.getElementById("settingPromoPercent").value) || 0;
+            const giftCode = document.getElementById("settingGiftCode").value.trim().toUpperCase() || "SIDR5000";
             const freeShipLimit = Number(document.getElementById("settingFreeShipLimit").value) || 35000;
             const shipRanya = Number(document.getElementById("settingShipRanya").value) || 0;
             const shipMain = Number(document.getElementById("settingShipMain").value) || 0;
@@ -943,15 +1277,9 @@
             btn.innerText = "خەریکی پاشەکەوتکردنە...";
             try {
                 await setDoc(doc(db, "metadata", "settings"), {
-                    banners: rawBanners,
-                    promoCode,
-                    promoPercent,
-                    freeShipLimit,
-                    shipRanya,
-                    shipMain,
-                    shipOther
+                    banners: rawBanners, promoCode, promoPercent, giftCode, freeShipLimit, shipRanya, shipMain, shipOther
                 }, { merge: true });
-                storeSettings = { banners: rawBanners, promoCode, promoPercent, freeShipLimit, shipRanya, shipMain, shipOther };
+                Object.assign(storeSettings, { banners: rawBanners, promoCode, promoPercent, giftCode, freeShipLimit, shipRanya, shipMain, shipOther });
                 startBannerSlider();
                 alert("ڕێکخستنەکان بە سەرکەوتوویی پاشەکەوت کران!");
             } catch (e) {
@@ -961,6 +1289,313 @@
             btn.innerText = "پاشەکەوتکردنی ڕێکخستنەکان";
         }
 
+        // بەڕێوەبردنی پرسیارە باوەکان (FAQ)
+        function renderPublicFaqs() {
+            const sec = document.getElementById("faqSectionContainer");
+            const list = document.getElementById("faqPublicList");
+            if (!faqList.length) { sec.style.display = "none"; return; }
+            sec.style.display = "block";
+            list.innerHTML = "";
+            faqList.forEach(item => {
+                const det = document.createElement("details");
+                det.className = "faq-item";
+                det.innerHTML = `<summary>${item.q}</summary><p>${item.a}</p>`;
+                list.appendChild(det);
+            });
+        }
+        function renderAdminFaqs() {
+            const list = document.getElementById("adminFaqList");
+            list.innerHTML = "";
+            faqList.forEach((item, idx) => {
+                const row = document.createElement("div");
+                row.className = "item-row";
+                row.innerHTML = `
+                    <div class="item-details">
+                        <strong style="font-size:13px;">${item.q}</strong>
+                        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">${item.a}</div>
+                    </div>
+                    <div style="display:flex; gap:5px;">
+                        <button type="button" style="background:#0284c7; color:#fff; border:none; padding:5px 9px; border-radius:6px; font-size:11px; cursor:pointer;" onclick="editFaqItem(${idx})">دەستکاری</button>
+                        <button type="button" class="btn-del" onclick="deleteFaqItem(${idx})">سڕینەوە</button>
+                    </div>
+                `;
+                list.appendChild(row);
+            });
+        }
+        window.saveFaqItem = async function() {
+            const q = document.getElementById("faqQInput").value.trim();
+            const a = document.getElementById("faqAInput").value.trim();
+            if (!q || !a) { alert("تکایە هەم پرسیار و هەم وەڵام بنووسە!"); return; }
+            if (editingFaqIndex !== null) faqList[editingFaqIndex] = { q, a };
+            else faqList.push({ q, a });
+            await setDoc(doc(db, "metadata", "settings"), { faqs: faqList }, { merge: true });
+            resetFaqForm();
+            renderPublicFaqs();
+            renderAdminFaqs();
+            alert("پرسیارەکە بە سەرکەوتوویی پاشەکەوت کرا!");
+        }
+        window.editFaqItem = function(idx) {
+            editingFaqIndex = idx;
+            document.getElementById("faqQInput").value = faqList[idx].q;
+            document.getElementById("faqAInput").value = faqList[idx].a;
+            document.getElementById("saveFaqBtn").innerText = "خەزنکردنی دەستکاریی پرسیار";
+            document.getElementById("cancelFaqEditBtn").style.display = "block";
+        }
+        window.resetFaqForm = function() {
+            editingFaqIndex = null;
+            document.getElementById("faqQInput").value = "";
+            document.getElementById("faqAInput").value = "";
+            document.getElementById("saveFaqBtn").innerText = "+ زیادکردنی پرسیار و وەڵام";
+            document.getElementById("cancelFaqEditBtn").style.display = "none";
+        }
+        window.deleteFaqItem = async function(idx) {
+            if (!confirm("دڵنیایت لە سڕینەوەی ئەم پرسیارە؟")) return;
+            faqList.splice(idx, 1);
+            await setDoc(doc(db, "metadata", "settings"), { faqs: faqList }, { merge: true });
+            renderPublicFaqs();
+            renderAdminFaqs();
+        }
+
+        // خەڵاتی مانگانەی کڕیاران (تیروپشک)
+        let raffleEntries = [];
+        window.openRaffleModal = function() {
+            updateWinnerDisplays();
+            const msgEl = document.getElementById("raffleStatusMsg");
+            const currentMonth = new Date().toISOString().slice(0, 7);
+            if (localStorage.getItem("sidr_raffle_joined") === currentMonth) {
+                msgEl.style.color = "#10b981";
+                msgEl.innerText = "✅ ناوت بۆ تیروپشکی ئەم مانگە تۆمار کراوە!";
+            } else {
+                msgEl.innerText = "";
+            }
+            document.getElementById("raffleModal").style.display = "flex";
+        }
+        window.closeRaffleModal = function() {
+            document.getElementById("raffleModal").style.display = "none";
+        }
+        window.submitRaffleEntry = async function() {
+            const fullName = document.getElementById("raffleFullName").value.trim();
+            let igUser = document.getElementById("raffleIgUser").value.trim();
+            const msgEl = document.getElementById("raffleStatusMsg");
+            const currentMonth = new Date().toISOString().slice(0, 7);
+
+            if (localStorage.getItem("sidr_raffle_joined") === currentMonth) {
+                alert("تۆ پێشتر ناوت بۆ تیروپشکی ئەم مانگە تۆمار کردووە!");
+                return;
+            }
+            if (!fullName || !igUser) {
+                alert("تکایە ناوی تەواو و یوزەرنەیمی ئینستاگرامەکەت بنووسە!");
+                return;
+            }
+            if (!igUser.startsWith("@")) igUser = "@" + igUser;
+
+            const hasOrdered = localStorage.getItem("sidr_has_ordered") === "1";
+            const chances = hasOrdered ? 3 : 1;
+
+            const btn = document.getElementById("submitRaffleBtn");
+            btn.disabled = true;
+            btn.innerText = "خەریکی تۆمارکردنە...";
+            try {
+                await addDoc(collection(db, "raffle_entries"), {
+                    name: fullName,
+                    instagram: igUser,
+                    chances: chances,
+                    createdAt: Date.now()
+                });
+                localStorage.setItem("sidr_raffle_joined", currentMonth);
+                msgEl.style.color = "#10b981";
+                msgEl.innerText = `🎉 پیرۆزە! ناوت بە (${chances} چانس) تۆمار کرا. هیوای بردنەوەت بۆ دەخوازین!`;
+                document.getElementById("raffleFullName").value = "";
+                document.getElementById("raffleIgUser").value = "";
+            } catch (e) {
+                alert("هەڵەیەک ڕوویدا: " + e.message);
+            }
+            btn.disabled = false;
+            btn.innerText = "✨ تۆمارکردنی ناوم لە تیروپشک";
+        }
+        async function loadRaffleEntries() {
+            const listEl = document.getElementById("adminRaffleList");
+            try {
+                const snap = await getDocs(query(collection(db, "raffle_entries"), orderBy("createdAt", "desc")));
+                raffleEntries = [];
+                snap.forEach(d => raffleEntries.push({ id: d.id, ...d.data() }));
+                document.getElementById("raffleCountLabel").innerText = raffleEntries.length;
+                listEl.innerHTML = "";
+                if (!raffleEntries.length) {
+                    listEl.innerHTML = `<div style="font-size:12px; color:var(--text-muted); text-align:center;">هێشتا کەس ناوی تۆمار نەکردووە.</div>`;
+                    return;
+                }
+                raffleEntries.forEach(item => {
+                    const row = document.createElement("div");
+                    row.className = "item-row";
+                    row.innerHTML = `
+                        <div class="item-details">
+                            <strong style="font-size:13px;">${item.name}</strong>
+                            <span style="font-size:12px; color:var(--amber); margin-right:6px;">${item.instagram}</span>
+                            <span style="font-size:11px; color:#10b981;">(${item.chances || 1} چانس)</span>
+                        </div>
+                    `;
+                    listEl.appendChild(row);
+                });
+            } catch (e) {}
+        }
+        window.pickRandomRaffleWinner = async function() {
+            if (!raffleEntries.length) {
+                alert("هیچ بەشداربوویەک لە لیستەکەدا نییە!");
+                return;
+            }
+            let pool = [];
+            raffleEntries.forEach(entry => {
+                const c = entry.chances || 1;
+                for (let i = 0; i < c; i++) pool.push(entry);
+            });
+            const winner = pool[Math.floor(Math.random() * pool.length)];
+            const winnerText = `${winner.name} (${winner.instagram})`;
+            await setDoc(doc(db, "metadata", "settings"), { lastWinner: winnerText }, { merge: true });
+            storeSettings.lastWinner = winnerText;
+            updateWinnerDisplays();
+
+            const congrats = `🎉 پیرۆزە ${winner.name} (${winner.instagram})!\nتۆ بوویتە براوەی خەڵاتی مانگانەی پێشانگای سیدر بە بڕی ٥,٠٠٠ دینار!\nکۆدی دیارییەکەت: ${storeSettings.giftCode}`;
+            if (confirm(`🏆 براوەی تیروپشک:\n${winnerText}\n\nدەتەوێت پەیامی پیرۆزبایی و کۆدی دیارییەکە کۆپی بکەیت؟`)) {
+                navigator.clipboard.writeText(congrats);
+                alert("پەیامی پیرۆزباییەکە کۆپی کرا!");
+            }
+        }
+        window.clearRaffleEntries = async function() {
+            if (!confirm("دڵنیایت دەتەوێت هەموو ناوەکانی ئەم مانگە بسڕیتەوە بۆ مانگی نوێ؟")) return;
+            for (const item of raffleEntries) {
+                await deleteDoc(doc(db, "raffle_entries", item.id));
+            }
+            await loadRaffleEntries();
+            alert("لیستەکە پاک کرایەوە بۆ مانگی نوێ!");
+        }
+
+        // لیستی کڕینەوەی جوملە (کەمبووەکان)
+        function renderJomlaList() {
+            const container = document.getElementById("jomlaListContainer");
+            container.innerHTML = "";
+            const outOfStockProducts = products.filter(p => p.outOfStock === true).map(p => ({
+                key: "prod_" + p.id,
+                label: `${p.name} (لە دوکان تەواو بووە)`,
+                isManual: false
+            }));
+            const manualList = manualJomlaItems.map((txt, idx) => ({
+                key: "man_" + idx,
+                label: txt,
+                isManual: true,
+                idx
+            }));
+            const allItems = [...outOfStockProducts, ...manualList];
+            if (!allItems.length) {
+                container.innerHTML = `<div style="font-size:12px; color:var(--text-muted); text-align:center; padding:8px;">هیچ بەرهەمێکی تەواوبوو یان کەمبوو نییە.</div>`;
+                return;
+            }
+            allItems.forEach(item => {
+                const isBought = boughtJomlaKeys.includes(item.key);
+                const div = document.createElement("div");
+                div.className = "jomla-check-item" + (isBought ? " bought" : "");
+                div.innerHTML = `
+                    <label style="display:flex; align-items:center; gap:8px; margin:0; cursor:pointer; flex:1;">
+                        <input type="checkbox" ${isBought ? "checked" : ""} onchange="toggleJomlaBought('${item.key}')">
+                        <span>${item.label}</span>
+                    </label>
+                    ${item.isManual ? `<button type="button" class="btn-del" style="padding:3px 8px;" onclick="removeManualJomla(${item.idx})">×</button>` : ''}
+                `;
+                container.appendChild(div);
+            });
+        }
+        window.addManualJomlaItem = function() {
+            const input = document.getElementById("jomlaNewItemInput");
+            const val = input.value.trim();
+            if (!val) return;
+            manualJomlaItems.push(val);
+            localStorage.setItem("sidr_jomla_manual", JSON.stringify(manualJomlaItems));
+            input.value = "";
+            renderJomlaList();
+        }
+        window.removeManualJomla = function(idx) {
+            manualJomlaItems.splice(idx, 1);
+            localStorage.setItem("sidr_jomla_manual", JSON.stringify(manualJomlaItems));
+            renderJomlaList();
+        }
+        window.toggleJomlaBought = function(key) {
+            if (boughtJomlaKeys.includes(key)) boughtJomlaKeys = boughtJomlaKeys.filter(k => k !== key);
+            else boughtJomlaKeys.push(key);
+            localStorage.setItem("sidr_jomla_bought", JSON.stringify(boughtJomlaKeys));
+            renderJomlaList();
+        }
+        window.copyJomlaList = function() {
+            const outItems = products.filter(p => p.outOfStock === true).map(p => p.name);
+            const all = [...outItems, ...manualJomlaItems];
+            if (!all.length) { alert("لیستەکە بەتاڵە!"); return; }
+            const text = "📋 لیستی پێداویستییەکانی پێشانگای سیدر:\n" + all.map((x, i) => `${i + 1}. ${x}`).join("\n");
+            navigator.clipboard.writeText(text);
+            alert("هەموو لیستەکە کۆپی کرا!");
+        }
+
+        // بەشی تەسبیحی ئەلیکترۆنی (تەسبیحات)
+        let tasbihData = JSON.parse(localStorage.getItem("sidr_tasbih") || '{"subhan":0,"alhamd":0,"akbar":0,"tahlil":0}');
+        let currentZikrKey = "subhan";
+        let currentZikrName = "سبحان الله";
+
+        function playGentleBell() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(880, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.7);
+                gain.gain.setValueAtTime(0.35, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.75);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.75);
+            } catch (e) {}
+        }
+
+        function updateTasbihUI() {
+            const count = tasbihData[currentZikrKey] || 0;
+            document.getElementById("tasbihCurrentLabel").innerText = currentZikrName;
+            document.getElementById("tasbihCurrentCount").innerText = count;
+            const totalZikr = Object.values(tasbihData).reduce((a, b) => a + b, 0);
+            const hasanat = totalZikr * 10;
+            document.getElementById("tasbihHasanatText").innerText = `کۆی خێرەکانت: ${hasanat.toLocaleString('en-US')} چاکە (هەر زیکرێک ١٠ چاکە)`;
+        }
+        window.openTasbihModal = function() {
+            updateTasbihUI();
+            document.getElementById("tasbihModal").style.display = "flex";
+        }
+        window.closeTasbihModal = function() {
+            document.getElementById("tasbihModal").style.display = "none";
+        }
+        window.selectZikr = function(key, label, btn) {
+            currentZikrKey = key;
+            currentZikrName = label;
+            document.querySelectorAll(".tasbih-tab-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            updateTasbihUI();
+        }
+        window.incrementTasbih = function() {
+            tasbihData[currentZikrKey] = (tasbihData[currentZikrKey] || 0) + 1;
+            localStorage.setItem("sidr_tasbih", JSON.stringify(tasbihData));
+            if (navigator.vibrate) navigator.vibrate(25);
+            if (tasbihData[currentZikrKey] % 100 === 0) {
+                playGentleBell();
+                if (navigator.vibrate) navigator.vibrate([100, 60, 100]);
+            }
+            updateTasbihUI();
+        }
+        window.resetCurrentTasbih = function() {
+            if (confirm(`دەتەوێت ژمارەی (${currentZikrName}) سفر بکەیتەوە؟`)) {
+                tasbihData[currentZikrKey] = 0;
+                localStorage.setItem("sidr_tasbih", JSON.stringify(tasbihData));
+                updateTasbihUI();
+            }
+        }
+
+        // دڵخوازەکان و نیشانەی نوێ
         function getFavorites() {
             try { return JSON.parse(localStorage.getItem("sidr_favorites") || "[]"); } catch { return []; }
         }
@@ -984,14 +1619,18 @@
         }
         function updateCategoryBadges() {
             const seen = getSeenProducts();
+            const totalUnseen = products.filter(p => !seen.includes(p.id)).length;
+            updateHomeScreenBadge(totalUnseen);
+
             document.querySelectorAll("#categoriesContainer .cat-btn").forEach(btn => {
                 const oldBadge = btn.querySelector(".cat-new-badge");
                 if (oldBadge) oldBadge.remove();
                 const cat = btn.getAttribute("data-cat");
                 if (cat === "دڵخوازەکان") return;
                 let hasUnseen = false;
-                if (cat === "هەمووی") hasUnseen = products.some(p => !seen.includes(p.id));
+                if (cat === "هەمووی") hasUnseen = totalUnseen > 0;
                 else if (cat === "داشکاندن") hasUnseen = products.some(p => p.oldPrice && p.oldPrice.trim() !== "" && !seen.includes(p.id));
+                else if (cat === "پاکێجەکان") hasUnseen = products.some(p => (p.category === "پاکێجەکان" || p.category === "پێکەجەکان") && !seen.includes(p.id));
                 else hasUnseen = products.some(p => p.category && p.category.trim() === cat && !seen.includes(p.id));
 
                 if (hasUnseen) {
@@ -1015,6 +1654,7 @@
                 updateCategoryBadges();
                 renderProducts();
                 renderAdminList();
+                renderJomlaList();
                 checkUrlProductParam();
             } catch (error) {
                 container.innerHTML = `<div class="loading">هێشتا هیچ بەرهەمێک زیاد نەکراوە!</div>`;
@@ -1053,17 +1693,15 @@
                 if (currentCategory === "هەمووی") matchCat = true;
                 else if (currentCategory === "دڵخوازەکان") matchCat = favs.includes(p.id);
                 else if (currentCategory === "داشکاندن") matchCat = p.oldPrice && p.oldPrice.trim() !== "";
+                else if (currentCategory === "پاکێجەکان") matchCat = p.category && (p.category.trim() === "پاکێجەکان" || p.category.trim() === "پێکەجەکان");
                 else matchCat = p.category && p.category.trim() === currentCategory.trim();
 
                 const matchSearch = p.name.toLowerCase().includes(searchTerm) || (p.benefits && p.benefits.toLowerCase().includes(searchTerm));
                 return matchCat && matchSearch;
             });
 
-            if (sortType === "priceAsc") {
-                filtered.sort((a, b) => parsePriceNumber(a.price) - parsePriceNumber(b.price));
-            } else if (sortType === "priceDesc") {
-                filtered.sort((a, b) => parsePriceNumber(b.price) - parsePriceNumber(a.price));
-            }
+            if (sortType === "priceAsc") filtered.sort((a, b) => parsePriceNumber(a.price) - parsePriceNumber(b.price));
+            else if (sortType === "priceDesc") filtered.sort((a, b) => parsePriceNumber(b.price) - parsePriceNumber(a.price));
 
             if (filtered.length === 0) {
                 container.innerHTML = `<div class="loading">هیچ بەرهەمێک نەدۆزرایەوە.</div>`;
@@ -1076,6 +1714,7 @@
                 const isBestSeller = product.bestSeller === true;
                 const isFav = favs.includes(product.id);
                 const isOut = product.outOfStock === true;
+                const displayCat = (product.category === "پێکەجەکان") ? "پاکێجەکان" : product.category;
 
                 const card = document.createElement("div");
                 card.className = "product-card" + (isOut ? " out-of-stock" : "");
@@ -1093,7 +1732,7 @@
                     </div>
                     <div class="product-info">
                         <div>
-                            <div class="product-cat">${product.category}</div>
+                            <div class="product-cat">${displayCat}</div>
                             <div class="product-title">${product.name}</div>
                         </div>
                         <div>
@@ -1161,10 +1800,7 @@
             } else {
                 modalCartBtn.innerText = "+ زیادکردن بۆ سەبەتە";
                 modalCartBtn.style.background = "var(--green-primary)";
-                modalCartBtn.onclick = () => {
-                    addToCart(product.id);
-                    closeModal();
-                };
+                modalCartBtn.onclick = () => { addToCart(product.id); closeModal(); };
                 waBtn.style.display = "block";
                 const message = encodeURIComponent(`سڵاو پێشانگای سیدر، دەمەوێت داوای ئەم بەرهەمە بکەم:\n*${product.name}*\nنرخ: ${product.price}`);
                 waBtn.href = `https://wa.me/${shopPhone}?text=${message}`;
@@ -1181,12 +1817,8 @@
 
             if (hasTextFb || hasImgFb) {
                 fbBox.style.display = "block";
-                if (hasTextFb) {
-                    fbTextEl.innerText = product.feedback;
-                    fbTextEl.style.display = "block";
-                } else {
-                    fbTextEl.style.display = "none";
-                }
+                if (hasTextFb) { fbTextEl.innerText = product.feedback; fbTextEl.style.display = "block"; }
+                else fbTextEl.style.display = "none";
                 fbImgsEl.innerHTML = "";
                 if (hasImgFb) {
                     product.feedbackImages.forEach(imgSrc => {
@@ -1196,9 +1828,7 @@
                         fbImgsEl.appendChild(img);
                     });
                 }
-            } else {
-                fbBox.style.display = "none";
-            }
+            } else fbBox.style.display = "none";
 
             const relatedSec = document.getElementById("relatedSection");
             const relatedGrid = document.getElementById("relatedGrid");
@@ -1219,25 +1849,15 @@
                     `;
                     relatedGrid.appendChild(rCard);
                 });
-            } else {
-                relatedSec.style.display = "none";
-            }
+            } else relatedSec.style.display = "none";
 
             document.getElementById("productModal").style.display = "flex";
         }
+        window.closeModal = function() { document.getElementById("productModal").style.display = "none"; }
 
-        window.closeModal = function() {
-            document.getElementById("productModal").style.display = "none";
-        }
-
-        function saveCart() {
-            localStorage.setItem("sidr_cart", JSON.stringify(cart));
-            updateFloatingCartBar();
-        }
-        window.addToCartFromCard = function(e, id) {
-            e.stopPropagation();
-            addToCart(id);
-        }
+        // سەبەتەی کڕین
+        function saveCart() { localStorage.setItem("sidr_cart", JSON.stringify(cart)); updateFloatingCartBar(); }
+        window.addToCartFromCard = function(e, id) { e.stopPropagation(); addToCart(id); }
         function addToCart(id) {
             const p = products.find(x => x.id === id);
             if (!p || p.outOfStock) return;
@@ -1249,22 +1869,14 @@
         function updateFloatingCartBar() {
             const bar = document.getElementById("floatingCartBar");
             const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-            if (totalQty === 0) {
-                bar.style.display = "none";
-                return;
-            }
+            if (totalQty === 0) { bar.style.display = "none"; return; }
             const subtotal = cart.reduce((sum, item) => sum + (item.priceNum * item.qty), 0);
             document.getElementById("cartCountBadge").innerText = totalQty;
             document.getElementById("cartBarTotal").innerText = formatNumber(subtotal);
             bar.style.display = "flex";
         }
-        window.openCartModal = function() {
-            renderCartItems();
-            document.getElementById("cartModal").style.display = "flex";
-        }
-        window.closeCartModal = function() {
-            document.getElementById("cartModal").style.display = "none";
-        }
+        window.openCartModal = function() { renderCartItems(); document.getElementById("cartModal").style.display = "flex"; }
+        window.closeCartModal = function() { document.getElementById("cartModal").style.display = "none"; }
         window.changeCartQty = function(index, delta) {
             cart[index].qty += delta;
             if (cart[index].qty <= 0) cart.splice(index, 1);
@@ -1275,14 +1887,20 @@
         window.applyPromoCode = function() {
             const code = document.getElementById("cartPromoInput").value.trim().toUpperCase();
             const msgEl = document.getElementById("promoMsg");
-            if (storeSettings.promoCode && code === storeSettings.promoCode.toUpperCase() && storeSettings.promoPercent > 0) {
+            appliedDiscountPercent = 0;
+            appliedFixedGift = 0;
+
+            if (storeSettings.giftCode && code === storeSettings.giftCode.toUpperCase()) {
+                appliedFixedGift = 5000;
+                msgEl.style.color = "#10b981";
+                msgEl.innerText = "🎁 کۆدی دیاریی براوە (٥,٠٠٠ دینار) جێبەجێ کرا!";
+            } else if (storeSettings.promoCode && code === storeSettings.promoCode.toUpperCase() && storeSettings.promoPercent > 0) {
                 appliedDiscountPercent = storeSettings.promoPercent;
                 msgEl.style.color = "#10b981";
                 msgEl.innerText = `کۆدەکە سەرکەوتوو بوو! داشکاندنی ${appliedDiscountPercent}٪ جێبەجێ کرا.`;
             } else {
-                appliedDiscountPercent = 0;
                 msgEl.style.color = "#ef4444";
-                msgEl.innerText = "کۆدی داشکاندنەکە هەڵەیە یان بەسەرچووە.";
+                msgEl.innerText = "کۆدەکە هەڵەیە یان بەسەرچووە.";
             }
             renderCartItems();
         }
@@ -1320,8 +1938,8 @@
                 container.appendChild(row);
             });
 
-            const discountAmount = Math.round(subtotal * (appliedDiscountPercent / 100));
-            const afterDiscount = subtotal - discountAmount;
+            const discountAmount = appliedFixedGift > 0 ? Math.min(subtotal, appliedFixedGift) : Math.round(subtotal * (appliedDiscountPercent / 100));
+            const afterDiscount = Math.max(0, subtotal - discountAmount);
 
             const limit = storeSettings.freeShipLimit || 35000;
             const freeText = document.getElementById("freeShipText");
@@ -1340,25 +1958,15 @@
             const shipEl = document.getElementById("cartShippingVal");
             let finalTotal = afterDiscount;
 
-            if (shipCost === null) {
-                shipEl.innerText = "شار هەڵبژێرە";
-                shipEl.style.color = "var(--text-muted)";
-            } else if (shipCost === 0) {
-                shipEl.innerText = "بێبەرامبەر (0 دینار)";
-                shipEl.style.color = "#10b981";
-            } else {
-                shipEl.innerText = formatNumber(shipCost);
-                shipEl.style.color = "var(--text-main)";
-                finalTotal += shipCost;
-            }
+            if (shipCost === null) { shipEl.innerText = "شار هەڵبژێرە"; shipEl.style.color = "var(--text-muted)"; }
+            else if (shipCost === 0) { shipEl.innerText = "بێبەرامبەر (0 دینار)"; shipEl.style.color = "#10b981"; }
+            else { shipEl.innerText = formatNumber(shipCost); shipEl.style.color = "var(--text-main)"; finalTotal += shipCost; }
 
             document.getElementById("cartSubtotal").innerText = formatNumber(subtotal);
             if (discountAmount > 0) {
                 document.getElementById("cartDiscountRow").style.display = "flex";
                 document.getElementById("cartDiscountVal").innerText = `- ${formatNumber(discountAmount)}`;
-            } else {
-                document.getElementById("cartDiscountRow").style.display = "none";
-            }
+            } else document.getElementById("cartDiscountRow").style.display = "none";
             document.getElementById("cartFinalTotal").innerText = formatNumber(finalTotal);
         }
 
@@ -1370,14 +1978,10 @@
             const address = document.getElementById("custAddress").value.trim();
             const note = document.getElementById("custNote").value.trim();
 
-            if (!cityVal) {
-                alert("تکایە شارەکەت هەڵبژێرە بۆ دیاریکردنی گەیاندن!");
-                return;
-            }
-            if (!address) {
-                alert("تکایە ناونیشانی تەواو (گەڕەک) بنووسە پێش ناردن!");
-                return;
-            }
+            if (!cityVal) { alert("تکایە شارەکەت هەڵبژێرە بۆ دیاریکردنی گەیاندن!"); return; }
+            if (!address) { alert("تکایە ناونیشانی تەواو (گەڕەک) بنووسە پێش ناردن!"); return; }
+
+            localStorage.setItem("sidr_has_ordered", "1");
 
             let subtotal = 0;
             let text = `سڵاو پێشانگای سیدر، داواکارییەکی نوێم هەیە:\n\n`;
@@ -1386,16 +1990,14 @@
                 text += `${i + 1}. *${item.name}* (${item.qty} دانە) - ${item.price}\n`;
             });
 
-            const discountAmount = Math.round(subtotal * (appliedDiscountPercent / 100));
-            const afterDiscount = subtotal - discountAmount;
+            const discountAmount = appliedFixedGift > 0 ? Math.min(subtotal, appliedFixedGift) : Math.round(subtotal * (appliedDiscountPercent / 100));
+            const afterDiscount = Math.max(0, subtotal - discountAmount);
             const shipCost = getShippingCost(afterDiscount) || 0;
             const finalTotal = afterDiscount + shipCost;
 
             text += `\n-------------------\n`;
             text += `کۆی نرخ: ${formatNumber(subtotal)}\n`;
-            if (discountAmount > 0) {
-                text += `داشکاندن (${appliedDiscountPercent}٪): -${formatNumber(discountAmount)}\n`;
-            }
+            if (discountAmount > 0) text += `داشکاندن / دیاری: -${formatNumber(discountAmount)}\n`;
             text += `گەیاندن (${cityName}): ${shipCost === 0 ? 'بێبەرامبەر' : formatNumber(shipCost)}\n`;
             text += `*کۆی گشتی: ${formatNumber(finalTotal)}*\n`;
             text += `📍 ناونیشان: ${cityName} - ${address}\n`;
@@ -1404,6 +2006,7 @@
             window.open(`https://wa.me/${shopPhone}?text=${encodeURIComponent(text)}`, "_blank");
         }
 
+        // بەڕێوەبردنی ئەدمین
         window.openAdmin = function() {
             const pass = prompt("پاسۆردی بەڕێوەبەر بنووسە:");
             if (pass === ADMIN_PASS) {
@@ -1413,23 +2016,30 @@
                 document.getElementById("settingBanners").value = storeSettings.banners.join("\n");
                 document.getElementById("settingPromoCode").value = storeSettings.promoCode;
                 document.getElementById("settingPromoPercent").value = storeSettings.promoPercent || "";
+                document.getElementById("settingGiftCode").value = storeSettings.giftCode;
                 document.getElementById("settingFreeShipLimit").value = storeSettings.freeShipLimit;
                 document.getElementById("settingShipRanya").value = storeSettings.shipRanya;
                 document.getElementById("settingShipMain").value = storeSettings.shipMain;
                 document.getElementById("settingShipOther").value = storeSettings.shipOther;
+                window.scrollTo({ top: 0, behavior: "smooth" });
                 loadVisitorStats();
+                loadRaffleEntries();
+                renderAdminFaqs();
+                renderJomlaList();
                 renderAdminList();
             } else if (pass !== null) {
                 alert("پاسۆردەکە هەڵەیە!");
             }
         }
         window.closeAdmin = function() {
-            resetForm();
             document.getElementById("adminSection").style.display = "none";
             document.getElementById("storeView").style.display = "block";
-            updateFloatingCartBar();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            try { resetForm(); } catch (e) {}
+            try { updateFloatingCartBar(); } catch (e) {}
             loadProducts();
         }
+
         window.renderFbPreviews = function() {
             const container = document.getElementById("fbPreviewContainer");
             container.innerHTML = "";
@@ -1440,15 +2050,12 @@
                 container.appendChild(div);
             });
         }
-        window.removeFbImage = function(index) {
-            feedbackImagesList.splice(index, 1);
-            renderFbPreviews();
-        }
+        window.removeFbImage = function(index) { feedbackImagesList.splice(index, 1); renderFbPreviews(); }
         window.resetForm = function() {
             editingProductId = null;
             compressedImageBase64 = "";
             feedbackImagesList = [];
-            document.getElementById("formTitle").innerText = "زیادکردنی بەرهەمی نوێ";
+            document.getElementById("formTitle").innerText = "➕ زیادکردنی بەرهەمی نوێ";
             document.getElementById("pName").value = "";
             document.getElementById("pPrice").value = "";
             document.getElementById("pOldPrice").value = "";
@@ -1476,8 +2083,7 @@
                     const scaleSize = MAX_WIDTH / img.width;
                     canvas.width = MAX_WIDTH;
                     canvas.height = img.height * scaleSize;
-                    const ctx = canvas.getContext("2d");
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
                     compressedImageBase64 = canvas.toDataURL("image/jpeg", 0.7);
                     const preview = document.getElementById("previewImg");
                     preview.src = compressedImageBase64;
@@ -1500,8 +2106,7 @@
                         const scaleSize = MAX_WIDTH / img.width;
                         canvas.width = MAX_WIDTH;
                         canvas.height = img.height * scaleSize;
-                        const ctx = canvas.getContext("2d");
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
                         feedbackImagesList.push(canvas.toDataURL("image/jpeg", 0.6));
                         renderFbPreviews();
                     }
@@ -1562,10 +2167,11 @@
             feedbackImagesList = Array.isArray(p.feedbackImages) ? [...p.feedbackImages] : [];
             renderFbPreviews();
 
-            document.getElementById("formTitle").innerText = "دەستکاریکردنی بەرهەم";
+            document.getElementById("formTitle").innerText = "✏️ دەستکاریکردنی بەرهەم";
             document.getElementById("pName").value = p.name;
             const catSelect = document.getElementById("pCat");
-            catSelect.value = p.category ? p.category.trim() : "سرکەکان";
+            const mappedCat = (p.category === "پێکەجەکان") ? "پاکێجەکان" : (p.category ? p.category.trim() : "سرکەکان");
+            catSelect.value = mappedCat;
             if (!catSelect.value) catSelect.value = "هیتر";
 
             document.getElementById("pPrice").value = p.price;
@@ -1598,8 +2204,8 @@
                         ${p.oldPrice ? `<span style="font-size:11px; color:var(--text-muted); text-decoration:line-through; margin-right:6px;">${p.oldPrice}</span>` : ''}
                     </div>
                     <div style="display:flex; gap:6px;">
-                        <button style="background:#0284c7; color:white; border:none; padding:6px 10px; border-radius:6px; cursor:pointer; font-size:12px;" onclick="editItem('${p.id}')">دەستکاری</button>
-                        <button class="btn-del" onclick="deleteItem('${p.id}')">سڕینەوە</button>
+                        <button type="button" style="background:#0284c7; color:white; border:none; padding:6px 10px; border-radius:6px; cursor:pointer; font-size:12px;" onclick="editItem('${p.id}')">دەستکاری</button>
+                        <button type="button" class="btn-del" onclick="deleteItem('${p.id}')">سڕینەوە</button>
                     </div>
                 `;
                 list.appendChild(div);
@@ -1620,28 +2226,16 @@
     </script>
     <script>
         setInterval(() => {
-            document.querySelectorAll('a[href*="netlify"], iframe[src*="netlify"]').forEach(el => {
-                el.remove();
-            });
+            document.querySelectorAll('a[href*="netlify"], iframe[src*="netlify"]').forEach(el => el.remove());
             document.querySelectorAll('*').forEach(el => {
-                if (el.tagName && el.tagName.toLowerCase().includes('netlify')) {
-                    el.remove();
-                }
-                if ((el.src && el.src.includes('netlify')) || (el.href && el.href.includes('netlify'))) {
-                    el.remove();
-                }
+                if (el.tagName && el.tagName.toLowerCase().includes('netlify')) el.remove();
+                if ((el.src && el.src.includes('netlify')) || (el.href && el.href.includes('netlify'))) el.remove();
                 if (el.shadowRoot) {
                     const txt = el.shadowRoot.textContent || "";
-                    if (txt.includes("Powered by Netlify") || txt.includes("netlify")) {
-                        el.remove();
-                    }
+                    if (txt.includes("Powered by Netlify") || txt.includes("netlify")) el.remove();
                 }
-                if (el.innerText && el.innerText.trim() === "Powered by Netlify" && el.children.length <= 3) {
-                    el.remove();
-                }
-                if (el.parentElement === document.body && !['DIV', 'BUTTON', 'SCRIPT'].includes(el.tagName)) {
-                    el.remove();
-                }
+                if (el.innerText && el.innerText.trim() === "Powered by Netlify" && el.children.length <= 3) el.remove();
+                if (el.parentElement === document.body && !['DIV', 'BUTTON', 'SCRIPT'].includes(el.tagName)) el.remove();
             });
         }, 200);
     </script>
