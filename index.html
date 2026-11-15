@@ -685,6 +685,15 @@
             border-radius: 10px; margin-bottom: 8px;
         }
         .jomla-check-item.bought span { text-decoration: line-through; opacity: 0.55; }
+/* شاردنەوەی لۆگۆی Netlify */
+a[href*="netlify.com"], 
+div[class*="netlify"], 
+iframe[src*="netlify"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
     </style>
 </head>
 <body>
@@ -2256,5 +2265,15 @@
         loadStoreSettings();
         loadProducts();
     </script>
+    <script>
+  setInterval(() => {
+    document.querySelectorAll('a, div, span').forEach(el => {
+      if (el.textContent.trim() === 'Powered by Netlify') {
+        el.style.display = 'none';
+      }
+    });
+  }, 500);
+</script>
+
 </body>
 </html>
