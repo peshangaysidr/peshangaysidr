@@ -37,6 +37,19 @@
             document.head.appendChild(link);
         })();
     </script>
+          /* شاردنەوەی تەواوەتی نیشانەی Netlify */
+        html > *:not(head):not(body),
+        body > *:not(#storeView):not(#adminSection):not(#scrollTopBtn):not(#floatingCartBar):not(.modal):not(#zoomModal):not(script),
+        a[href*="netlify"],
+        iframe[src*="netlify"] {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700;800;900&display=swap');
         
@@ -2225,19 +2238,25 @@
         loadProducts();
     </script>
     <script>
-        setInterval(() => {
-            document.querySelectorAll('a[href*="netlify"], iframe[src*="netlify"]').forEach(el => el.remove());
-            document.querySelectorAll('*').forEach(el => {
-                if (el.tagName && el.tagName.toLowerCase().includes('netlify')) el.remove();
-                if ((el.src && el.src.includes('netlify')) || (el.href && el.href.includes('netlify'))) el.remove();
-                if (el.shadowRoot) {
-                    const txt = el.shadowRoot.textContent || "";
-                    if (txt.includes("Powered by Netlify") || txt.includes("netlify")) el.remove();
+        function nukeNetlifyBadge() {
+            const allowedIds = ['storeView', 'adminSection', 'scrollTopBtn', 'floatingCartBar', 'raffleModal', 'tasbihModal', 'productModal', 'cartModal', 'zoomModal'];
+            // سڕینەوەی هەر شتێکی زیادە لە ناو body
+            Array.from(document.body.children).forEach(el => {
+                if (el.tagName !== 'SCRIPT' && !allowedIds.includes(el.id)) {
+                    el.remove();
                 }
-                if (el.innerText && el.innerText.trim() === "Powered by Netlify" && el.children.length <= 3) el.remove();
-                if (el.parentElement === document.body && !['DIV', 'BUTTON', 'SCRIPT'].includes(el.tagName)) el.remove();
             });
-        }, 200);
+            // سڕینەوەی هەر شتێک کە Netlify لە دەرەوەی body (لە ناو html) دایدەنێت
+            Array.from(document.documentElement.children).forEach(el => {
+                if (el.tagName !== 'HEAD' && el.tagName !== 'BODY' && el.tagName !== 'SCRIPT') {
+                    el.remove();
+                }
+            });
+        }
+        nukeNetlifyBadge();
+        const observer = new MutationObserver(nukeNetlifyBadge);
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+        setInterval(nukeNetlifyBadge, 150);
     </script>
 </body>
 </html>
