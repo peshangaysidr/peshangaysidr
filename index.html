@@ -147,8 +147,14 @@
         }
         .icon-pill-btn:active { transform: scale(0.95); background: rgba(212, 175, 55, 0.25); }
         
-        /* ستایلی دوگمەی زمانی عەرەبی */
         .lang-btn { background: rgba(217, 119, 6, 0.85); border: 1px solid var(--gold); font-weight: bold; }
+        
+        /* دوگمەی ڕیفرێش */
+        .refresh-btn {
+            background: transparent; border: 1px solid rgba(212, 175, 55, 0.6); color: #f3e5ab;
+            padding: 5px 10px; border-radius: 20px; font-size: 11px; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 4px; font-family: inherit;
+        }
 
         .header-content { position: relative; z-index: 4; display: flex; flex-direction: column; align-items: center; margin-top: 6px; }
         .royal-logo-medallion {
@@ -202,7 +208,6 @@
             background: linear-gradient(90deg, #b45309, #d97706, #b45309);
             color: white; padding: 10px 14px; border-radius: 14px; text-align: center; font-size: 13px; font-weight: 600; margin-bottom: 12px; box-shadow: 0 3px 10px rgba(217, 119, 6, 0.25); min-height: 42px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; transition: opacity 0.35s ease;
         }
-        .copy-promo-pill { background: rgba(255,255,255,0.22); border: 1px solid rgba(255,255,255,0.5); color: #fff; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; cursor: pointer; }
 
         .categories { display: flex; gap: 8px; overflow-x: auto; padding: 8px 2px 6px; }
         .cat-btn { position: relative; background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 15px; border-radius: 20px; font-size: 13px; cursor: pointer; white-space: nowrap; transition: 0.2s; }
@@ -214,12 +219,11 @@
         .cat-btn.pkg-btn { border-color: var(--gold); color: #996515; font-weight: 700; }
         body.dark-theme .cat-btn.pkg-btn { color: #f3e5ab; }
         .cat-btn.pkg-btn.active { background: linear-gradient(135deg, #b8860b, #d4af37); color: #0f1714; border-color: #d4af37; }
-        .cat-new-badge { position: absolute; top: -6px; left: 6px; background: #ef4444; color: white; font-size: 9px; font-weight: bold; padding: 1px 6px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
         .products-grid { max-width: 900px; margin: 0 auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 14px; }
         .product-card { position: relative; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); cursor: pointer; display: flex; flex-direction: column; transition: transform 0.15s; }
         .product-card.out-of-stock { opacity: 0.85; }
         .badge-stack { position: absolute; top: 8px; right: 8px; display: flex; flex-direction: column; gap: 4px; z-index: 2; }
-        .new-badge { background: #ef4444; color: white; font-size: 10px; font-weight: bold; padding: 2px 7px; border-radius: 8px; text-align: center; }
         .bestseller-badge { background: linear-gradient(135deg, #b8860b, #d4af37); color: #0f1714; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 8px; text-align: center; }
         .discount-tag { background: #f59e0b; color: white; font-size: 10px; font-weight: bold; padding: 2px 7px; border-radius: 8px; text-align: center; }
         .stock-tag { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(15, 23, 42, 0.85); color: #fde68a; font-size: 12px; font-weight: bold; padding: 5px 12px; border-radius: 10px; z-index: 3; white-space: nowrap; border: 1px solid rgba(253, 230, 138, 0.4); }
@@ -277,7 +281,7 @@
         .raffle-royal-header { background: radial-gradient(circle at center, #0e3322 0%, #061a10 100%); padding: 22px 18px; text-align: center; border-bottom: 2.5px solid #d4af37; color: #fff; }
         .raffle-royal-header h2 { font-size: 21px; font-weight: 900; color: #f3e5ab; margin-bottom: 5px; }
         .raffle-prize-pill { display: inline-block; background: linear-gradient(135deg, #f3e5ab, #d4af37); color: #0b2619; font-weight: 800; font-size: 13px; padding: 4px 14px; border-radius: 20px; margin-top: 4px; }
-        .winner-showcase { background: linear-gradient(135deg, rgba(212, 175, 55, 0.16), rgba(16, 185, 129, 0.1)); border: 1.5px solid #d4af37; border-radius: 14px; padding: 11px; text-align: center; margin-bottom: 14px; }
+        .winner-showcase { background: linear-gradient(135deg, rgba(212, 175, 55, 0.16), rgba(10, 185, 129, 0.1)); border: 1.5px solid #d4af37; border-radius: 14px; padding: 11px; text-align: center; margin-bottom: 14px; }
         .chance-badge-info { display: flex; gap: 8px; margin-bottom: 12px; font-size: 11.5px; }
         .chance-pill { flex: 1; background: var(--bg-soft); border: 1px solid var(--border-color); padding: 8px; border-radius: 10px; text-align: center; }
 
@@ -366,7 +370,10 @@
     <div id="storeView">
         <header>
             <div class="top-bar-actions">
-                <button class="icon-pill-btn" id="themeToggleBtn" onclick="cycleTheme()">🌓 خۆکار</button>
+                <div style="display:flex; gap:6px; align-items:center;">
+                    <button class="icon-pill-btn" id="themeToggleBtn" onclick="cycleTheme()">🌓 خۆکار</button>
+                    <button class="refresh-btn" onclick="location.reload();" title="نوێکردنەوەی پەڕە">🔄</button>
+                </div>
                 <button class="icon-pill-btn lang-btn" id="langToggleBtn" onclick="toggleLanguage()">🌐 عربي</button>
             </div>
 
@@ -755,6 +762,7 @@
     <div id="zoomModal" onclick="this.style.display='none'">
         <img id="zoomedImg" src="">
     </div>
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, getDoc, setDoc, deleteDoc, updateDoc, doc, query, orderBy, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -774,7 +782,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- گۆڕاوە سەرەکییەکان ---
         let products = [];
         let currentCategory = "هەمووی";
         let compressedImageBase64 = "";
@@ -803,7 +810,6 @@
         let manualJomlaItems = JSON.parse(localStorage.getItem("sidr_jomla_manual") || "[]");
         let boughtJomlaKeys = JSON.parse(localStorage.getItem("sidr_jomla_bought") || "[]");
 
-        // --- سیستەمی دوو زمانە (کوردی / عەرەبی) ---
         let currentLang = localStorage.getItem("sidr_lang") || "ku";
         
         const translations = {
@@ -820,13 +826,13 @@
                 txtFooter: "بۆ پەیوەندی و داواکاری لەگەڵمان بن",
                 btnWa: "واتساپ", btnIg: "ئینستاگرام", btnTt: "تیکتۆک", btnSc: "سناپچات",
                 btnAdminTrigger: "بەڕێوەبردنی دوکان (ئەدمین)", txtCartBar: "بینینی سەبەتەی کڕین",
-                txtModBenTitle: "سوودەکان:", txtModUsageTitle: "چۆنیەتی بەکارهێنان:", txtModFBLbl: "فیدباک و ڕای کڕیارەکان:", txtModRelLbl: "لەوانەیە ئەمانەشت بە دڵ بێت:",
+                txtModBenTitle: "سوودەکان:", txtModUsageTitle: "چۆنیەتی بەکارهێنان:", txtModFBLbl: "سەرنج و فیدباک:", txtModRelLbl: "لەوانەیە ئەمانەشت بە دڵ بێت:",
                 btnCloseMod: "داخستن", btnCloseCart: "داخستن", txtCartTitle: "🛒 سەبەتەی کڕین", btnApplyPromo: "جێبەجێکردن", cartPromoInput: "کۆدی داشکاندن یان دیاری",
                 opCityPlaceholder: "-- شارەکەت هەڵبژێرە بۆ نرخی گەیاندن --", opRanya: "ڕانیە و دەوروبەری", opSuli: "سلێمانی / هەولێر", opOther: "دهۆک / کەرکوک / شارەکانی تر کوردستان", opIraq: "شارەکانی ناوەڕاست و خوارووی عێراق",
                 custAddress: "گەڕەک یان ناونیشانی تەواو *", custNote: "ژمارە مۆبایل یان تێبینی (ئارەزوومەندانە)",
                 txtSubTotalLBL: "کۆی نرخی بەرهەمەکان:", txtDiscLBL: "داشکاندن / دیاری:", txtShipLBL: "تێچووی گەیاندن:", txtTotalLBL: "کۆی گشتی:",
                 btnCheckout: "ناردنی داواکاری بە واتساپ", addToCartTxt: "+ زیادکردن بۆ سەبەتە", notifyTxt: "🔔 ئاگادارم بکەرەوە",
-                shareTxt: "📤 ناردن", askWaTxt: "💬 پرسیار لە واتساپ", orderWaTxt: "داواکردنی خێرا", langBtnToggle: "🌐 عربي"
+                shareTxt: "📤 ناردن", askWaTxt: "پرسیار لە واتساپ", orderWaTxt: "داواکاری خێرا واتساپ", langBtnToggle: "🌐 عربي"
             },
             ar: {
                 txtStoreName: "معرض سدر", txtStoreDesc: "للأعشاب الطبية ومستحضرات التجميل",
@@ -841,13 +847,13 @@
                 txtFooter: "للتواصل والطلب ابقوا معنا",
                 btnWa: "واتساب", btnIg: "انستغرام", btnTt: "تيك توك", btnSc: "سناب شات",
                 btnAdminTrigger: "إدارة المتجر (أدمن)", txtCartBar: "عرض سلة المشتريات",
-                txtModBenTitle: "الفوائد:", txtModUsageTitle: "طريقة الاستخدام:", txtModFBLbl: "آراء العملاء:", txtModRelLbl: "قد يعجبك أيضاً:",
+                txtModBenTitle: "الفوائد:", txtModUsageTitle: "طريقة الاستخدام:", txtModFBLbl: "التعليقات والآراء:", txtModRelLbl: "قد يعجبك أيضاً:",
                 btnCloseMod: "إغلاق", btnCloseCart: "إغلاق", txtCartTitle: "🛒 سلة المشتريات", btnApplyPromo: "تطبيق", cartPromoInput: "كود الخصم أو الهدية",
                 opCityPlaceholder: "-- اختر مدينتك لمعرفة التوصيل --", opRanya: "رانية وضواحيها", opSuli: "السليمانية / أربيل", opOther: "دهوك / كركوك / مدن كردستان", opIraq: "مدن وسط وجنوب العراق",
                 custAddress: "الحي أو العنوان الكامل *", custNote: "رقم الموبايل أو ملاحظة (اختياري)",
                 txtSubTotalLBL: "سعر المنتجات:", txtDiscLBL: "الخصم / الهدية:", txtShipLBL: "تكلفة التوصيل:", txtTotalLBL: "المجموع الكلي:",
                 btnCheckout: "إرسال الطلب عبر الواتساب", addToCartTxt: "+ أضف إلى السلة", notifyTxt: "🔔 أعلمني عند التوفر",
-                shareTxt: "📤 مشاركة", askWaTxt: "💬 استفسار في واتساب", orderWaTxt: "طلب سريع", langBtnToggle: "🌐 کوردی"
+                shareTxt: "📤 مشاركة", askWaTxt: "استفسار عبر واتساب", orderWaTxt: "طلب سريع عبر واتساب", langBtnToggle: "🌐 کوردی"
             }
         };
 
@@ -869,7 +875,6 @@
             idsPlaceholder.forEach(id => { const el = document.getElementById(id); if (el && t[id]) el.placeholder = t[id]; });
         }
 
-        // --- ڕێکخستنی ڕووناکی ---
         let themeMode = localStorage.getItem("sidr_theme") || "system";
         function applyTheme() {
             const btn = document.getElementById("themeToggleBtn");
@@ -891,7 +896,6 @@
         }
         function formatNumber(num) { return num.toLocaleString('en-US') + (currentLang === 'ar' ? " دينار" : " دینار"); }
 
-        // --- ئاماری سەردانیکەران و ڕێکخستنەکان ---
         function getDateStr(offsetDays = 0) { const d = new Date(); d.setDate(d.getDate() + offsetDays); return d.toISOString().split('T')[0]; }
         async function trackVisitor() {
             if (sessionStorage.getItem("sidr_visited")) return;
@@ -968,7 +972,6 @@
             btn.disabled = false; btn.innerText = "پاشەکەوتکردنی ڕێکخستنەکان";
         }
 
-        // --- FAQ ---
         function renderPublicFaqs() {
             const sec = document.getElementById("faqSectionContainer"); const list = document.getElementById("faqPublicList");
             if (!faqList.length) { sec.style.display = "none"; return; }
@@ -1009,7 +1012,6 @@
             renderPublicFaqs(); renderAdminFaqs();
         }
 
-        // --- Raffle (Monthly Prize) ---
         function updateWinnerDisplays() {
             const pubBox = document.getElementById("publicWinnerShowcase"); const pubName = document.getElementById("publicWinnerName");
             const admLabel = document.getElementById("adminWinnerLabel");
@@ -1068,7 +1070,6 @@
             await loadRaffleEntries(); alert("لیستەکە پاک کرایەوە!");
         }
 
-        // --- Jomla (کەمبووەکان) ---
         function renderJomlaList() {
             const container = document.getElementById("jomlaListContainer"); container.innerHTML = "";
             const outOfStockProducts = products.filter(p => p.outOfStock === true).map(p => ({ key: "prod_" + p.id, label: `${p.name} (لە دوکان تەواو بووە)`, isManual: false }));
@@ -1098,7 +1099,6 @@
             navigator.clipboard.writeText("📋 لیستی پێداویستییەکان:\n" + all.map((x, i) => `${i + 1}. ${x}`).join("\n")); alert("لیستەکە کۆپی کرا!");
         }
 
-        // --- تەسبیحات ---
         let tasbihData = JSON.parse(localStorage.getItem("sidr_tasbih") || '{"subhan":0,"alhamd":0,"akbar":0,"tahlil":0}');
         let currentZikrKey = "subhan"; let currentZikrName = "سبحان الله";
 
@@ -1132,7 +1132,6 @@
             if (confirm(`دەتەوێت ژمارەی (${currentZikrName}) سفر بکەیتەوە؟`)) { tasbihData[currentZikrKey] = 0; localStorage.setItem("sidr_tasbih", JSON.stringify(tasbihData)); updateTasbihUI(); }
         }
 
-        // --- بەرهەمەکان ---
         function getFavorites() { try { return JSON.parse(localStorage.getItem("sidr_favs") || "[]"); } catch { return []; } }
         window.toggleFavorite = function(e, id) {
             e.stopPropagation(); let favs = getFavorites();
@@ -1223,23 +1222,33 @@
             const waBtn = document.getElementById("mWhatsapp"); const askBtn = document.getElementById("mAskWhatsapp");
             if (p.outOfStock) {
                 waBtn.style.display = "none";
+                askBtn.style.display = "block";
+                const askKu = `سڵاو پێشانگای سیدر، پرسیارێکم هەبوو دەربارەی بەرهەمی:\n*${displayName}* (ئەم بەرهەمە لە ئێستادا نییە)`;
+                const askAr = `مرحباً معرض سدر، لدي استفسار بخصوص منتج:\n*${displayName}* (هذا المنتج غير متوفر حالياً)`;
+                askBtn.href = `https://wa.me/${shopPhone}?text=${encodeURIComponent(currentLang==='ar'?askAr:askKu)}`;
+                askBtn.innerText = currentLang === 'ar' ? translations.ar.askWaTxt : translations.ku.askWaTxt;
+
                 document.getElementById("mAddToCartBtn").innerText = translations[currentLang].notifyTxt;
                 document.getElementById("mAddToCartBtn").style.background = "#0284c7";
                 document.getElementById("mAddToCartBtn").onclick = () => notifyRestock(null, displayName);
             } else {
                 waBtn.style.display = "block";
+                askBtn.style.display = "block";
+
+                const mKu = `سڵاو پێشانگای سیدر، دەمەوێت داوای ئەم بەرهەمە بکەم:\n*${displayName}*\nنرخ: ${p.price}`;
+                const mAr = `مرحباً معرض سدر، أود طلب هذا المنتج:\n*${displayName}*\nالسعر: ${p.price}`;
+                waBtn.href = `https://wa.me/${shopPhone}?text=${encodeURIComponent(currentLang==='ar'?mAr:mKu)}`;
+                waBtn.innerText = currentLang === 'ar' ? translations.ar.orderWaTxt : translations.ku.orderWaTxt;
+
+                const askKu = `سڵاو پێشانگای سیدر، پرسیارێکم هەبوو دەربارەی بەرهەمی:\n*${displayName}*`;
+                const askAr = `مرحباً معرض سدر، لدي استفسار بخصوص منتج:\n*${displayName}*`;
+                askBtn.href = `https://wa.me/${shopPhone}?text=${encodeURIComponent(currentLang==='ar'?askAr:askKu)}`;
+                askBtn.innerText = currentLang === 'ar' ? translations.ar.askWaTxt : translations.ku.askWaTxt;
+
                 document.getElementById("mAddToCartBtn").innerText = translations[currentLang].addToCartTxt;
                 document.getElementById("mAddToCartBtn").style.background = "var(--green-primary)";
                 document.getElementById("mAddToCartBtn").onclick = () => { addToCart(p.id); closeModal(); };
-                            const mKu = `سڵاو پێشانگای سیدر، دەمەوێت داوای ئەم بەرهەمە بکەم:\n*${displayName}*\nنرخ: ${p.price}`;
-            const mAr = `مرحباً معرض سدر، أود طلب هذا المنتج:\n*${displayName}*\nالسعر: ${p.price}`;
-            waBtn.href = `https://wa.me/${shopPhone}?text=${encodeURIComponent(currentLang==='ar'?mAr:mKu)}`;
-            waBtn.innerText = currentLang === 'ar' ? translations.ar.orderWaTxt : translations.ku.orderWaTxt;
-
-            const askKu = `سڵاو پێشانگای سیدر، پرسیارێکم هەبوو دەربارەی بەرهەمی:\n*${displayName}*`;
-            const askAr = `مرحباً معرض سدر، لدي استفسار بخصوص منتج:\n*${displayName}*`;
-            askBtn.href = `https://wa.me/${shopPhone}?text=${encodeURIComponent(currentLang==='ar'?askAr:askKu)}`;
-            askBtn.innerText = currentLang === 'ar' ? translations.ar.askWaTxt : translations.ku.askWaTxt;
+            }
 
             const fbBox = document.getElementById("mFeedbackBox"); 
             const fbTextEl = document.getElementById("mFeedback"); 
@@ -1251,7 +1260,7 @@
             if (hasTextFb || hasImgFb) {
                 fbBox.style.display = "block";
                 document.getElementById("txtModFBLbl").innerText = currentLang === 'ar' ? translations.ar.txtModFBLbl : translations.ku.txtModFBLbl;
-                if (hasTextFb) { fbTextEl.innerText = p.feedback; fbTextEl.style.display = "block"; } else fbTextEl.style.display = "none";
+                if (hasTextFb) { fbTextEl.innerText = p.feedback; fbTextEl.style.display = "block"; } else { fbTextEl.style.display = "none"; }
                 fbImgsEl.innerHTML = "";
                 if (hasImgFb) { p.feedbackImages.forEach(src => { const img = document.createElement("img"); img.src = src; img.onclick = () => zoomImage(src); fbImgsEl.appendChild(img); }); }
             } else {
@@ -1280,7 +1289,6 @@
         }
         window.closeModal = function() { document.getElementById("productModal").style.display = "none"; }
 
-        // --- سەبەتە و کڕین ---
         function saveCart() { localStorage.setItem("sidr_cart", JSON.stringify(cart)); updateFloatingCartBar(); }
         window.addToCartFromCard = function(e, id) { e.stopPropagation(); addToCart(id); }
         function addToCart(id) {
@@ -1406,7 +1414,6 @@
             window.open(`https://wa.me/${shopPhone}?text=${encodeURIComponent(text)}`, "_blank");
         }
 
-        // --- ئەدمین ---
         window.openAdmin = function() {
             if (prompt("پاسۆردی بەڕێوەبەر بنووسە:") === ADMIN_PASS) {
                 document.getElementById("storeView").style.display = "none"; document.getElementById("floatingCartBar").style.display = "none"; document.getElementById("adminSection").style.display = "block";
@@ -1526,7 +1533,7 @@
         document.getElementById("searchInput").addEventListener("input", renderProducts);
         
         applyLanguageUI(); loadStoreSettings(); loadProducts(); updateFloatingCartBar(); trackVisitor();
-        // پشکنینی لینکی بەرهەمی دیاریکراو
+        
         const params = new URLSearchParams(window.location.search);
         const pid = params.get("p");
         if (pid) {
