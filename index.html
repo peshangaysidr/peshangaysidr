@@ -1231,22 +1231,32 @@
                 document.getElementById("mAddToCartBtn").innerText = translations[currentLang].addToCartTxt;
                 document.getElementById("mAddToCartBtn").style.background = "var(--green-primary)";
                 document.getElementById("mAddToCartBtn").onclick = () => { addToCart(p.id); closeModal(); };
-                const mKu = `سڵاو پێشانگای سیدر، دەمەوێت داوای ئەم بەرهەمە بکەم:\n*${displayName}*\nنرخ: ${p.price}`;
-                const mAr = `مرحباً معرض سدر، أود طلب هذا المنتج:\n*${displayName}*\nالسعر: ${p.price}`;
-                waBtn.href = `https://wa.me/${shopPhone}?text=${encodeURIComponent(currentLang==='ar'?mAr:mKu)}`;
-            }
+                            const mKu = `سڵاو پێشانگای سیدر، دەمەوێت داوای ئەم بەرهەمە بکەم:\n*${displayName}*\nنرخ: ${p.price}`;
+            const mAr = `مرحباً معرض سدر، أود طلب هذا المنتج:\n*${displayName}*\nالسعر: ${p.price}`;
+            waBtn.href = `https://wa.me/${shopPhone}?text=${encodeURIComponent(currentLang==='ar'?mAr:mKu)}`;
+            waBtn.innerText = currentLang === 'ar' ? translations.ar.orderWaTxt : translations.ku.orderWaTxt;
 
-            const askKu = `سڵاو پێشانگای سیدر، پرسیارێکم هەبوو دەربارەی بەرهەمی:\n*${displayName}*`; const askAr = `مرحباً معرض سدر، لدي استفسار بخصوص منتج:\n*${displayName}*`;
+            const askKu = `سڵاو پێشانگای سیدر، پرسیارێکم هەبوو دەربارەی بەرهەمی:\n*${displayName}*`;
+            const askAr = `مرحباً معرض سدر، لدي استفسار بخصوص منتج:\n*${displayName}*`;
             askBtn.href = `https://wa.me/${shopPhone}?text=${encodeURIComponent(currentLang==='ar'?askAr:askKu)}`;
+            askBtn.innerText = currentLang === 'ar' ? translations.ar.askWaTxt : translations.ku.askWaTxt;
 
-            const fbBox = document.getElementById("mFeedbackBox"); const fbTextEl = document.getElementById("mFeedback"); const fbImgsEl = document.getElementById("mFeedbackImages");
-            const hasTextFb = p.feedback && p.feedback.trim() !== ""; const hasImgFb = Array.isArray(p.feedbackImages) && p.feedbackImages.length > 0;
+            const fbBox = document.getElementById("mFeedbackBox"); 
+            const fbTextEl = document.getElementById("mFeedback"); 
+            const fbImgsEl = document.getElementById("mFeedbackImages");
+            
+            const hasTextFb = p.feedback && p.feedback.trim() !== ""; 
+            const hasImgFb = Array.isArray(p.feedbackImages) && p.feedbackImages.length > 0;
+            
             if (hasTextFb || hasImgFb) {
                 fbBox.style.display = "block";
+                document.getElementById("txtModFBLbl").innerText = currentLang === 'ar' ? translations.ar.txtModFBLbl : translations.ku.txtModFBLbl;
                 if (hasTextFb) { fbTextEl.innerText = p.feedback; fbTextEl.style.display = "block"; } else fbTextEl.style.display = "none";
                 fbImgsEl.innerHTML = "";
                 if (hasImgFb) { p.feedbackImages.forEach(src => { const img = document.createElement("img"); img.src = src; img.onclick = () => zoomImage(src); fbImgsEl.appendChild(img); }); }
-            } else fbBox.style.display = "none";
+            } else {
+                fbBox.style.display = "none";
+            }
 
             const relSec = document.getElementById("relatedSection"); const relGrid = document.getElementById("relatedGrid");
             const relItems = products.filter(x => x.category === p.category && x.id !== p.id).slice(0, 4);
