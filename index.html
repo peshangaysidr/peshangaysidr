@@ -20,7 +20,7 @@
     <!-- سکریپتی جێگیر بۆ پاککردنەوەی Netlify (بێ زیان گەیاندن بە ماڵپەڕەکە) -->
     <script>
         (function() {
-            const safeIds = ['storeView', 'adminSection', 'scrollTopBtn', 'floatingCartBar', 'raffleModal', 'tasbihModal', 'productModal', 'cartModal', 'zoomModal'];
+            const safeIds = ['storeView', 'adminSection', 'scrollTopBtn', 'floatingCartBar', 'raffleModal', 'tasbihModal', 'productModal', 'cartModal', 'storyViewModal', 'zoomModal'];
             function cleanNetlify() {
                 document.querySelectorAll('a[href*="netlify"], iframe[src*="netlify"], div[class*="netlify"], #netlify-badge').forEach(el => el.remove());
                 if (document.body) {
@@ -46,8 +46,8 @@
                 short_name: "پێشانگای سیدر",
                 start_url: location.origin + location.pathname,
                 display: "standalone",
-                background_color: "#092216",
-                theme_color: "#092216",
+                background_color: "#061c12",
+                theme_color: "#061c12",
                 icons: [
                     { src: location.origin + "/IMG_3196.jpeg", sizes: "192x192", type: "image/jpeg" },
                     { src: location.origin + "/IMG_3196.jpeg", sizes: "512x512", type: "image/jpeg" }
@@ -64,7 +64,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700;800;900&display=swap');
         
-        /* دڵنیایی زیاتر بۆ شاردنەوەی لۆگۆی Netlify */
         html > *:not(head):not(body),
         body > *:not(#storeView):not(#adminSection):not(#scrollTopBtn):not(#floatingCartBar):not(.modal):not(#zoomModal):not(script),
         a[href*="netlify.com"], div[class*="netlify"], iframe[src*="netlify"], #netlify-badge {
@@ -72,33 +71,33 @@
         }
 
         :root {
-            --bg-body: #f4f7f6;
+            --bg-body: #f1f5f3;
             --bg-card: #ffffff;
-            --bg-soft: #f8faf9;
+            --bg-soft: #f6faf8;
             --text-main: #2d3436;
-            --text-title: #1b4332;
+            --text-title: #0d3322;
             --text-muted: #64748b;
-            --border-color: #d8e2dc;
+            --border-color: #d4e0da;
             --input-bg: #ffffff;
-            --shadow-card: 0 3px 10px rgba(0,0,0,0.06);
-            --header-grad: radial-gradient(circle at center, #0e3322 0%, #071e13 100%);
+            --shadow-card: 0 3px 10px rgba(6, 28, 18, 0.08);
+            --header-grad: radial-gradient(circle at center, #0e3825 0%, #051910 100%);
             --gold: #d4af37;
             --gold-light: #f3e5ab;
             --amber: #d97706;
-            --green-primary: #2d6a4f;
+            --green-primary: #154c33;
         }
 
         body.dark-theme {
-            --bg-body: #0d1512;
-            --bg-card: #16221e;
-            --bg-soft: #1d2b26;
-            --text-main: #e2e8f0;
-            --text-title: #a7f3d0;
-            --text-muted: #94a3b8;
-            --border-color: #2c4039;
-            --input-bg: #1d2b26;
-            --shadow-card: 0 4px 14px rgba(0,0,0,0.38);
-            --header-grad: radial-gradient(circle at center, #0c2b1d 0%, #05160e 100%);
+            --bg-body: #07140e;
+            --bg-card: #0e2319;
+            --bg-soft: #132d21;
+            --text-main: #e6ede9;
+            --text-title: #f3e5ab;
+            --text-muted: #9eb3a8;
+            --border-color: #214433;
+            --input-bg: #132d21;
+            --shadow-card: 0 4px 16px rgba(0,0,0,0.45);
+            --header-grad: radial-gradient(circle at center, #0e3825 0%, #04130c 100%);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans Arabic', sans-serif; }
@@ -107,16 +106,16 @@
         header {
             position: relative; background: var(--header-grad); color: white; padding: 58px 18px 54px;
             text-align: center; border-bottom-left-radius: 28px; border-bottom-right-radius: 28px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3); overflow: hidden; border-bottom: 3px solid var(--gold);
+            box-shadow: 0 10px 28px rgba(0,0,0,0.38); overflow: hidden; border-bottom: 3px solid var(--gold);
         }
 
         .royal-frame-outer {
             position: absolute; top: 14px; bottom: 14px; left: 12px; right: 12px;
-            border: 1.5px solid rgba(212, 175, 55, 0.75); border-radius: 16px; pointer-events: none; z-index: 2;
+            border: 1.5px solid rgba(212, 175, 55, 0.8); border-radius: 16px; pointer-events: none; z-index: 2;
         }
         .royal-frame-inner {
             position: absolute; top: 20px; bottom: 20px; left: 18px; right: 18px;
-            border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 12px; pointer-events: none; z-index: 2;
+            border: 1px solid rgba(212, 175, 55, 0.45); border-radius: 12px; pointer-events: none; z-index: 2;
         }
 
         .corner-ornament {
@@ -130,7 +129,7 @@
         .co-bl { bottom: 14px; left: 12px; transform: scaleY(-1); }
 
         .side-foliage {
-            position: absolute; top: 16px; bottom: 16px; width: 115px; z-index: 2; pointer-events: none; opacity: 0.72;
+            position: absolute; top: 16px; bottom: 16px; width: 115px; z-index: 2; pointer-events: none; opacity: 0.78;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 260'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='1.15'%3E%3Cpath d='M10,10 Q45,75 25,155 Q15,205 35,245'/%3E%3Cpath d='M25,22 C45,10 62,18 55,34 C42,38 28,30 25,22 Z'/%3E%3Cpath d='M25,22 L50,30' stroke-width='0.7'/%3E%3Cpath d='M33,48 C58,36 76,46 68,64 C52,68 38,58 33,48 Z'/%3E%3Cpath d='M33,48 L62,58' stroke-width='0.7'/%3E%3Cpath d='M22,58 C6,70 4,88 18,90 C26,80 26,66 22,58 Z'/%3E%3Cpath d='M36,85 C62,74 82,86 72,104 C56,108 42,96 36,85 Z'/%3E%3Cpath d='M36,85 L66,98' stroke-width='0.7'/%3E%3Cpath d='M28,118 C52,110 70,122 60,138 C46,140 34,128 28,118 Z'/%3E%3Cpath d='M28,118 L55,132' stroke-width='0.7'/%3E%3Cpath d='M18,132 C4,144 4,162 18,162 C25,152 24,140 18,132 Z'/%3E%3Cpath d='M24,168 C46,162 62,174 52,188 C40,190 30,178 24,168 Z'/%3E%3Cpath d='M26,204 C44,200 56,212 48,224 C36,225 30,214 26,204 Z'/%3E%3C/g%3E%3C/svg%3E");
             background-size: 100% 100%; background-repeat: no-repeat;
         }
@@ -141,25 +140,22 @@
             position: absolute; top: 24px; left: 24px; right: 24px; display: flex; justify-content: space-between; align-items: center; z-index: 6;
         }
         .icon-pill-btn {
-            background: rgba(7, 30, 19, 0.82); border: 1px solid rgba(212, 175, 55, 0.6);
+            background: rgba(5, 25, 16, 0.85); border: 1px solid rgba(212, 175, 55, 0.65);
             color: #f3e5ab; padding: 5px 11px; border-radius: 20px; font-size: 11px;
             cursor: pointer; backdrop-filter: blur(4px); display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s;
         }
         .icon-pill-btn:active { transform: scale(0.95); background: rgba(212, 175, 55, 0.25); }
-        
-        .lang-btn { background: rgba(217, 119, 6, 0.85); border: 1px solid var(--gold); font-weight: bold; }
-        
-        /* دوگمەی ڕیفرێش */
+        .lang-btn { background: rgba(217, 119, 6, 0.88); border: 1px solid var(--gold); font-weight: bold; }
         .refresh-btn {
-            background: transparent; border: 1px solid rgba(212, 175, 55, 0.6); color: #f3e5ab;
+            background: rgba(5, 25, 16, 0.85); border: 1px solid rgba(212, 175, 55, 0.65); color: #f3e5ab;
             padding: 5px 10px; border-radius: 20px; font-size: 11px; cursor: pointer;
             display: inline-flex; align-items: center; gap: 4px; font-family: inherit;
         }
 
         .header-content { position: relative; z-index: 4; display: flex; flex-direction: column; align-items: center; margin-top: 6px; }
         .royal-logo-medallion {
-            width: 82px; height: 82px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #14452f, #061b11);
-            border: 3px solid #d4af37; box-shadow: 0 0 0 2px #071e13, 0 0 0 3.5px rgba(212, 175, 55, 0.65), 0 8px 20px rgba(0,0,0,0.6);
+            width: 82px; height: 82px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #14452f, #051910);
+            border: 3px solid #d4af37; box-shadow: 0 0 0 2px #051910, 0 0 0 3.5px rgba(212, 175, 55, 0.7), 0 8px 20px rgba(0,0,0,0.65);
             display: flex; align-items: center; justify-content: center; margin-bottom: 12px; position: relative;
         }
         .royal-logo-medallion::before {
@@ -168,21 +164,21 @@
         header h1 {
             font-size: 32px; font-weight: 900; margin-bottom: 6px; letter-spacing: 0.3px;
             background: linear-gradient(to bottom, #fff6d1 0%, #e5be49 52%, #b5891c 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 3px 5px rgba(0,0,0,0.75));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 3px 5px rgba(0,0,0,0.8));
         }
-        header p { font-size: 15px; color: #f5efe6; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.75); }
+        header p { font-size: 15px; color: #f5efe6; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 
-        .controls { position: relative; z-index: 15; max-width: 900px; margin: -22px auto 15px; padding: 0 15px; }
+        .controls { position: relative; z-index: 15; max-width: 900px; margin: -22px auto 10px; padding: 0 15px; }
         .search-sort-row { display: flex; gap: 8px; margin-bottom: 11px; }
         .search-box {
             flex: 1; padding: 13px 16px; border: 1.5px solid var(--border-color); border-radius: 15px;
-            background: var(--bg-card); color: var(--text-main); box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+            background: var(--bg-card); color: var(--text-main); box-shadow: 0 5px 18px rgba(0,0,0,0.14);
             font-size: 14px; outline: none; transition: border-color 0.25s, box-shadow 0.25s;
         }
-        .search-box:focus { border-color: var(--gold); box-shadow: 0 5px 18px rgba(212, 175, 55, 0.22); }
+        .search-box:focus { border-color: var(--gold); box-shadow: 0 5px 18px rgba(212, 175, 55, 0.25); }
         .sort-select {
             padding: 0 10px; border: 1.5px solid var(--border-color); border-radius: 15px;
-            background: var(--bg-card); color: var(--text-main); box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+            background: var(--bg-card); color: var(--text-main); box-shadow: 0 5px 18px rgba(0,0,0,0.14);
             font-size: 13px; outline: none; cursor: pointer;
         }
 
@@ -190,13 +186,13 @@
         .raffle-banner-btn, .tasbih-banner-btn {
             position: relative; border-radius: 15px; padding: 11px 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: transform 0.15s;
         }
-        .raffle-banner-btn { background: linear-gradient(135deg, #0b2b1c, #16442e, #0b2b1c); border: 1.5px solid #d4af37; color: #fff; text-align: right; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.25); }
+        .raffle-banner-btn { background: linear-gradient(135deg, #092618, #14402b, #092618); border: 1.5px solid #d4af37; color: #fff; text-align: right; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.25); }
         .tasbih-banner-btn { background: var(--bg-card); border: 1.5px solid var(--green-primary); color: var(--text-title); text-align: right; box-shadow: var(--shadow-card); }
         .raffle-banner-btn:active, .tasbih-banner-btn:active { transform: scale(0.98); }
         
-        .raffle-icon-glow { width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, #f3e5ab, #d4af37); color: #0b2b1c; font-size: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 12px rgba(212, 175, 55, 0.6); flex-shrink: 0; }
-        .tasbih-icon-box { width: 36px; height: 36px; border-radius: 12px; background: rgba(45, 106, 79, 0.14); color: var(--green-primary); font-size: 19px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        body.dark-theme .tasbih-icon-box { color: #a7f3d0; background: rgba(167, 243, 208, 0.12); }
+        .raffle-icon-glow { width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, #f3e5ab, #d4af37); color: #092618; font-size: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 12px rgba(212, 175, 55, 0.6); flex-shrink: 0; }
+        .tasbih-icon-box { width: 36px; height: 36px; border-radius: 12px; background: rgba(21, 76, 51, 0.16); color: var(--green-primary); font-size: 19px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        body.dark-theme .tasbih-icon-box { color: #f3e5ab; background: rgba(212, 175, 55, 0.15); }
         
         .btn-text-box strong { display: block; font-size: 12.5px; font-weight: 800; line-height: 1.3; }
         .raffle-btn-text strong { color: #f3e5ab; }
@@ -205,60 +201,84 @@
         .tasbih-banner-btn span { color: var(--text-muted); }
 
         .promo-banner {
-            background: linear-gradient(90deg, #b45309, #d97706, #b45309);
-            color: white; padding: 10px 14px; border-radius: 14px; text-align: center; font-size: 13px; font-weight: 600; margin-bottom: 12px; box-shadow: 0 3px 10px rgba(217, 119, 6, 0.25); min-height: 42px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; transition: opacity 0.35s ease;
+            background: linear-gradient(90deg, #9a4708, #c2650a, #9a4708);
+            color: #fff8e7; padding: 10px 14px; border-radius: 14px; text-align: center; font-size: 13px; font-weight: 700; margin-bottom: 10px; border: 1px solid rgba(212, 175, 55, 0.45); box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2); min-height: 42px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; transition: opacity 0.35s ease;
         }
 
-        .categories { display: flex; gap: 8px; overflow-x: auto; padding: 8px 2px 6px; }
-        .cat-btn { position: relative; background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 15px; border-radius: 20px; font-size: 13px; cursor: pointer; white-space: nowrap; transition: 0.2s; }
-        .cat-btn.active, .cat-btn:hover { background: var(--green-primary); color: white; border-color: var(--green-primary); }
+        .categories { display: flex; gap: 8px; overflow-x: auto; padding: 6px 2px 6px; }
+        .cat-btn { position: relative; background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); padding: 7px 14px; border-radius: 20px; font-size: 12.5px; cursor: pointer; white-space: nowrap; transition: 0.2s; }
+        .cat-btn.active, .cat-btn:hover { background: var(--green-primary); color: white; border-color: var(--gold); }
         .cat-btn.discount-btn { border-color: #f59e0b; color: var(--amber); font-weight: 600; }
         .cat-btn.discount-btn.active { background: #d97706; color: white; border-color: #d97706; }
         .cat-btn.fav-btn { border-color: #f43f5e; color: #e11d48; font-weight: 600; }
         .cat-btn.fav-btn.active { background: #e11d48; color: white; border-color: #e11d48; }
         .cat-btn.pkg-btn { border-color: var(--gold); color: #996515; font-weight: 700; }
         body.dark-theme .cat-btn.pkg-btn { color: #f3e5ab; }
-        .cat-btn.pkg-btn.active { background: linear-gradient(135deg, #b8860b, #d4af37); color: #0f1714; border-color: #d4af37; }
+        .cat-btn.pkg-btn.active { background: linear-gradient(135deg, #b8860b, #d4af37); color: #092618; border-color: #d4af37; }
 
-        .products-grid { max-width: 900px; margin: 0 auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 14px; }
-        .product-card { position: relative; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); cursor: pointer; display: flex; flex-direction: column; transition: transform 0.15s; }
+        /* ستایلی ستۆریی ڕۆژانە */
+        .stories-strip {
+            max-width: 900px; margin: 4px auto 12px; padding: 4px 15px;
+            display: flex; gap: 11px; overflow-x: auto; align-items: flex-start;
+        }
+        .story-item {
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            cursor: pointer; flex-shrink: 0; width: 68px; transition: transform 0.15s;
+        }
+        .story-item:active { transform: scale(0.95); }
+        .story-ring {
+            width: 62px; height: 62px; border-radius: 50%; padding: 2.5px;
+            background: linear-gradient(135deg, #fff3b0, #d4af37, #996515);
+            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.28);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .story-ring-inner {
+            width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
+            background: var(--bg-card); border: 2px solid var(--bg-body);
+            display: flex; align-items: center; justify-content: center; font-size: 22px;
+        }
+        .story-ring-inner img { width: 100%; height: 100%; object-fit: cover; }
+        .story-label {
+            font-size: 10.5px; font-weight: 700; color: var(--text-title);
+            text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;
+        }
+
+        /* ٣ ستوون لەسەر مۆبایل (٦ بەرهەم لە یەک شاشەدا) */
+        .products-grid { max-width: 900px; margin: 0 auto; padding: 0 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        @media (min-width: 650px) { .products-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; padding: 0 15px; } }
+
+        .product-card { position: relative; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-card); cursor: pointer; display: flex; flex-direction: column; transition: transform 0.15s; }
         .product-card.out-of-stock { opacity: 0.85; }
-        .badge-stack { position: absolute; top: 8px; right: 8px; display: flex; flex-direction: column; gap: 4px; z-index: 2; }
-        .bestseller-badge { background: linear-gradient(135deg, #b8860b, #d4af37); color: #0f1714; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 8px; text-align: center; }
-        .discount-tag { background: #f59e0b; color: white; font-size: 10px; font-weight: bold; padding: 2px 7px; border-radius: 8px; text-align: center; }
-        .stock-tag { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(15, 23, 42, 0.85); color: #fde68a; font-size: 12px; font-weight: bold; padding: 5px 12px; border-radius: 10px; z-index: 3; white-space: nowrap; border: 1px solid rgba(253, 230, 138, 0.4); }
-        .fav-heart-btn { position: absolute; top: 8px; left: 8px; background: rgba(255,255,255,0.92); border: none; width: 30px; height: 30px; border-radius: 50%; font-size: 16px; cursor: pointer; z-index: 3; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+        .badge-stack { position: absolute; top: 5px; right: 5px; display: flex; flex-direction: column; gap: 3px; z-index: 2; }
+        .bestseller-badge { background: linear-gradient(135deg, #b8860b, #d4af37); color: #092618; font-size: 8px; font-weight: 800; padding: 1.5px 5px; border-radius: 6px; text-align: center; }
+        .discount-tag { background: #f59e0b; color: white; font-size: 8px; font-weight: bold; padding: 1.5px 5px; border-radius: 6px; text-align: center; }
+        .stock-tag { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(6, 28, 18, 0.88); color: #fde68a; font-size: 9.5px; font-weight: bold; padding: 3px 7px; border-radius: 8px; z-index: 3; white-space: nowrap; border: 1px solid rgba(253, 230, 138, 0.45); }
+        .fav-heart-btn { position: absolute; top: 5px; left: 5px; background: rgba(255,255,255,0.92); border: none; width: 23px; height: 23px; border-radius: 50%; font-size: 12px; cursor: pointer; z-index: 3; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
         
-        .img-wrapper { position: relative; width: 100%; height: 160px; background: var(--bg-soft); }
+        .img-wrapper { position: relative; width: 100%; height: 105px; background: var(--bg-soft); }
         .product-img { width: 100%; height: 100%; object-fit: cover; }
-        .product-info { padding: 11px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .product-cat { font-size: 11px; color: #10b981; font-weight: 600; margin-bottom: 3px; }
-        .product-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--text-title); }
-        .price-box { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
-        .product-price { font-size: 14px; font-weight: 700; color: var(--amber); }
-        .old-price { font-size: 11px; color: var(--text-muted); text-decoration: line-through; }
+        .product-info { padding: 7px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .product-cat { font-size: 9px; color: #10b981; font-weight: 600; margin-bottom: 2px; }
+        .product-title { font-size: 11.5px; font-weight: 700; margin-bottom: 4px; color: var(--text-title); line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .price-box { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-bottom: 6px; }
+        .product-price { font-size: 11.5px; font-weight: 700; color: var(--amber); }
+        .old-price { font-size: 9.5px; color: var(--text-muted); text-decoration: line-through; }
         
-        .btn-add-cart-card { width: 100%; padding: 7px; border: none; border-radius: 10px; background: var(--green-primary); color: white; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-add-cart-card { width: 100%; padding: 5px 4px; border: none; border-radius: 8px; background: var(--green-primary); color: white; font-size: 10px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .btn-add-cart-card.notify-card-btn { background: #0284c7; color: white; }
         .btn-add-cart-card:active { transform: scale(0.97); }
         .loading { text-align: center; padding: 40px; color: var(--green-primary); font-weight: bold; grid-column: 1 / -1; }
 
         .floating-cart-bar {
             position: fixed; bottom: 16px; left: 15px; right: 15px; max-width: 550px; margin: 0 auto;
-            background: linear-gradient(135deg, #0f3020, #1b4332); color: white; padding: 13px 18px; border-radius: 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.28); display: none; justify-content: space-between; align-items: center; z-index: 900; cursor: pointer; border: 1.5px solid var(--gold);
+            background: linear-gradient(135deg, #092618, #154c33); color: white; padding: 13px 18px; border-radius: 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.32); display: none; justify-content: space-between; align-items: center; z-index: 900; cursor: pointer; border: 1.5px solid var(--gold);
         }
-        .cart-badge-count { background: var(--gold); color: #0f3020; font-weight: bold; padding: 2px 9px; border-radius: 12px; font-size: 13px; margin-left: 8px; }
+        .cart-badge-count { background: var(--gold); color: #092618; font-weight: bold; padding: 2px 9px; border-radius: 12px; font-size: 13px; margin-left: 8px; }
         .scroll-top-btn { position: fixed; bottom: 80px; right: 16px; width: 42px; height: 42px; background: var(--bg-card); color: var(--text-title); border: 1px solid var(--border-color); border-radius: 50%; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.18); display: none; z-index: 850; }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.68); justify-content: center; align-items: center; padding: 15px; z-index: 1000; }
-        .modal-content { background: var(--bg-card); color: var(--text-main); max-width: 460px; width: 100%; border-radius: 20px; overflow: hidden; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border-color); }
-.modal-img {
-    width: 100%;
-    max-height: 280px;
-    object-fit: contain;
-    background-color: var(--bg-soft);
-    cursor: zoom-in;
-}
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.72); justify-content: center; align-items: center; padding: 15px; z-index: 1000; }
+        .modal-content { background: var(--bg-card); color: var(--text-main); max-width: 460px; width: 100%; border-radius: 20px; overflow: hidden; max-height: 90vh; overflow-y: auto; border: 1px solid var(--gold); }
+        .modal-img { width: 100%; max-height: 280px; object-fit: contain; background-color: var(--bg-soft); cursor: zoom-in; display: block; }
         .modal-body { padding: 18px; }
         .modal-header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
         .modal-title { font-size: 19px; color: var(--text-title); margin-bottom: 4px; }
@@ -284,17 +304,17 @@
         .btn-ask-wa { width: 100%; background: var(--bg-soft); color: var(--text-title); border: 1.5px solid #25D366; text-align: center; padding: 10px; border-radius: 12px; text-decoration: none; font-weight: bold; font-size: 13px; display: block; margin-top: 8px; }
         .btn-close { background: var(--bg-soft); color: var(--text-main); border: 1px solid var(--border-color); padding: 11px 16px; border-radius: 12px; cursor: pointer; font-weight: bold; }
 
-        .raffle-royal-header { background: radial-gradient(circle at center, #0e3322 0%, #061a10 100%); padding: 22px 18px; text-align: center; border-bottom: 2.5px solid #d4af37; color: #fff; }
+        .raffle-royal-header { background: radial-gradient(circle at center, #0e3825 0%, #051910 100%); padding: 22px 18px; text-align: center; border-bottom: 2.5px solid #d4af37; color: #fff; }
         .raffle-royal-header h2 { font-size: 21px; font-weight: 900; color: #f3e5ab; margin-bottom: 5px; }
-        .raffle-prize-pill { display: inline-block; background: linear-gradient(135deg, #f3e5ab, #d4af37); color: #0b2619; font-weight: 800; font-size: 13px; padding: 4px 14px; border-radius: 20px; margin-top: 4px; }
+        .raffle-prize-pill { display: inline-block; background: linear-gradient(135deg, #f3e5ab, #d4af37); color: #092618; font-weight: 800; font-size: 13px; padding: 4px 14px; border-radius: 20px; margin-top: 4px; }
         .winner-showcase { background: linear-gradient(135deg, rgba(212, 175, 55, 0.16), rgba(10, 185, 129, 0.1)); border: 1.5px solid #d4af37; border-radius: 14px; padding: 11px; text-align: center; margin-bottom: 14px; }
         .chance-badge-info { display: flex; gap: 8px; margin-bottom: 12px; font-size: 11.5px; }
         .chance-pill { flex: 1; background: var(--bg-soft); border: 1px solid var(--border-color); padding: 8px; border-radius: 10px; text-align: center; }
 
         .tasbih-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
         .tasbih-tab-btn { padding: 10px 8px; border-radius: 12px; border: 1.5px solid var(--border-color); background: var(--bg-soft); color: var(--text-main); font-size: 13.5px; font-weight: 700; cursor: pointer; transition: 0.2s; }
-        .tasbih-tab-btn.active { background: linear-gradient(135deg, #0b2b1c, #1b4332); color: #f3e5ab; border-color: #d4af37; }
-        .tasbih-circle-btn { width: 195px; height: 195px; border-radius: 50%; margin: 10px auto 14px; background: radial-gradient(circle at 35% 30%, #16442e, #082014); border: 4px solid #d4af37; box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.22), 0 10px 25px rgba(0,0,0,0.3); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; user-select: none; transition: transform 0.08s; }
+        .tasbih-tab-btn.active { background: linear-gradient(135deg, #092618, #154c33); color: #f3e5ab; border-color: #d4af37; }
+        .tasbih-circle-btn { width: 195px; height: 195px; border-radius: 50%; margin: 10px auto 14px; background: radial-gradient(circle at 35% 30%, #154c33, #061c12); border: 4px solid #d4af37; box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.22), 0 10px 25px rgba(0,0,0,0.3); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; user-select: none; transition: transform 0.08s; }
         .tasbih-circle-btn:active { transform: scale(0.95); }
         .tasbih-zikr-label { font-size: 18px; font-weight: 800; color: #f3e5ab; margin-bottom: 4px; }
         .tasbih-count-num { font-size: 42px; font-weight: 900; color: #ffffff; line-height: 1.1; }
@@ -317,7 +337,7 @@
         .summary-line { display: flex; justify-content: space-between; margin-bottom: 5px; }
         .summary-total { font-weight: bold; font-size: 16px; color: var(--amber); border-top: 1px solid var(--border-color); padding-top: 6px; margin-top: 6px; }
 
-        #zoomModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); justify-content: center; align-items: center; z-index: 2000; padding: 15px; }
+        #zoomModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 2000; padding: 15px; }
         #zoomModal img { max-width: 100%; max-height: 90vh; border-radius: 12px; }
 
         .faq-section { max-width: 650px; margin: 35px auto 10px; padding: 0 15px; }
@@ -333,7 +353,7 @@
         .social-footer p { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; font-weight: 600; }
         .social-links { display: flex; justify-content: center; gap: 9px; flex-wrap: wrap; }
         .social-btn { padding: 9px 14px; border-radius: 12px; text-decoration: none; font-size: 13px; font-weight: bold; color: white; display: inline-flex; align-items: center; gap: 5px; }
-        .s-call { background: linear-gradient(135deg, #1b4332, #2d6a4f); border: 1px solid var(--gold); }
+        .s-call { background: linear-gradient(135deg, #0e3825, #154c33); border: 1px solid var(--gold); }
         .s-wa { background: #25D366; }
         .s-ig { background: #E1306C; }
         .s-tt { background: #111827; }
@@ -343,9 +363,9 @@
         .admin-trigger button { background: transparent; border: none; color: var(--text-muted); font-size: 13px; cursor: pointer; text-decoration: underline; }
 
         #adminSection { max-width: 600px; margin: 20px auto; padding: 0 15px; display: none; }
-        .admin-top-return { width: 100%; margin-bottom: 15px; padding: 12px; background: linear-gradient(135deg, #0b2b1c, #16442e); color: #f3e5ab; border: 1.5px solid #d4af37; border-radius: 14px; font-size: 14px; font-weight: 800; cursor: pointer; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .admin-top-return { width: 100%; margin-bottom: 15px; padding: 12px; background: linear-gradient(135deg, #092618, #154c33); color: #f3e5ab; border: 1.5px solid #d4af37; border-radius: 14px; font-size: 14px; font-weight: 800; cursor: pointer; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .admin-card { background: var(--bg-card); border: 1px solid var(--border-color); border-right: 4px solid var(--gold); padding: 16px; border-radius: 16px; box-shadow: var(--shadow-card); margin-bottom: 20px; }
-        .admin-card-header { background: linear-gradient(135deg, #0b2b1c, #17442f); color: #f3e5ab; padding: 12px 15px; border-radius: 12px; border-bottom: 2.5px solid #d4af37; margin-bottom: 16px; font-size: 16px; font-weight: 800; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.18); letter-spacing: 0.2px; }
+        .admin-card-header { background: linear-gradient(135deg, #092618, #154c33); color: #f3e5ab; padding: 12px 15px; border-radius: 12px; border-bottom: 2.5px solid #d4af37; margin-bottom: 16px; font-size: 16px; font-weight: 800; text-align: center; box-shadow: 0 3px 10px rgba(0,0,0,0.18); letter-spacing: 0.2px; }
         .admin-card label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; }
         .admin-card input[type="text"], .admin-card input[type="number"], .admin-card input[type="file"], .admin-card select, .admin-card textarea { width: 100%; padding: 11px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--input-bg); color: var(--text-main); margin-bottom: 13px; font-size: 14px; outline: none; }
         .admin-card textarea { height: 85px; }
@@ -460,6 +480,9 @@
             </div>
         </div>
 
+        <!-- هێڵی ستۆریی ڕۆژانە -->
+        <div class="stories-strip" id="storiesStrip" style="display:none;"></div>
+
         <div class="products-grid" id="productsContainer">
             <div class="loading" id="txtLoading">چاوەڕێ بە، بەرهەمەکان باردەبن...</div>
         </div>
@@ -500,6 +523,18 @@
         <button type="button" class="admin-top-return" onclick="closeAdmin()">← گەڕانەوە بۆ پێشانگا</button>
 
         <div class="admin-card">
+            <div class="admin-card-header">📸 زیادکردنی ستۆریی ڕۆژانە</div>
+            <label>ناونیشانی کورتی ستۆری:</label>
+            <input type="text" id="storyTitleInput" placeholder="بۆ نموونە: فیدباکی کڕیار / هاتنەوەی بەرهەم">
+            <label>دەق یان وردەکاریی ستۆری:</label>
+            <textarea id="storyTextInput" placeholder="بۆ نموونە: سرکەی سێوی سەوز گەیشتەوە یان ڕای کڕیار..."></textarea>
+            <label>وێنەی ستۆری (ئارەزوومەندانە):</label>
+            <input type="file" id="storyImageFile" accept="image/*" onchange="processStoryImage(event)">
+            <button type="button" class="btn-save" id="publishStoryBtn" onclick="addStoryItem()">+ بڵاوکردنەوەی ستۆری (دێتە سەرەوە)</button>
+            <div id="adminStoriesList" style="margin-top:12px;"></div>
+        </div>
+
+        <div class="admin-card">
             <div class="admin-card-header">📊 ئاماری سەردانیکەرانی پێشانگا</div>
             <div class="stats-grid">
                 <div class="stat-box"><div class="stat-num" id="statToday">0</div><div class="stat-label">ئەمڕۆ</div></div>
@@ -514,7 +549,7 @@
                 براوەی ئێستا: <strong id="adminWinnerLabel">هێشتا دیاری نەکراوە</strong>
             </div>
             <div style="font-size:13px; margin-bottom:10px;">کۆی بەشداربووان: <strong id="raffleCountLabel">0</strong> کەس</div>
-            <button type="button" class="btn-save" style="background:linear-gradient(135deg, #b8860b, #d4af37); color:#0b2619; margin-bottom:10px;" onclick="pickRandomRaffleWinner()">🎲 ئەنجامدانی تیروپشک</button>
+            <button type="button" class="btn-save" style="background:linear-gradient(135deg, #b8860b, #d4af37); color:#092618; margin-bottom:10px;" onclick="pickRandomRaffleWinner()">🎲 ئەنجامدانی تیروپشک</button>
             <div id="adminRaffleList" style="max-height:190px; overflow-y:auto; margin-bottom:10px;"></div>
             <button type="button" class="btn-del" style="width:100%; padding:9px;" onclick="clearRaffleEntries()">پاککردنەوەی بەشداربووان بۆ مانگی نوێ</button>
         </div>
@@ -636,6 +671,17 @@
     </div>
 
     <!-- پەنجەرەکان (Modals) -->
+    <div class="modal" id="storyViewModal" onclick="closeStoryModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-body">
+                <h2 id="storyModalTitle" class="modal-title" style="margin-bottom:10px;"></h2>
+                <img id="storyModalImg" src="" style="width:100%; max-height:340px; object-fit:contain; border-radius:12px; display:none; margin-bottom:12px; background:var(--bg-soft); cursor:zoom-in;">
+                <p id="storyModalText" class="modal-benefits" style="display:none;"></p>
+                <button type="button" class="btn-close" style="width:100%; margin-top:8px;" onclick="closeStoryModal()">داخستن</button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" id="raffleModal" onclick="closeRaffleModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="raffle-royal-header">
@@ -654,7 +700,7 @@
                 </div>
                 <input type="text" id="raffleFullName" class="cart-input" placeholder="ناوی سیانی یان ناوی تەواو *">
                 <input type="text" id="raffleIgUser" class="cart-input" placeholder="یوزەرنەیمی ئینستاگرامەکەت *">
-                <button type="button" class="btn-save" id="submitRaffleBtn" style="background:linear-gradient(135deg, #0b2b1c, #1b4332); color:#f3e5ab; border:1px solid #d4af37;" onclick="submitRaffleEntry()">✨ تۆمارکردنی ناوم لە تیروپشک</button>
+                <button type="button" class="btn-save" id="submitRaffleBtn" style="background:linear-gradient(135deg, #092618, #154c33); color:#f3e5ab; border:1px solid #d4af37;" onclick="submitRaffleEntry()">✨ تۆمارکردنی ناوم لە تیروپشک</button>
                 <div id="raffleStatusMsg" style="font-size:12.5px; text-align:center; margin-top:8px;"></div>
                 <button type="button" class="btn-close" style="width:100%; margin-top:10px;" onclick="closeRaffleModal()">داخستن</button>
             </div>
@@ -768,7 +814,6 @@
     <div id="zoomModal" onclick="this.style.display='none'">
         <img id="zoomedImg" src="">
     </div>
-    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, getDoc, setDoc, deleteDoc, updateDoc, doc, query, orderBy, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -815,6 +860,9 @@
         let raffleEntries = [];
         let manualJomlaItems = JSON.parse(localStorage.getItem("sidr_jomla_manual") || "[]");
         let boughtJomlaKeys = JSON.parse(localStorage.getItem("sidr_jomla_bought") || "[]");
+
+        let storiesList = [];
+        let storyImageBase64 = "";
 
         let currentLang = localStorage.getItem("sidr_lang") || "ku";
         
@@ -872,8 +920,6 @@
         function applyLanguageUI() {
             const t = translations[currentLang];
             document.getElementById("langToggleBtn").innerText = t.langBtnToggle;
-          const mImgEl = document.getElementById("mImg");
-mImgEl.onclick = () => zoomImage(p.image);
             document.body.dir = "rtl"; 
             
             const idsText = ["txtStoreName", "txtStoreDesc", "opNew", "opCheap", "opExp", "txtRaffleTitle", "txtRaffleSub", "txtTasbihTitle", "txtTasbihSub", "catAll", "catPkg", "catFav", "catDisc", "catVinegar", "catShampoo", "catOil", "catSoap", "catPerfume", "catBeauty", "catHerbal", "catMusk", "catOther", "txtLoading", "txtFaqTitle", "txtFooter", "btnWa", "btnIg", "btnTt", "btnSc", "btnAdminTrigger", "txtCartBar", "txtModBenTitle", "txtModUsageTitle", "txtModFBLbl", "txtModRelLbl", "btnCloseMod", "btnCloseCart", "txtCartTitle", "btnApplyPromo", "opCityPlaceholder", "opRanya", "opSuli", "opOther", "opIraq", "txtSubTotalLBL", "txtDiscLBL", "txtShipLBL", "txtTotalLBL", "btnCheckout", "mShareBtn", "mAskWhatsapp", "mWhatsapp", "mAddToCartBtn"];
@@ -979,6 +1025,109 @@ mImgEl.onclick = () => zoomImage(p.image);
             } catch (e) { alert("هەڵە: " + e.message); }
             btn.disabled = false; btn.innerText = "پاشەکەوتکردنی ڕێکخستنەکان";
         }
+
+        // --- ستۆریی ڕۆژانە ---
+        window.processStoryImage = function(e) {
+            const file = e.target.files[0]; if (!file) { storyImageBase64 = ""; return; }
+            const r = new FileReader();
+            r.onload = function(ev) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement("canvas");
+                    const sz = 650 / img.width;
+                    canvas.width = 650; canvas.height = img.height * sz;
+                    canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+                    storyImageBase64 = canvas.toDataURL("image/jpeg", 0.72);
+                };
+                img.src = ev.target.result;
+            };
+            r.readAsDataURL(file);
+        };
+
+        async function loadStories() {
+            try {
+                const snap = await getDocs(query(collection(db, "stories"), orderBy("createdAt", "desc")));
+                storiesList = [];
+                snap.forEach(d => storiesList.push({ id: d.id, ...d.data() }));
+                renderStoriesStrip();
+                renderAdminStories();
+            } catch (e) {}
+        }
+
+        function renderStoriesStrip() {
+            const strip = document.getElementById("storiesStrip");
+            if (!strip) return;
+            if (!storiesList.length) { strip.style.display = "none"; return; }
+            strip.style.display = "flex";
+            strip.innerHTML = "";
+            storiesList.forEach(st => {
+                const item = document.createElement("div");
+                item.className = "story-item";
+                item.onclick = () => openStoryModal(st.id);
+                const innerContent = st.image ? `<img src="${st.image}" alt="${st.title || ''}">` : `✨`;
+                item.innerHTML = `<div class="story-ring"><div class="story-ring-inner">${innerContent}</div></div><div class="story-label">${st.title || "ستۆری"}</div>`;
+                strip.appendChild(item);
+            });
+        }
+
+        window.openStoryModal = function(id) {
+            const st = storiesList.find(x => x.id === id);
+            if (!st) return;
+            document.getElementById("storyModalTitle").innerText = st.title || "ستۆری";
+            const imgEl = document.getElementById("storyModalImg");
+            if (st.image) {
+                imgEl.src = st.image;
+                imgEl.style.display = "block";
+                imgEl.onclick = () => zoomImage(st.image);
+            } else {
+                imgEl.style.display = "none";
+            }
+            const txtEl = document.getElementById("storyModalText");
+            if (st.text) { txtEl.innerText = st.text; txtEl.style.display = "block"; } else { txtEl.style.display = "none"; }
+            document.getElementById("storyViewModal").style.display = "flex";
+        };
+        window.closeStoryModal = function() { document.getElementById("storyViewModal").style.display = "none"; };
+
+        window.addStoryItem = async function() {
+            const title = document.getElementById("storyTitleInput").value.trim();
+            const text = document.getElementById("storyTextInput").value.trim();
+            if (!title && !text && !storyImageBase64) { alert("تکایە ناونیشان، دەق یان وێنەیەک دابنێ!"); return; }
+            const btn = document.getElementById("publishStoryBtn");
+            btn.disabled = true; btn.innerText = "بڵاودەکرێتەوە...";
+            try {
+                await addDoc(collection(db, "stories"), {
+                    title: title || "نوێکاری",
+                    text: text,
+                    image: storyImageBase64 || "",
+                    createdAt: Date.now()
+                });
+                document.getElementById("storyTitleInput").value = "";
+                document.getElementById("storyTextInput").value = "";
+                document.getElementById("storyImageFile").value = "";
+                storyImageBase64 = "";
+                await loadStories();
+                alert("ستۆرییەکە بڵاوکرایەوە و هاتە سەرەوە!");
+            } catch (e) { alert("هەڵە: " + e.message); }
+            btn.disabled = false; btn.innerText = "+ بڵاوکردنەوەی ستۆری (دێتە سەرەوە)";
+        };
+
+        function renderAdminStories() {
+            const box = document.getElementById("adminStoriesList");
+            if (!box) return;
+            box.innerHTML = "";
+            storiesList.forEach(st => {
+                const row = document.createElement("div");
+                row.className = "item-row";
+                row.innerHTML = `<div class="item-details"><strong>${st.title || "ستۆری"}</strong><div style="font-size:11px; color:var(--text-muted);">${(st.text || "").slice(0, 45)}</div></div><button type="button" class="btn-del" onclick="deleteStoryItem('${st.id}')">سڕینەوە</button>`;
+                box.appendChild(row);
+            });
+        }
+
+        window.deleteStoryItem = async function(id) {
+            if (!confirm("ستۆرییەکە بسڕدرێتەوە؟")) return;
+            await deleteDoc(doc(db, "stories", id));
+            await loadStories();
+        };
 
         function renderPublicFaqs() {
             const sec = document.getElementById("faqSectionContainer"); const list = document.getElementById("faqPublicList");
@@ -1216,7 +1365,11 @@ mImgEl.onclick = () => zoomImage(p.image);
             const displayBen = (currentLang === 'ar' && p.benefitsAr) ? p.benefitsAr : (p.benefits || "");
             const displayUsg = (currentLang === 'ar' && p.usageAr) ? p.usageAr : (p.usage || "");
 
-            document.getElementById("mImg").src = p.image; document.getElementById("mTitle").innerText = displayName;
+            const mImgEl = document.getElementById("mImg");
+            mImgEl.src = p.image;
+            mImgEl.onclick = () => zoomImage(p.image);
+
+            document.getElementById("mTitle").innerText = displayName;
             document.getElementById("mPrice").innerHTML = p.oldPrice ? `${p.price} <span style="font-size:13px; color:var(--text-muted); text-decoration:line-through; margin-right:6px;">${p.oldPrice}</span>` : p.price;
             
             document.getElementById("mBenefits").innerText = displayBen;
@@ -1429,7 +1582,7 @@ mImgEl.onclick = () => zoomImage(p.image);
                 document.getElementById("settingPromoCode").value = storeSettings.promoCode || ""; document.getElementById("settingPromoPercent").value = storeSettings.promoPercent || ""; document.getElementById("settingGiftCode").value = storeSettings.giftCode || "";
                 document.getElementById("settingFreeShipLimit").value = storeSettings.freeShipLimit; document.getElementById("settingFreeShipIraq").value = storeSettings.freeShipIraq;
                 document.getElementById("settingShipRanya").value = storeSettings.shipRanya; document.getElementById("settingShipMain").value = storeSettings.shipMain; document.getElementById("settingShipOther").value = storeSettings.shipOther;
-                loadVisitorStats(); renderAdminList(); loadRaffleEntries(); renderAdminFaqs(); renderJomlaList(); window.scrollTo(0,0);
+                loadVisitorStats(); renderAdminList(); loadRaffleEntries(); renderAdminFaqs(); renderJomlaList(); renderAdminStories(); window.scrollTo(0,0);
             } else { alert("پاسۆرد هەڵەیە!"); }
         }
         window.closeAdmin = function() { document.getElementById("adminSection").style.display = "none"; document.getElementById("storeView").style.display = "block"; resetForm(); updateFloatingCartBar(); window.scrollTo(0,0); }
@@ -1540,7 +1693,7 @@ mImgEl.onclick = () => zoomImage(p.image);
 
         document.getElementById("searchInput").addEventListener("input", renderProducts);
         
-        applyLanguageUI(); loadStoreSettings(); loadProducts(); updateFloatingCartBar(); trackVisitor();
+        applyLanguageUI(); loadStoreSettings(); loadStories(); loadProducts(); updateFloatingCartBar(); trackVisitor();
         
         const params = new URLSearchParams(window.location.search);
         const pid = params.get("p");
