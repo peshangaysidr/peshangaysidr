@@ -71,37 +71,38 @@
         }
 
         :root {
-            --bg-body: #f1f5f3;
-            --bg-card: #ffffff;
-            --bg-soft: #f6faf8;
-            --text-main: #2d3436;
-            --text-title: #0d3322;
-            --text-muted: #64748b;
-            --border-color: #d4e0da;
-            --input-bg: #ffffff;
-            --shadow-card: 0 3px 10px rgba(6, 28, 18, 0.08);
-            --header-grad: radial-gradient(circle at center, #0e3825 0%, #051910 100%);
+            --bg-body: radial-gradient(circle at top, #0d3623 0%, #061c12 58%, #04130c 100%);
+            --bg-card: #0c261a;
+            --bg-soft: #113222;
+            --text-main: #eef5f1;
+            --text-title: #f3e5ab;
+            --text-muted: #9eb8ab;
+            --border-color: rgba(212, 175, 55, 0.35);
+            --input-bg: #091f15;
+            --shadow-card: 0 4px 16px rgba(0,0,0,0.42);
+            --header-grad: radial-gradient(circle at center, #0f3b27 0%, #051910 100%);
             --gold: #d4af37;
             --gold-light: #f3e5ab;
-            --amber: #d97706;
+            --amber: #e59a1a;
             --green-primary: #154c33;
         }
 
         body.dark-theme {
-            --bg-body: #07140e;
-            --bg-card: #0e2319;
-            --bg-soft: #132d21;
-            --text-main: #e6ede9;
+            --bg-body: radial-gradient(circle at top, #0d3623 0%, #061c12 58%, #04130c 100%);
+            --bg-card: #0b2217;
+            --bg-soft: #102e20;
+            --text-main: #eef5f1;
             --text-title: #f3e5ab;
-            --text-muted: #9eb3a8;
-            --border-color: #214433;
-            --input-bg: #132d21;
-            --shadow-card: 0 4px 16px rgba(0,0,0,0.45);
+            --text-muted: #95b0a2;
+            --border-color: rgba(212, 175, 55, 0.32);
+            --input-bg: #081a12;
+            --shadow-card: 0 5px 18px rgba(0,0,0,0.52);
             --header-grad: radial-gradient(circle at center, #0e3825 0%, #04130c 100%);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans Arabic', sans-serif; }
-        body { background-color: var(--bg-body); color: var(--text-main); padding-bottom: 95px; transition: background-color 0.25s, color 0.25s; }
+        body { background: var(--bg-body); background-attachment: fixed; color: var(--text-main); padding-bottom: 95px; min-height: 100vh; transition: background-color 0.25s, color 0.25s; }
+
 
         header {
             position: relative; background: var(--header-grad); color: white; padding: 58px 18px 54px;
