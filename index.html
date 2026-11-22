@@ -163,7 +163,7 @@
         .royal-logo-medallion {
             width: 82px; height: 82px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #14452f, #051910);
             border: 3px solid #d4af37; box-shadow: 0 0 0 2px #051910, 0 0 0 3.5px rgba(212, 175, 55, 0.7), 0 8px 20px rgba(0,0,0,0.65);
-            display: flex; align-items: center; justify-content: center; margin-bottom: 12px; position: relative;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 12px; position: relative; overflow: hidden;
         }
         .royal-logo-medallion::before {
             content: ""; position: absolute; top: -8px; width: 4px; height: 10px; background: linear-gradient(to bottom, #f3e5ab, #b8860b); border-radius: 2px;
@@ -292,6 +292,29 @@
         
         .fb-images-grid { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-top: 8px; }
         .fb-images-grid img { width: 105px; height: 135px; object-fit: cover; border-radius: 10px; border: 1px solid #fcd34d; cursor: pointer; flex-shrink: 0; }
+
+        /* ستایلی فیدباکی کڕیاران و ڕیپلەی فرۆشگا */
+        .customer-reviews-list { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+        .review-card { background: var(--bg-soft); border: 1px solid var(--border-color); border-radius: 12px; padding: 11px 12px; }
+        .review-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 5px; }
+        .review-author { font-size: 13px; font-weight: 800; color: var(--text-title); }
+        .review-stars { font-size: 12px; color: #fbbf24; }
+        .review-comment { font-size: 13px; line-height: 1.6; color: var(--text-main); white-space: pre-line; }
+        .merchant-reply-box { margin-top: 8px; padding: 9px 11px; border-radius: 10px; background: rgba(212, 175, 55, 0.11); border-right: 3px solid var(--gold); }
+        .merchant-reply-badge { font-size: 11px; font-weight: 800; color: var(--gold-light); margin-bottom: 3px; }
+        .merchant-reply-text { font-size: 12.5px; line-height: 1.55; color: var(--text-main); white-space: pre-line; }
+
+        .write-review-box { background: var(--bg-soft); border: 1px solid var(--border-color); border-radius: 14px; padding: 12px; margin-top: 10px; }
+        .star-picker { display: flex; gap: 6px; margin-bottom: 10px; align-items: center; }
+        .star-pick-btn { background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-muted); border-radius: 8px; padding: 4px 8px; font-size: 15px; cursor: pointer; transition: 0.15s; }
+        .star-pick-btn.active { color: #fbbf24; border-color: var(--gold); background: rgba(212, 175, 55, 0.14); }
+        .review-input, .review-textarea { width: 100%; padding: 9px 11px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--input-bg); color: var(--text-main); font-size: 13px; outline: none; margin-bottom: 8px; }
+        .review-textarea { height: 70px; resize: vertical; }
+
+        .admin-fb-card { background: var(--bg-soft); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+        .admin-fb-status { display: inline-block; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 8px; margin-bottom: 6px; }
+        .status-pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+        .status-approved { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
         
         .related-section { margin-top: 15px; padding-top: 12px; border-top: 1px solid var(--border-color); }
         .related-grid { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; margin-top: 8px; }
@@ -417,7 +440,7 @@
 
             <div class="header-content">
                 <div class="royal-logo-medallion">
-<img src="IMG_3381.jpeg" alt="پێشانگای سیدر" style="width:100%; height:100%; object-fit:cover; object-position:50% 18%; border-radius:50%;">
+                    <img src="IMG_3381.jpeg" alt="پێشانگای سیدر" style="width:100%; height:100%; object-fit:cover; object-position:50% 18%; border-radius:50%;">
                 </div>
                 <h1 id="txtStoreName">پێشانگای سیدر</h1>
                 <p id="txtStoreDesc">بۆ گیا دەرمانی و جوانکاری</p>
@@ -509,6 +532,12 @@
 
     <div id="adminSection">
         <button type="button" class="admin-top-return" onclick="closeAdmin()">← گەڕانەوە بۆ پێشانگا</button>
+
+        <div class="admin-card">
+            <div class="admin-card-header">💬 بەڕێوەبردنی فیدباکی کڕیاران</div>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">فیدباکە نوێیەکان لە دۆخی چاوەڕوانیدان؛ دوای قەبوڵکردن لە پەڕەی بەرهەم دەردەکەون و دەتوانیت ڕیپلەیان بۆ بنووسیت.</p>
+            <div id="adminFeedbacksList">چاوەڕێ بە...</div>
+        </div>
 
         <div class="admin-card">
             <div class="admin-card-header">📸 زیادکردنی ستۆریی ڕۆژانە</div>
@@ -740,6 +769,23 @@
                     <div class="modal-benefits-title" id="txtModFBLbl" style="color:#d97706;">فیدباک و ڕای کڕیارەکان:</div>
                     <p id="mFeedback" class="modal-benefits" style="background:rgba(245, 158, 11, 0.12); border-right:3px solid #f59e0b; margin-bottom:8px; display:none;"></p>
                     <div id="mFeedbackImages" class="fb-images-grid"></div>
+                    <div id="mApprovedReviewsList" class="customer-reviews-list"></div>
+                </div>
+
+                <div class="write-review-box" id="writeReviewSection">
+                    <div class="modal-benefits-title" id="txtWriteRevTitle" style="color:var(--gold-light); margin-bottom:8px;">✍️ فیدباکی خۆت بنووسە</div>
+                    <div class="star-picker" id="reviewStarPicker">
+                        <span style="font-size:12px; color:var(--text-muted);" id="txtStarLbl">هەڵسەنگاندن:</span>
+                        <button type="button" class="star-pick-btn" data-star="1" onclick="setReviewStars(1)">★</button>
+                        <button type="button" class="star-pick-btn" data-star="2" onclick="setReviewStars(2)">★</button>
+                        <button type="button" class="star-pick-btn" data-star="3" onclick="setReviewStars(3)">★</button>
+                        <button type="button" class="star-pick-btn" data-star="4" onclick="setReviewStars(4)">★</button>
+                        <button type="button" class="star-pick-btn active" data-star="5" onclick="setReviewStars(5)">★</button>
+                    </div>
+                    <input type="text" id="revAuthorInput" class="review-input" placeholder="ناوت (ئارەزوومەندانە — بۆ نموونە: کڕیارێک)">
+                    <textarea id="revCommentInput" class="review-textarea" placeholder="ئەزموون یان ڕات دەربارەی ئەم بەرهەمە بنووسە..."></textarea>
+                    <button type="button" class="btn-save" id="submitReviewBtn" style="padding:10px; font-size:13px;" onclick="submitProductFeedback()">ناردنی فیدباک (دوای قەبوڵکردن دەردەکەوێت)</button>
+                    <div id="reviewStatusMsg" style="font-size:12px; text-align:center; margin-top:7px;"></div>
                 </div>
 
                 <div class="modal-actions">
@@ -821,6 +867,10 @@
         const db = getFirestore(app);
 
         let products = [];
+        let productFeedbacks = [];
+        let activeModalProduct = null;
+        let selectedReviewStars = 5;
+
         let currentCategory = "هەمووی";
         let compressedImageBase64 = "";
         let feedbackImagesList = [];
@@ -868,12 +918,17 @@
                 btnWa: "واتساپ", btnIg: "ئینستاگرام", btnTt: "تیکتۆک", btnSc: "سناپچات",
                 btnAdminTrigger: "بەڕێوەبردنی دوکان (ئەدمین)", txtCartBar: "بینینی سەبەتەی کڕین",
                 txtModBenTitle: "سوودەکان:", txtModUsageTitle: "چۆنیەتی بەکارهێنان:", txtModFBLbl: "سەرنج و فیدباک:", txtModRelLbl: "لەوانەیە ئەمانەشت بە دڵ بێت:",
+                txtWriteRevTitle: "✍️ فیدباکی خۆت بنووسە", txtStarLbl: "هەڵسەنگاندن:",
+                revAuthorInput: "ناوت (ئارەزوومەندانە — بۆ نموونە: کڕیارێک)",
+                revCommentInput: "ئەزموون یان ڕات دەربارەی ئەم بەرهەمە بنووسە...",
+                submitReviewBtn: "ناردنی فیدباک (دوای قەبوڵکردن دەردەکەوێت)",
                 btnCloseMod: "داخستن", btnCloseCart: "داخستن", txtCartTitle: "🛒 سەبەتەی کڕین", btnApplyPromo: "جێبەجێکردن", cartPromoInput: "کۆدی داشکاندن یان دیاری",
                 opCityPlaceholder: "-- شارەکەت هەڵبژێرە بۆ نرخی گەیاندن --", opRanya: "ڕانیە و دەوروبەری", opSuli: "سلێمانی / هەولێر", opOther: "دهۆک / کەرکوک / شارەکانی تر کوردستان", opIraq: "شارەکانی ناوەڕاست و خوارووی عێراق",
                 custAddress: "گەڕەک یان ناونیشانی تەواو *", custNote: "ژمارە مۆبایل یان تێبینی (ئارەزوومەندانە)",
                 txtSubTotalLBL: "کۆی نرخی بەرهەمەکان:", txtDiscLBL: "داشکاندن / دیاری:", txtShipLBL: "تێچووی گەیاندن:", txtTotalLBL: "کۆی گشتی:",
                 btnCheckout: "ناردنی داواکاری بە واتساپ", addToCartTxt: "+ زیادکردن بۆ سەبەتە", notifyTxt: "🔔 ئاگادارم بکەرەوە",
-                shareTxt: "📤 ناردن", askWaTxt: "پرسیار لە واتساپ", orderWaTxt: "داواکاری خێرا واتساپ", langBtnToggle: "🌐 عربي"
+                shareTxt: "📤 ناردن", askWaTxt: "پرسیار لە واتساپ", orderWaTxt: "داواکاری خێرا واتساپ", langBtnToggle: "🌐 عربي",
+                merchantReplyBadge: "💬 وەڵامی پێشانگای سیدر:"
             },
             ar: {
                 txtStoreName: "معرض سدر", txtStoreDesc: "للأعشاب الطبية ومستحضرات التجميل",
@@ -889,12 +944,17 @@
                 btnWa: "واتساب", btnIg: "انستغرام", btnTt: "تيك توك", btnSc: "سناب شات",
                 btnAdminTrigger: "إدارة المتجر (أدمن)", txtCartBar: "عرض سلة المشتريات",
                 txtModBenTitle: "الفوائد:", txtModUsageTitle: "طريقة الاستخدام:", txtModFBLbl: "التعليقات والآراء:", txtModRelLbl: "قد يعجبك أيضاً:",
+                txtWriteRevTitle: "✍️ اكتب رأيك أو تجربتك", txtStarLbl: "التقييم:",
+                revAuthorInput: "اسمك (اختياري — مثلاً: زبون)",
+                revCommentInput: "اكتب رأيك أو تجربتك حول هذا المنتج...",
+                submitReviewBtn: "إرسال الرأي (يظهر بعد الموافقة)",
                 btnCloseMod: "إغلاق", btnCloseCart: "إغلاق", txtCartTitle: "🛒 سلة المشتريات", btnApplyPromo: "تطبيق", cartPromoInput: "كود الخصم أو الهدية",
                 opCityPlaceholder: "-- اختر مدينتك لمعرفة التوصيل --", opRanya: "رانية وضواحيها", opSuli: "السليمانية / أربيل", opOther: "دهوك / كركوك / مدن كردستان", opIraq: "مدن وسط وجنوب العراق",
                 custAddress: "الحي أو العنوان الكامل *", custNote: "رقم الموبايل أو ملاحظة (اختياري)",
                 txtSubTotalLBL: "سعر المنتجات:", txtDiscLBL: "الخصم / الهدية:", txtShipLBL: "تكلفة التوصيل:", txtTotalLBL: "المجموع الكلي:",
                 btnCheckout: "إرسال الطلب عبر الواتساب", addToCartTxt: "+ أضف إلى السلة", notifyTxt: "🔔 أعلمني عند التوفر",
-                shareTxt: "📤 مشاركة", askWaTxt: "استفسار عبر واتساب", orderWaTxt: "طلب سريع عبر واتساب", langBtnToggle: "🌐 کوردی"
+                shareTxt: "📤 مشاركة", askWaTxt: "استفسار عبر واتساب", orderWaTxt: "طلب سريع عبر واتساب", langBtnToggle: "🌐 کوردی",
+                merchantReplyBadge: "💬 رد معرض سدر:"
             }
         };
 
@@ -902,6 +962,7 @@
             currentLang = (currentLang === "ku") ? "ar" : "ku";
             localStorage.setItem("sidr_lang", currentLang);
             applyLanguageUI(); renderProducts(); renderCartItems(); startBannerSlider(); renderPublicFaqs();
+            if (activeModalProduct) renderModalFeedbackSection(activeModalProduct);
         };
 
         function applyLanguageUI() {
@@ -909,10 +970,10 @@
             document.getElementById("langToggleBtn").innerText = t.langBtnToggle;
             document.body.dir = "rtl"; 
             
-            const idsText = ["txtStoreName", "txtStoreDesc", "opNew", "opCheap", "opExp", "txtRaffleTitle", "txtRaffleSub", "txtTasbihTitle", "txtTasbihSub", "catAll", "catPkg", "catFav", "catDisc", "catVinegar", "catShampoo", "catOil", "catSoap", "catPerfume", "catBeauty", "catHerbal", "catMusk", "catOther", "txtLoading", "txtFaqTitle", "txtFooter", "btnWa", "btnIg", "btnTt", "btnSc", "btnAdminTrigger", "txtCartBar", "txtModBenTitle", "txtModUsageTitle", "txtModFBLbl", "txtModRelLbl", "btnCloseMod", "btnCloseCart", "txtCartTitle", "btnApplyPromo", "opCityPlaceholder", "opRanya", "opSuli", "opOther", "opIraq", "txtSubTotalLBL", "txtDiscLBL", "txtShipLBL", "txtTotalLBL", "btnCheckout", "mShareBtn", "mAskWhatsapp", "mWhatsapp", "mAddToCartBtn"];
+            const idsText = ["txtStoreName", "txtStoreDesc", "opNew", "opCheap", "opExp", "txtRaffleTitle", "txtRaffleSub", "txtTasbihTitle", "txtTasbihSub", "catAll", "catPkg", "catFav", "catDisc", "catVinegar", "catShampoo", "catOil", "catSoap", "catPerfume", "catBeauty", "catHerbal", "catMusk", "catOther", "txtLoading", "txtFaqTitle", "txtFooter", "btnWa", "btnIg", "btnTt", "btnSc", "btnAdminTrigger", "txtCartBar", "txtModBenTitle", "txtModUsageTitle", "txtModFBLbl", "txtModRelLbl", "txtWriteRevTitle", "txtStarLbl", "submitReviewBtn", "btnCloseMod", "btnCloseCart", "txtCartTitle", "btnApplyPromo", "opCityPlaceholder", "opRanya", "opSuli", "opOther", "opIraq", "txtSubTotalLBL", "txtDiscLBL", "txtShipLBL", "txtTotalLBL", "btnCheckout", "mShareBtn", "mAskWhatsapp", "mWhatsapp", "mAddToCartBtn"];
             idsText.forEach(id => { const el = document.getElementById(id); if (el && t[id]) el.innerText = t[id]; });
 
-            const idsPlaceholder = ["searchInput", "cartPromoInput", "custAddress", "custNote"];
+            const idsPlaceholder = ["searchInput", "cartPromoInput", "custAddress", "custNote", "revAuthorInput", "revCommentInput"];
             idsPlaceholder.forEach(id => { const el = document.getElementById(id); if (el && t[id]) el.placeholder = t[id]; });
         }
 
@@ -936,6 +997,193 @@
             const digits = normalized.replace(/[^0-9]/g, ''); return digits ? parseInt(digits, 10) : 0;
         }
         function formatNumber(num) { return num.toLocaleString('en-US') + (currentLang === 'ar' ? " دينار" : " دینار"); }
+
+        function escapeHtml(str) {
+            return String(str || "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;");
+        }
+
+        /* سیستەمی فیدباکی کڕیاران، قەبوڵکردن و ڕیپلەی فرۆشگا */
+        window.setReviewStars = function(num) {
+            selectedReviewStars = num;
+            document.querySelectorAll("#reviewStarPicker .star-pick-btn").forEach(btn => {
+                const s = Number(btn.getAttribute("data-star"));
+                btn.classList.toggle("active", s <= num);
+            });
+        };
+
+        async function loadProductFeedbacks() {
+            try {
+                const snap = await getDocs(query(collection(db, "product_feedbacks"), orderBy("createdAt", "desc")));
+                productFeedbacks = [];
+                snap.forEach(d => productFeedbacks.push({ id: d.id, ...d.data() }));
+                if (activeModalProduct) renderModalFeedbackSection(activeModalProduct);
+                if (document.getElementById("adminSection").style.display === "block") renderAdminFeedbacks();
+            } catch (e) {}
+        }
+
+        window.submitProductFeedback = async function() {
+            if (!activeModalProduct) return;
+            const authorRaw = document.getElementById("revAuthorInput").value.trim();
+            const comment = document.getElementById("revCommentInput").value.trim();
+            const msgEl = document.getElementById("reviewStatusMsg");
+
+            if (!comment) {
+                alert(currentLang === 'ar' ? "يرجى كتابة رأيك أو تجربتك أولاً!" : "تکایە سەرەتا فیدباک یان ڕات بنووسە!");
+                return;
+            }
+
+            const defaultAuthor = currentLang === 'ar' ? "زبون" : "کڕیارێک";
+            const author = authorRaw || defaultAuthor;
+            const btn = document.getElementById("submitReviewBtn");
+            btn.disabled = true;
+            btn.innerText = currentLang === 'ar' ? "جاري الإرسال..." : "خەریکی ناردنە...";
+
+            try {
+                await addDoc(collection(db, "product_feedbacks"), {
+                    productId: activeModalProduct.id,
+                    productName: activeModalProduct.name || "",
+                    author: author,
+                    rating: selectedReviewStars || 5,
+                    comment: comment,
+                    status: "pending",
+                    reply: "",
+                    createdAt: Date.now()
+                });
+                document.getElementById("revAuthorInput").value = "";
+                document.getElementById("revCommentInput").value = "";
+                setReviewStars(5);
+                msgEl.style.color = "#34d399";
+                msgEl.innerText = currentLang === 'ar'
+                    ? "✅ تم إرسال رأيك بنجاح، وسيظهر بعد موافقة الإدارة."
+                    : "✅ فیدباکەکەت نێردرا؛ دوای قەبوڵکردن لەلایەن پێشانگا دەردەکەوێت.";
+                await loadProductFeedbacks();
+            } catch (e) {
+                msgEl.style.color = "#ef4444";
+                msgEl.innerText = (currentLang === 'ar' ? "حدث خطأ: " : "هەڵە: ") + e.message;
+            }
+            btn.disabled = false;
+            btn.innerText = translations[currentLang].submitReviewBtn;
+        };
+
+        function renderModalFeedbackSection(p) {
+            const fbBox = document.getElementById("mFeedbackBox");
+            const fbTextEl = document.getElementById("mFeedback");
+            const fbImgsEl = document.getElementById("mFeedbackImages");
+            const revListEl = document.getElementById("mApprovedReviewsList");
+
+            document.getElementById("txtModFBLbl").innerText = currentLang === 'ar' ? translations.ar.txtModFBLbl : translations.ku.txtModFBLbl;
+
+            const hasTextFb = p.feedback && p.feedback.trim() !== "";
+            const hasImgFb = Array.isArray(p.feedbackImages) && p.feedbackImages.length > 0;
+            const approvedList = productFeedbacks.filter(f => f.productId === p.id && f.status === "approved");
+
+            if (hasTextFb) {
+                fbTextEl.innerText = p.feedback;
+                fbTextEl.style.display = "block";
+            } else {
+                fbTextEl.style.display = "none";
+            }
+
+            fbImgsEl.innerHTML = "";
+            if (hasImgFb) {
+                p.feedbackImages.forEach(src => {
+                    const img = document.createElement("img");
+                    img.src = src;
+                    img.onclick = () => zoomImage(src);
+                    fbImgsEl.appendChild(img);
+                });
+            }
+
+            revListEl.innerHTML = "";
+            approvedList.forEach(item => {
+                const starsCount = Math.min(5, Math.max(1, Number(item.rating) || 5));
+                const starsStr = "★".repeat(starsCount) + "☆".repeat(5 - starsCount);
+                const card = document.createElement("div");
+                card.className = "review-card";
+                let replyHtml = "";
+                if (item.reply && item.reply.trim() !== "") {
+                    replyHtml = `<div class="merchant-reply-box">
+                        <div class="merchant-reply-badge">${translations[currentLang].merchantReplyBadge}</div>
+                        <div class="merchant-reply-text">${escapeHtml(item.reply)}</div>
+                    </div>`;
+                }
+                card.innerHTML = `
+                    <div class="review-top">
+                        <span class="review-author">${escapeHtml(item.author)}</span>
+                        <span class="review-stars">${starsStr}</span>
+                    </div>
+                    <div class="review-comment">${escapeHtml(item.comment)}</div>
+                    ${replyHtml}
+                `;
+                revListEl.appendChild(card);
+            });
+
+            if (hasTextFb || hasImgFb || approvedList.length > 0) {
+                fbBox.style.display = "block";
+            } else {
+                fbBox.style.display = "none";
+            }
+        }
+
+        function renderAdminFeedbacks() {
+            const box = document.getElementById("adminFeedbacksList");
+            if (!box) return;
+            if (!productFeedbacks.length) {
+                box.innerHTML = `<div style="font-size:13px; color:var(--text-muted); text-align:center; padding:10px;">هێشتا هیچ فیدباکێک تۆمار نەکراوە.</div>`;
+                return;
+            }
+            box.innerHTML = "";
+            productFeedbacks.forEach(fb => {
+                const isApproved = fb.status === "approved";
+                const prod = products.find(x => x.id === fb.productId);
+                const prodLabel = prod ? prod.name : (fb.productName || "بەرهەم");
+                const stars = "★".repeat(Number(fb.rating) || 5);
+                const card = document.createElement("div");
+                card.className = "admin-fb-card";
+                card.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+                        <span class="admin-fb-status ${isApproved ? 'status-approved' : 'status-pending'}">${isApproved ? '✅ قەبوڵکراو' : '⏳ چاوەڕوان (Pending)'}</span>
+                        <span style="font-size:11.5px; color:var(--text-muted);">بەرهەم: <strong style="color:var(--text-title);">${escapeHtml(prodLabel)}</strong></span>
+                    </div>
+                    <div style="font-size:13px; font-weight:700; color:var(--text-title); margin-bottom:4px;">${escapeHtml(fb.author)} <span style="color:#fbbf24; margin-right:6px;">${stars}</span></div>
+                    <div style="font-size:13px; line-height:1.6; color:var(--text-main); margin-bottom:10px;">${escapeHtml(fb.comment)}</div>
+                    <label style="font-size:12px; color:var(--gold-light); margin-bottom:4px;">ڕیپلەی پێشانگای سیدر:</label>
+                    <textarea id="replyInput_${fb.id}" placeholder="وەڵام یان ڕیپلەی خۆت لێرە بنووسە..." style="height:62px; margin-bottom:8px;">${escapeHtml(fb.reply || "")}</textarea>
+                    <div style="display:flex; gap:7px; flex-wrap:wrap;">
+                        ${!isApproved ? `<button type="button" class="btn-save" style="flex:1; padding:8px; font-size:12.5px;" onclick="approveFeedback('${fb.id}')">✅ قەبوڵکردن</button>` : ''}
+                        <button type="button" class="btn-save" style="flex:1; padding:8px; font-size:12.5px; background:#0284c7;" onclick="saveFeedbackReply('${fb.id}')">💬 پاشەکەوتکردنی ڕیپلەی</button>
+                        <button type="button" class="btn-del" style="padding:8px 12px;" onclick="deleteFeedbackItem('${fb.id}')">سڕینەوە</button>
+                    </div>
+                `;
+                box.appendChild(card);
+            });
+        }
+
+        window.approveFeedback = async function(id) {
+            const replyEl = document.getElementById("replyInput_" + id);
+            const replyVal = replyEl ? replyEl.value.trim() : "";
+            await updateDoc(doc(db, "product_feedbacks", id), { status: "approved", reply: replyVal });
+            await loadProductFeedbacks();
+            alert("فیدباکەکە قەبوڵ کرا و لە پەڕەی بەرهەم دەردەکەوێت!");
+        };
+
+        window.saveFeedbackReply = async function(id) {
+            const replyEl = document.getElementById("replyInput_" + id);
+            const replyVal = replyEl ? replyEl.value.trim() : "";
+            await updateDoc(doc(db, "product_feedbacks", id), { reply: replyVal });
+            await loadProductFeedbacks();
+            alert("ڕیپلەیەکە پاشەکەوت کرا!");
+        };
+
+        window.deleteFeedbackItem = async function(id) {
+            if (!confirm("دڵنیایت لە سڕینەوەی ئەم فیدباکە؟")) return;
+            await deleteDoc(doc(db, "product_feedbacks", id));
+            await loadProductFeedbacks();
+        };
 
         function getDateStr(offsetDays = 0) { const d = new Date(); d.setDate(d.getDate() + offsetDays); return d.toISOString().split('T')[0]; }
         async function trackVisitor() {
@@ -1347,6 +1595,12 @@
         window.filterCategory = function(cat, btn) { currentCategory = cat; document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active")); btn.classList.add("active"); renderProducts(); }
 
         window.openModal = function(p) {
+            activeModalProduct = p;
+            document.getElementById("reviewStatusMsg").innerText = "";
+            document.getElementById("revAuthorInput").value = "";
+            document.getElementById("revCommentInput").value = "";
+            setReviewStars(5);
+
             const displayName = (currentLang === 'ar' && p.nameAr) ? p.nameAr : p.name;
             const displayBen = (currentLang === 'ar' && p.benefitsAr) ? p.benefitsAr : (p.benefits || "");
             const displayUsg = (currentLang === 'ar' && p.usageAr) ? p.usageAr : (p.usage || "");
@@ -1397,22 +1651,7 @@
                 document.getElementById("mAddToCartBtn").onclick = () => { addToCart(p.id); closeModal(); };
             }
 
-            const fbBox = document.getElementById("mFeedbackBox"); 
-            const fbTextEl = document.getElementById("mFeedback"); 
-            const fbImgsEl = document.getElementById("mFeedbackImages");
-            
-            const hasTextFb = p.feedback && p.feedback.trim() !== ""; 
-            const hasImgFb = Array.isArray(p.feedbackImages) && p.feedbackImages.length > 0;
-            
-            if (hasTextFb || hasImgFb) {
-                fbBox.style.display = "block";
-                document.getElementById("txtModFBLbl").innerText = currentLang === 'ar' ? translations.ar.txtModFBLbl : translations.ku.txtModFBLbl;
-                if (hasTextFb) { fbTextEl.innerText = p.feedback; fbTextEl.style.display = "block"; } else { fbTextEl.style.display = "none"; }
-                fbImgsEl.innerHTML = "";
-                if (hasImgFb) { p.feedbackImages.forEach(src => { const img = document.createElement("img"); img.src = src; img.onclick = () => zoomImage(src); fbImgsEl.appendChild(img); }); }
-            } else {
-                fbBox.style.display = "none";
-            }
+            renderModalFeedbackSection(p);
 
             const relSec = document.getElementById("relatedSection"); const relGrid = document.getElementById("relatedGrid");
             const relItems = products.filter(x => x.category === p.category && x.id !== p.id).slice(0, 4);
@@ -1434,7 +1673,7 @@
 
             document.getElementById("productModal").style.display = "flex";
         }
-        window.closeModal = function() { document.getElementById("productModal").style.display = "none"; }
+        window.closeModal = function() { activeModalProduct = null; document.getElementById("productModal").style.display = "none"; }
 
         function saveCart() { localStorage.setItem("sidr_cart", JSON.stringify(cart)); updateFloatingCartBar(); }
         window.addToCartFromCard = function(e, id) { e.stopPropagation(); addToCart(id); }
@@ -1568,7 +1807,7 @@
                 document.getElementById("settingPromoCode").value = storeSettings.promoCode || ""; document.getElementById("settingPromoPercent").value = storeSettings.promoPercent || ""; document.getElementById("settingGiftCode").value = storeSettings.giftCode || "";
                 document.getElementById("settingFreeShipLimit").value = storeSettings.freeShipLimit; document.getElementById("settingFreeShipIraq").value = storeSettings.freeShipIraq;
                 document.getElementById("settingShipRanya").value = storeSettings.shipRanya; document.getElementById("settingShipMain").value = storeSettings.shipMain; document.getElementById("settingShipOther").value = storeSettings.shipOther;
-                loadVisitorStats(); renderAdminList(); loadRaffleEntries(); renderAdminFaqs(); renderJomlaList(); renderAdminStories(); window.scrollTo(0,0);
+                loadVisitorStats(); renderAdminList(); loadRaffleEntries(); renderAdminFaqs(); renderJomlaList(); renderAdminStories(); renderAdminFeedbacks(); window.scrollTo(0,0);
             } else { alert("پاسۆرد هەڵەیە!"); }
         }
         window.closeAdmin = function() { document.getElementById("adminSection").style.display = "none"; document.getElementById("storeView").style.display = "block"; resetForm(); updateFloatingCartBar(); window.scrollTo(0,0); }
@@ -1679,7 +1918,7 @@
 
         document.getElementById("searchInput").addEventListener("input", renderProducts);
         
-        applyLanguageUI(); loadStoreSettings(); loadStories(); loadProducts(); updateFloatingCartBar(); trackVisitor();
+        applyLanguageUI(); loadStoreSettings(); loadStories(); loadProducts(); loadProductFeedbacks(); updateFloatingCartBar(); trackVisitor();
         
         const params = new URLSearchParams(window.location.search);
         const pid = params.get("p");
