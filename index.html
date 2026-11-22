@@ -77,37 +77,43 @@
             --text-main: #eef5f1;
             --text-title: #f3e5ab;
             --text-muted: #9eb8ab;
-            --border-color: rgba(212, 175, 55, 0.35);
+            --border-color: rgba(212, 175, 55, 0.32);
             --input-bg: #091f15;
             --shadow-card: 0 4px 16px rgba(0,0,0,0.42);
             --header-grad: radial-gradient(circle at center, #0f3b27 0%, #051910 100%);
             --gold: #d4af37;
             --gold-light: #f3e5ab;
             --amber: #e59a1a;
-            --green-primary: #154c33;
+            --green-primary: #175438;
         }
 
         body.dark-theme {
-            --bg-body: radial-gradient(circle at top, #0d3623 0%, #061c12 58%, #04130c 100%);
+            --bg-body: radial-gradient(circle at top, #0a2b1c 0%, #05160e 60%, #030e09 100%);
             --bg-card: #0b2217;
             --bg-soft: #102e20;
             --text-main: #eef5f1;
             --text-title: #f3e5ab;
             --text-muted: #95b0a2;
-            --border-color: rgba(212, 175, 55, 0.32);
+            --border-color: rgba(212, 175, 55, 0.28);
             --input-bg: #081a12;
             --shadow-card: 0 5px 18px rgba(0,0,0,0.52);
             --header-grad: radial-gradient(circle at center, #0e3825 0%, #04130c 100%);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans Arabic', sans-serif; }
-        body { background: var(--bg-body); background-attachment: fixed; color: var(--text-main); padding-bottom: 95px; min-height: 100vh; transition: background-color 0.25s, color 0.25s; }
-
+        body {
+            background: var(--bg-body);
+            background-attachment: fixed;
+            color: var(--text-main);
+            padding-bottom: 95px;
+            min-height: 100vh;
+            transition: background-color 0.25s, color 0.25s;
+        }
 
         header {
             position: relative; background: var(--header-grad); color: white; padding: 58px 18px 54px;
             text-align: center; border-bottom-left-radius: 28px; border-bottom-right-radius: 28px;
-            box-shadow: 0 10px 28px rgba(0,0,0,0.38); overflow: hidden; border-bottom: 3px solid var(--gold);
+            box-shadow: 0 10px 28px rgba(0,0,0,0.45); overflow: hidden; border-bottom: 3px solid var(--gold);
         }
 
         .royal-frame-outer {
@@ -173,13 +179,13 @@
         .search-sort-row { display: flex; gap: 8px; margin-bottom: 11px; }
         .search-box {
             flex: 1; padding: 13px 16px; border: 1.5px solid var(--border-color); border-radius: 15px;
-            background: var(--bg-card); color: var(--text-main); box-shadow: 0 5px 18px rgba(0,0,0,0.14);
+            background: var(--bg-card); color: var(--text-main); box-shadow: 0 5px 18px rgba(0,0,0,0.25);
             font-size: 14px; outline: none; transition: border-color 0.25s, box-shadow 0.25s;
         }
-        .search-box:focus { border-color: var(--gold); box-shadow: 0 5px 18px rgba(212, 175, 55, 0.25); }
+        .search-box:focus { border-color: var(--gold); box-shadow: 0 5px 18px rgba(212, 175, 55, 0.28); }
         .sort-select {
             padding: 0 10px; border: 1.5px solid var(--border-color); border-radius: 15px;
-            background: var(--bg-card); color: var(--text-main); box-shadow: 0 5px 18px rgba(0,0,0,0.14);
+            background: var(--bg-card); color: var(--text-main); box-shadow: 0 5px 18px rgba(0,0,0,0.25);
             font-size: 13px; outline: none; cursor: pointer;
         }
 
@@ -188,12 +194,11 @@
             position: relative; border-radius: 15px; padding: 11px 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: transform 0.15s;
         }
         .raffle-banner-btn { background: linear-gradient(135deg, #092618, #14402b, #092618); border: 1.5px solid #d4af37; color: #fff; text-align: right; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.25); }
-        .tasbih-banner-btn { background: var(--bg-card); border: 1.5px solid var(--green-primary); color: var(--text-title); text-align: right; box-shadow: var(--shadow-card); }
+        .tasbih-banner-btn { background: var(--bg-card); border: 1.5px solid rgba(212, 175, 55, 0.45); color: var(--text-title); text-align: right; box-shadow: var(--shadow-card); }
         .raffle-banner-btn:active, .tasbih-banner-btn:active { transform: scale(0.98); }
         
         .raffle-icon-glow { width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, #f3e5ab, #d4af37); color: #092618; font-size: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 12px rgba(212, 175, 55, 0.6); flex-shrink: 0; }
-        .tasbih-icon-box { width: 36px; height: 36px; border-radius: 12px; background: rgba(21, 76, 51, 0.16); color: var(--green-primary); font-size: 19px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        body.dark-theme .tasbih-icon-box { color: #f3e5ab; background: rgba(212, 175, 55, 0.15); }
+        .tasbih-icon-box { width: 36px; height: 36px; border-radius: 12px; background: rgba(212, 175, 55, 0.15); color: #f3e5ab; font-size: 19px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         
         .btn-text-box strong { display: block; font-size: 12.5px; font-weight: 800; line-height: 1.3; }
         .raffle-btn-text strong { color: #f3e5ab; }
@@ -203,21 +208,19 @@
 
         .promo-banner {
             background: linear-gradient(90deg, #9a4708, #c2650a, #9a4708);
-            color: #fff8e7; padding: 10px 14px; border-radius: 14px; text-align: center; font-size: 13px; font-weight: 700; margin-bottom: 10px; border: 1px solid rgba(212, 175, 55, 0.45); box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2); min-height: 42px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; transition: opacity 0.35s ease;
+            color: #fff8e7; padding: 10px 14px; border-radius: 14px; text-align: center; font-size: 13px; font-weight: 700; margin-bottom: 10px; border: 1px solid rgba(212, 175, 55, 0.45); box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25); min-height: 42px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; transition: opacity 0.35s ease;
         }
 
         .categories { display: flex; gap: 8px; overflow-x: auto; padding: 6px 2px 6px; }
         .cat-btn { position: relative; background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); padding: 7px 14px; border-radius: 20px; font-size: 12.5px; cursor: pointer; white-space: nowrap; transition: 0.2s; }
-        .cat-btn.active, .cat-btn:hover { background: var(--green-primary); color: white; border-color: var(--gold); }
-        .cat-btn.discount-btn { border-color: #f59e0b; color: var(--amber); font-weight: 600; }
+        .cat-btn.active, .cat-btn:hover { background: var(--green-primary); color: #f3e5ab; border-color: var(--gold); }
+        .cat-btn.discount-btn { border-color: #f59e0b; color: #fbbf24; font-weight: 600; }
         .cat-btn.discount-btn.active { background: #d97706; color: white; border-color: #d97706; }
-        .cat-btn.fav-btn { border-color: #f43f5e; color: #e11d48; font-weight: 600; }
+        .cat-btn.fav-btn { border-color: #f43f5e; color: #fda4af; font-weight: 600; }
         .cat-btn.fav-btn.active { background: #e11d48; color: white; border-color: #e11d48; }
-        .cat-btn.pkg-btn { border-color: var(--gold); color: #996515; font-weight: 700; }
-        body.dark-theme .cat-btn.pkg-btn { color: #f3e5ab; }
+        .cat-btn.pkg-btn { border-color: var(--gold); color: #f3e5ab; font-weight: 700; }
         .cat-btn.pkg-btn.active { background: linear-gradient(135deg, #b8860b, #d4af37); color: #092618; border-color: #d4af37; }
 
-        /* ستایلی ستۆریی ڕۆژانە */
         .stories-strip {
             max-width: 900px; margin: 4px auto 12px; padding: 4px 15px;
             display: flex; gap: 11px; overflow-x: auto; align-items: flex-start;
@@ -235,7 +238,7 @@
         }
         .story-ring-inner {
             width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
-            background: var(--bg-card); border: 2px solid var(--bg-body);
+            background: var(--bg-card); border: 2px solid #061c12;
             display: flex; align-items: center; justify-content: center; font-size: 22px;
         }
         .story-ring-inner img { width: 100%; height: 100%; object-fit: cover; }
@@ -244,7 +247,6 @@
             text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;
         }
 
-        /* ٣ ستوون لەسەر مۆبایل (٦ بەرهەم لە یەک شاشەدا) */
         .products-grid { max-width: 900px; margin: 0 auto; padding: 0 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         @media (min-width: 650px) { .products-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; padding: 0 15px; } }
 
@@ -259,7 +261,7 @@
         .img-wrapper { position: relative; width: 100%; height: 105px; background: var(--bg-soft); }
         .product-img { width: 100%; height: 100%; object-fit: cover; }
         .product-info { padding: 7px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .product-cat { font-size: 9px; color: #10b981; font-weight: 600; margin-bottom: 2px; }
+        .product-cat { font-size: 9px; color: #34d399; font-weight: 600; margin-bottom: 2px; }
         .product-title { font-size: 11.5px; font-weight: 700; margin-bottom: 4px; color: var(--text-title); line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .price-box { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-bottom: 6px; }
         .product-price { font-size: 11.5px; font-weight: 700; color: var(--amber); }
@@ -268,16 +270,16 @@
         .btn-add-cart-card { width: 100%; padding: 5px 4px; border: none; border-radius: 8px; background: var(--green-primary); color: white; font-size: 10px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .btn-add-cart-card.notify-card-btn { background: #0284c7; color: white; }
         .btn-add-cart-card:active { transform: scale(0.97); }
-        .loading { text-align: center; padding: 40px; color: var(--green-primary); font-weight: bold; grid-column: 1 / -1; }
+        .loading { text-align: center; padding: 40px; color: #f3e5ab; font-weight: bold; grid-column: 1 / -1; }
 
         .floating-cart-bar {
             position: fixed; bottom: 16px; left: 15px; right: 15px; max-width: 550px; margin: 0 auto;
-            background: linear-gradient(135deg, #092618, #154c33); color: white; padding: 13px 18px; border-radius: 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.32); display: none; justify-content: space-between; align-items: center; z-index: 900; cursor: pointer; border: 1.5px solid var(--gold);
+            background: linear-gradient(135deg, #092618, #154c33); color: white; padding: 13px 18px; border-radius: 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.38); display: none; justify-content: space-between; align-items: center; z-index: 900; cursor: pointer; border: 1.5px solid var(--gold);
         }
         .cart-badge-count { background: var(--gold); color: #092618; font-weight: bold; padding: 2px 9px; border-radius: 12px; font-size: 13px; margin-left: 8px; }
-        .scroll-top-btn { position: fixed; bottom: 80px; right: 16px; width: 42px; height: 42px; background: var(--bg-card); color: var(--text-title); border: 1px solid var(--border-color); border-radius: 50%; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.18); display: none; z-index: 850; }
+        .scroll-top-btn { position: fixed; bottom: 80px; right: 16px; width: 42px; height: 42px; background: var(--bg-card); color: var(--text-title); border: 1px solid var(--border-color); border-radius: 50%; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: none; z-index: 850; }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.72); justify-content: center; align-items: center; padding: 15px; z-index: 1000; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; padding: 15px; z-index: 1000; }
         .modal-content { background: var(--bg-card); color: var(--text-main); max-width: 460px; width: 100%; border-radius: 20px; overflow: hidden; max-height: 90vh; overflow-y: auto; border: 1px solid var(--gold); }
         .modal-img { width: 100%; max-height: 280px; object-fit: contain; background-color: var(--bg-soft); cursor: zoom-in; display: block; }
         .modal-body { padding: 18px; }
@@ -285,7 +287,7 @@
         .modal-title { font-size: 19px; color: var(--text-title); margin-bottom: 4px; }
         .btn-share-prod { background: var(--bg-soft); color: var(--text-main); border: 1px solid var(--border-color); padding: 6px 11px; border-radius: 10px; font-size: 12px; cursor: pointer; white-space: nowrap; }
         .modal-price { font-size: 17px; color: var(--amber); font-weight: bold; margin-bottom: 12px; }
-        .modal-benefits-title { font-size: 13px; font-weight: bold; color: #10b981; margin-bottom: 5px; }
+        .modal-benefits-title { font-size: 13px; font-weight: bold; color: #34d399; margin-bottom: 5px; }
         .modal-benefits { font-size: 14px; line-height: 1.7; color: var(--text-main); margin-bottom: 14px; background: var(--bg-soft); padding: 12px; border-radius: 10px; white-space: pre-line; }
         
         .fb-images-grid { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-top: 8px; }
@@ -414,7 +416,21 @@
             <div class="side-foliage foliage-right"></div>
 
             <div class="header-content">
-<div class="royal-logo-medallion"><img src="IMG_3248.jpeg" alt="پێشانگای سیدر" style="width:100%; height:100%; object-fit:cover; border-radius:50%;"></div>
+                <div class="royal-logo-medallion">
+                    <svg viewBox="0 0 100 100" width="58" height="58">
+                        <defs>
+                            <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#fff3b0"/><stop offset="50%" stop-color="#d4af37"/><stop offset="100%" stop-color="#996515"/>
+                            </linearGradient>
+                            <linearGradient id="leafGrad" x1="0" y1="1" x2="1" y2="0">
+                                <stop offset="0%" stop-color="#15803d"/><stop offset="100%" stop-color="#86efac"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M52,38 C46,24 55,10 68,8 C66,22 58,34 52,38 Z" fill="url(#leafGrad)"/>
+                        <path d="M48,40 C38,32 32,20 38,12 C46,18 50,30 48,40 Z" fill="url(#leafGrad)" opacity="0.88"/>
+                        <path d="M72,34 L72,58 C72,66 64,68 60,62 C58,58 58,52 58,52 C58,62 49,66 44,60 C41,56 41,50 41,50 C41,66 32,76 20,74 C11,72 9,60 15,50 C19,43 27,40 32,42" fill="none" stroke="url(#goldGrad)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="72" cy="73" r="2.6" fill="url(#goldGrad)"/><circle cx="66" cy="77" r="2.6" fill="url(#goldGrad)"/><circle cx="77" cy="77" r="2.6" fill="url(#goldGrad)"/>
+                    </svg>
                 </div>
                 <h1 id="txtStoreName">پێشانگای سیدر</h1>
                 <p id="txtStoreDesc">بۆ گیا دەرمانی و جوانکاری</p>
@@ -467,7 +483,6 @@
             </div>
         </div>
 
-        <!-- هێڵی ستۆریی ڕۆژانە -->
         <div class="stories-strip" id="storiesStrip" style="display:none;"></div>
 
         <div class="products-grid" id="productsContainer">
@@ -505,7 +520,6 @@
         <div id="cartBarTotal" style="font-weight:bold; color:#fde68a;">0 دینار</div>
     </div>
 
-    <!-- بەشی بەڕێوەبردن (ئەدمین) -->
     <div id="adminSection">
         <button type="button" class="admin-top-return" onclick="closeAdmin()">← گەڕانەوە بۆ پێشانگا</button>
 
@@ -657,7 +671,6 @@
         </div>
     </div>
 
-    <!-- پەنجەرەکان (Modals) -->
     <div class="modal" id="storyViewModal" onclick="closeStoryModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-body">
@@ -1013,7 +1026,6 @@
             btn.disabled = false; btn.innerText = "پاشەکەوتکردنی ڕێکخستنەکان";
         }
 
-        // --- ستۆریی ڕۆژانە ---
         window.processStoryImage = function(e) {
             const file = e.target.files[0]; if (!file) { storyImageBase64 = ""; return; }
             const r = new FileReader();
